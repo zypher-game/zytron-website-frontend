@@ -1,18 +1,20 @@
-import type { GasPriceInfo } from 'types/api/stats';
-import type { GasUnit } from 'types/client/gasTracker';
+import type { GasPriceInfo } from "types/api/stats";
+import type { GasUnit } from "types/client/gasTracker";
 
-import { currencyUnits } from 'lib/units';
+import { currencyUnits } from "lib/units";
 
 export default function formatGasValue(data: GasPriceInfo, unit: GasUnit) {
   switch (unit) {
-    case 'gwei': {
+    case "gwei": {
       if (!data.price) {
-        return `N/A ${ currencyUnits.gwei }`;
+        return `N/A ${currencyUnits.gwei}`;
       }
-      return `${ Number(data.price).toLocaleString(undefined, { maximumFractionDigits: 1 }) } ${ currencyUnits.gwei }`;
+      return `${Number(data.price).toLocaleString(undefined, {
+        maximumFractionDigits: 1,
+      })} ${currencyUnits.gwei}`;
     }
 
-    case 'usd': {
+    case "usd": {
       if (!data.fiat_price) {
         return `$N/A`;
       }
@@ -21,7 +23,9 @@ export default function formatGasValue(data: GasPriceInfo, unit: GasUnit) {
         return `< $0.01`;
       }
 
-      return `$${ Number(data.fiat_price).toLocaleString(undefined, { maximumFractionDigits: 2 }) }`;
+      return `$${Number(data.fiat_price).toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })}`;
     }
   }
 }

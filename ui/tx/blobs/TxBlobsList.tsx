@@ -1,20 +1,26 @@
-import { Box } from '@chakra-ui/react';
-import React from 'react';
+import { Box } from "@chakra-ui/react";
+import React from "react";
 
-import type { TxBlob } from 'types/api/blobs';
+import type { TxBlob } from "types/api/blobs";
 
-import TxBlobListItem from './TxBlobListItem';
+import TxBlobListItem from "./TxBlobListItem";
 
-const TxBlobList = ({ data, isLoading }: { data: Array<TxBlob>; isLoading?: boolean }) => {
+const TxBlobList = ({
+  data,
+  isLoading,
+}: {
+  data: Array<TxBlob>;
+  isLoading?: boolean;
+}) => {
   return (
     <Box>
-      { data.map((item, index) => (
+      {data.map((item, index) => (
         <TxBlobListItem
-          key={ item.hash + (isLoading ? index : '') }
-          data={ item }
-          isLoading={ isLoading }
+          key={item.hash + (isLoading ? index : "")}
+          data={item}
+          isLoading={isLoading}
         />
-      )) }
+      ))}
     </Box>
   );
 };

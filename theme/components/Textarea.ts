@@ -1,8 +1,8 @@
-import { Textarea as TextareaComponent } from '@chakra-ui/react';
-import { defineStyle, defineStyleConfig } from '@chakra-ui/styled-system';
-import { mode } from '@chakra-ui/theme-tools';
+import { Textarea as TextareaComponent } from "@chakra-ui/react";
+import { defineStyle, defineStyleConfig } from "@chakra-ui/styled-system";
+import { mode } from "@chakra-ui/theme-tools";
 
-import getOutlinedFieldStyles from '../utils/getOutlinedFieldStyles';
+import getOutlinedFieldStyles from "../utils/getOutlinedFieldStyles";
 
 const variantFilledInactive = defineStyle((props) => {
   return {
@@ -12,25 +12,24 @@ const variantFilledInactive = defineStyle((props) => {
     // and whiteAlpha.50 is replaced with #1a1b1b
 
     // bgColor: mode('blackAlpha.50', 'whiteAlpha.50')(props),
-    bgColor: mode('#f5f5f6', '#1a1b1b')(props),
-
+    bgColor: mode("#f5f5f6", "#1a1b1b")(props),
   };
 });
 
 const sizes = {
   md: defineStyle({
-    fontSize: 'md',
-    lineHeight: '20px',
-    h: '160px',
-    borderRadius: 'base',
+    fontSize: "md",
+    lineHeight: "20px",
+    h: "160px",
+    borderRadius: "base",
   }),
   lg: defineStyle({
-    fontSize: 'md',
-    lineHeight: '20px',
-    px: '24px',
-    py: '28px',
-    h: '160px',
-    borderRadius: 'base',
+    fontSize: "md",
+    lineHeight: "20px",
+    px: "24px",
+    py: "28px",
+    h: "160px",
+    borderRadius: "base",
   }),
 };
 
@@ -41,13 +40,13 @@ const Textarea = defineStyleConfig({
     filledInactive: variantFilledInactive,
   },
   defaultProps: {
-    variant: 'outline',
+    variant: "outline",
   },
 });
 
 TextareaComponent.defaultProps = {
   ...TextareaComponent.defaultProps,
-  placeholder: ' ',
+  placeholder: " ",
 };
 
 export default Textarea;

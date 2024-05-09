@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import type { ApiKey } from 'types/api/account';
+import type { ApiKey } from "types/api/account";
 
-import ApiKeySnippet from 'ui/shared/ApiKeySnippet';
-import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
-import TableItemActionButtons from 'ui/shared/TableItemActionButtons';
+import ApiKeySnippet from "ui/shared/ApiKeySnippet";
+import ListItemMobile from "ui/shared/ListItemMobile/ListItemMobile";
+import TableItemActionButtons from "ui/shared/TableItemActionButtons";
 
 interface Props {
   item: ApiKey;
@@ -13,20 +13,32 @@ interface Props {
   onDeleteClick: (item: ApiKey) => void;
 }
 
-const ApiKeyListItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
-
+const ApiKeyListItem = ({
+  item,
+  isLoading,
+  onEditClick,
+  onDeleteClick,
+}: Props) => {
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [ item, onEditClick ]);
+  }, [item, onEditClick]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [ item, onDeleteClick ]);
+  }, [item, onDeleteClick]);
 
   return (
     <ListItemMobile>
-      <ApiKeySnippet apiKey={ item.api_key } name={ item.name } isLoading={ isLoading }/>
-      <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
+      <ApiKeySnippet
+        apiKey={item.api_key}
+        name={item.name}
+        isLoading={isLoading}
+      />
+      <TableItemActionButtons
+        onDeleteClick={onItemDeleteClick}
+        onEditClick={onItemEditClick}
+        isLoading={isLoading}
+      />
     </ListItemMobile>
   );
 };

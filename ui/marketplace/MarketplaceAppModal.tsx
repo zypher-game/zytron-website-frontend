@@ -1,30 +1,54 @@
 import {
-  Box, Flex, Heading, IconButton, Image, Link, List, Modal, ModalBody,
-  ModalCloseButton, ModalContent, ModalFooter, ModalOverlay, Tag, Text, useColorModeValue,
-} from '@chakra-ui/react';
-import React, { useCallback } from 'react';
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Image,
+  Link,
+  List,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+  Tag,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import React, { useCallback } from "react";
 
-import type { MarketplaceAppWithSecurityReport } from 'types/client/marketplace';
-import { ContractListTypes } from 'types/client/marketplace';
+import type { MarketplaceAppWithSecurityReport } from "types/client/marketplace";
+import { ContractListTypes } from "types/client/marketplace";
 
-import useFeatureValue from 'lib/growthbook/useFeatureValue';
-import useIsMobile from 'lib/hooks/useIsMobile';
-import { nbsp } from 'lib/html-entities';
-import * as mixpanel from 'lib/mixpanel/index';
-import type { IconName } from 'ui/shared/IconSvg';
-import IconSvg from 'ui/shared/IconSvg';
+import useFeatureValue from "lib/growthbook/useFeatureValue";
+import useIsMobile from "lib/hooks/useIsMobile";
+import { nbsp } from "lib/html-entities";
+import * as mixpanel from "lib/mixpanel/index";
+import type { IconName } from "ui/shared/IconSvg";
+import IconSvg from "ui/shared/IconSvg";
 
-import AppSecurityReport from './AppSecurityReport';
-import ContractListButton, { ContractListButtonVariants } from './ContractListButton';
-import MarketplaceAppModalLink from './MarketplaceAppModalLink';
+import AppSecurityReport from "./AppSecurityReport";
+import ContractListButton, {
+  ContractListButtonVariants,
+} from "./ContractListButton";
+import MarketplaceAppModalLink from "./MarketplaceAppModalLink";
 
 type Props = {
   onClose: () => void;
   isFavorite: boolean;
-  onFavoriteClick: (id: string, isFavorite: boolean, source: 'App modal') => void;
+  onFavoriteClick: (
+    id: string,
+    isFavorite: boolean,
+    source: "App modal"
+  ) => void;
   data: MarketplaceAppWithSecurityReport;
-  showContractList: (id: string, type: ContractListTypes, hasPreviousStep: boolean) => void;
-}
+  showContractList: (
+    id: string,
+    type: ContractListTypes,
+    hasPreviousStep: boolean
+  ) => void;
+};
 
 const MarketplaceAppModal = ({
   onClose,
@@ -33,8 +57,8 @@ const MarketplaceAppModal = ({
   data,
   showContractList: showContractListProp,
 }: Props) => {
-  const { value: isExperiment } = useFeatureValue('security_score_exp', false);
-  const starOutlineIconColor = useColorModeValue('gray.600', 'gray.300');
+  const { value: isExperiment } = useFeatureValue("security_score_exp", false);
+  const starOutlineIconColor = useColorModeValue("gray.600", "gray.300");
 
   const {
     id,
@@ -54,112 +78,127 @@ const MarketplaceAppModal = ({
   } = data;
 
   const socialLinks = [
-    telegram ? {
-      icon: 'social/telegram_filled' as IconName,
-      url: telegram,
-    } : null,
-    twitter ? {
-      icon: 'social/twitter_filled' as IconName,
-      url: twitter,
-    } : null,
+    telegram
+      ? {
+          icon: "social/telegram_filled" as IconName,
+          url: telegram,
+        }
+      : null,
+    twitter
+      ? {
+          icon: "social/twitter_filled" as IconName,
+          url: twitter,
+        }
+      : null,
   ].filter(Boolean);
 
   if (github) {
     if (Array.isArray(github)) {
-      github.forEach((url) => socialLinks.push({ icon: 'social/github_filled', url }));
+      github.forEach((url) =>
+        socialLinks.push({ icon: "social/github_filled", url })
+      );
     } else {
-      socialLinks.push({ icon: 'social/github_filled', url: github });
+      socialLinks.push({ icon: "social/github_filled", url: github });
     }
   }
 
   const handleFavoriteClick = useCallback(() => {
-    onFavoriteClick(id, isFavorite, 'App modal');
-  }, [ onFavoriteClick, id, isFavorite ]);
+    onFavoriteClick(id, isFavorite, "App modal");
+  }, [onFavoriteClick, id, isFavorite]);
 
-  const showContractList = useCallback((type: ContractListTypes) => {
-    onClose();
-    showContractListProp(id, type, true);
-  }, [ onClose, showContractListProp, id ]);
+  const showContractList = useCallback(
+    (type: ContractListTypes) => {
+      onClose();
+      showContractListProp(id, type, true);
+    },
+    [onClose, showContractListProp, id]
+  );
 
   const showAllContracts = React.useCallback(() => {
-    mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, { Type: 'Total contracts', Info: id, Source: 'App modal' });
+    mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, {
+      Type: "Total contracts",
+      Info: id,
+      Source: "App modal",
+    });
     showContractList(ContractListTypes.ALL);
-  }, [ showContractList, id ]);
+  }, [showContractList, id]);
 
   const showVerifiedContracts = React.useCallback(() => {
-    mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, { Type: 'Verified contracts', Info: id, Source: 'App modal' });
+    mixpanel.logEvent(mixpanel.EventTypes.PAGE_WIDGET, {
+      Type: "Verified contracts",
+      Info: id,
+      Source: "App modal",
+    });
     showContractList(ContractListTypes.VERIFIED);
-  }, [ showContractList, id ]);
+  }, [showContractList, id]);
 
   const showAnalyzedContracts = React.useCallback(() => {
     showContractList(ContractListTypes.ANALYZED);
-  }, [ showContractList ]);
+  }, [showContractList]);
 
   const isMobile = useIsMobile();
   const logoUrl = useColorModeValue(logo, logoDarkMode || logo);
 
   return (
     <Modal
-      isOpen={ Boolean(data.id) }
-      onClose={ onClose }
-      size={ isMobile ? 'full' : 'md' }
+      isOpen={Boolean(data.id)}
+      onClose={onClose}
+      size={isMobile ? "full" : "md"}
       isCentered
     >
-      <ModalOverlay/>
+      <ModalOverlay />
 
       <ModalContent>
         <Box
           display="grid"
-          gridTemplateColumns={{ base: 'auto 1fr' }}
+          gridTemplateColumns={{ base: "auto 1fr" }}
           paddingRight={{ sm: 12 }}
           marginBottom={{ base: 6, sm: 8 }}
         >
           <Flex
             alignItems="center"
             justifyContent="center"
-            w={{ base: '72px', sm: '144px' }}
-            h={{ base: '72px', sm: '144px' }}
+            w={{ base: "72px", sm: "144px" }}
+            h={{ base: "72px", sm: "144px" }}
             marginRight={{ base: 6, sm: 8 }}
-            gridRow={{ base: '1 / 3', sm: '1 / 4' }}
+            gridRow={{ base: "1 / 3", sm: "1 / 4" }}
           >
-            <Image
-              src={ logoUrl }
-              alt={ `${ title } app icon` }
-            />
+            <Image src={logoUrl} alt={`${title} app icon`} />
           </Flex>
 
           <Heading
             as="h2"
-            gridColumn={ 2 }
-            fontSize={{ base: '2xl', sm: '3xl' }}
+            gridColumn={2}
+            fontSize={{ base: "2xl", sm: "3xl" }}
             fontWeight="medium"
-            lineHeight={ 1 }
+            lineHeight={1}
             color="blue.600"
           >
-            { title }
+            {title}
           </Heading>
 
           <Text
             variant="secondary"
-            gridColumn={ 2 }
+            gridColumn={2}
             fontSize="sm"
             fontWeight="normal"
-            lineHeight={ 1 }
+            lineHeight={1}
           >
-            By{ nbsp }{ author }
+            By{nbsp}
+            {author}
           </Text>
 
           <Box
-            gridColumn={{ base: '1 / 3', sm: 2 }}
+            gridColumn={{ base: "1 / 3", sm: 2 }}
             marginTop={{ base: 6, sm: 0 }}
           >
-            <Flex flexWrap="wrap" gap={ 6 }>
-              <Flex width={{ base: '100%', sm: 'auto' }}>
+            <Flex flexWrap="wrap" gap={6}>
+              <Flex width={{ base: "100%", sm: "auto" }}>
                 <MarketplaceAppModalLink
-                  id={ data.id }
-                  url={ url }
-                  external={ external }
-                  title={ title }
+                  id={data.id}
+                  url={url}
+                  external={external}
+                  title={title}
                 />
 
                 <IconButton
@@ -167,77 +206,87 @@ const MarketplaceAppModal = ({
                   title="Mark as favorite"
                   variant="outline"
                   colorScheme="gray"
-                  w={ 9 }
-                  h={ 8 }
-                  onClick={ handleFavoriteClick }
-                  icon={ isFavorite ?
-                    <IconSvg name="star_filled" w={ 5 } h={ 5 } color="yellow.400"/> :
-                    <IconSvg name="star_outline" w={ 5 } h={ 5 } color={ starOutlineIconColor }/> }
+                  w={9}
+                  h={8}
+                  onClick={handleFavoriteClick}
+                  icon={
+                    isFavorite ? (
+                      <IconSvg
+                        name="star_filled"
+                        w={5}
+                        h={5}
+                        color="yellow.400"
+                      />
+                    ) : (
+                      <IconSvg
+                        name="star_outline"
+                        w={5}
+                        h={5}
+                        color={starOutlineIconColor}
+                      />
+                    )
+                  }
                 />
               </Flex>
 
-              { (isExperiment && securityReport) && (
-                <Flex alignItems="center" gap={ 3 }>
+              {isExperiment && securityReport && (
+                <Flex alignItems="center" gap={3}>
                   <AppSecurityReport
-                    id={ id }
-                    securityReport={ securityReport }
-                    showContractList={ showAnalyzedContracts }
+                    id={id}
+                    securityReport={securityReport}
+                    showContractList={showAnalyzedContracts}
                     source="App modal"
                   />
                   <ContractListButton
-                    onClick={ showAllContracts }
-                    variant={ ContractListButtonVariants.ALL_CONTRACTS }
+                    onClick={showAllContracts}
+                    variant={ContractListButtonVariants.ALL_CONTRACTS}
                   >
-                    { securityReport.overallInfo.totalContractsNumber }
+                    {securityReport.overallInfo.totalContractsNumber}
                   </ContractListButton>
                   <ContractListButton
-                    onClick={ showVerifiedContracts }
-                    variant={ ContractListButtonVariants.VERIFIED_CONTRACTS }
+                    onClick={showVerifiedContracts}
+                    variant={ContractListButtonVariants.VERIFIED_CONTRACTS}
                   >
-                    { securityReport.overallInfo.verifiedNumber }
+                    {securityReport.overallInfo.verifiedNumber}
                   </ContractListButton>
                 </Flex>
-              ) }
+              )}
             </Flex>
           </Box>
         </Box>
 
-        <ModalCloseButton/>
+        <ModalCloseButton />
 
         <ModalBody>
-          <Heading
-            as="h3"
-            fontSize="2xl"
-            marginBottom={ 4 }
-          >
+          <Heading as="h3" fontSize="2xl" marginBottom={4}>
             Overview
           </Heading>
 
-          <Box marginBottom={ 2 }>
-            { categories.map((category) => (
+          <Box marginBottom={2}>
+            {categories.map((category) => (
               <Tag
                 colorScheme="blue"
-                marginRight={ 2 }
-                marginBottom={ 2 }
-                key={ category }
+                marginRight={2}
+                marginBottom={2}
+                key={category}
               >
-                { category }
+                {category}
               </Tag>
-            )) }
+            ))}
           </Box>
 
-          <Text>{ description }</Text>
+          <Text>{description}</Text>
         </ModalBody>
 
         <ModalFooter
           display="flex"
-          flexDirection={{ base: 'column', sm: 'row' }}
-          alignItems={{ base: 'flex-start', sm: 'center' }}
+          flexDirection={{ base: "column", sm: "row" }}
+          alignItems={{ base: "flex-start", sm: "center" }}
         >
-          { site && (
+          {site && (
             <Link
               isExternal
-              href={ site }
+              href={site}
               display="flex"
               alignItems="center"
               paddingRight={{ sm: 2 }}
@@ -250,7 +299,7 @@ const MarketplaceAppModal = ({
                 display="inline"
                 verticalAlign="baseline"
                 boxSize="18px"
-                marginRight={ 2 }
+                marginRight={2}
               />
 
               <Text
@@ -259,42 +308,42 @@ const MarketplaceAppModal = ({
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                { site }
+                {site}
               </Text>
             </Link>
-          ) }
+          )}
 
-          { socialLinks.length > 0 && (
+          {socialLinks.length > 0 && (
             <List
-              marginLeft={{ sm: 'auto' }}
+              marginLeft={{ sm: "auto" }}
               display="grid"
               gridAutoFlow="column"
-              columnGap={ 2 }
+              columnGap={2}
             >
-              { socialLinks.map(({ icon, url }) => (
+              {socialLinks.map(({ icon, url }) => (
                 <Link
-                  aria-label={ `Link to ${ url }` }
-                  title={ url }
-                  key={ url }
-                  href={ url }
+                  aria-label={`Link to ${url}`}
+                  title={url}
+                  key={url}
+                  href={url}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
                   isExternal
-                  w={ 10 }
-                  h={ 10 }
+                  w={10}
+                  h={10}
                 >
                   <IconSvg
-                    name={ icon }
+                    name={icon}
                     w="20px"
                     h="20px"
                     display="block"
                     color="text_secondary"
                   />
                 </Link>
-              )) }
+              ))}
             </List>
-          ) }
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>

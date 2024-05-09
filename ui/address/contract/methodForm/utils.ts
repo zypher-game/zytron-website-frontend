@@ -1,8 +1,11 @@
-import _set from 'lodash/set';
+import _set from "lodash/set";
 
-import type { SmartContractMethodInput } from 'types/api/contract';
+import type { SmartContractMethodInput } from "types/api/contract";
 
-export type ContractMethodFormFields = Record<string, string | boolean | undefined>;
+export type ContractMethodFormFields = Record<
+  string,
+  string | boolean | undefined
+>;
 
 export const INT_REGEXP = /^(u)?int(\d+)?$/i;
 
@@ -12,18 +15,22 @@ export const ARRAY_REGEXP = /^(.*)\[(\d*)\]$/;
 
 export const getIntBoundaries = (power: number, isUnsigned: boolean) => {
   const maxUnsigned = BigInt(2 ** power);
-  const max = isUnsigned ? maxUnsigned - BigInt(1) : maxUnsigned / BigInt(2) - BigInt(1);
+  const max = isUnsigned
+    ? maxUnsigned - BigInt(1)
+    : maxUnsigned / BigInt(2) - BigInt(1);
   const min = isUnsigned ? BigInt(0) : -maxUnsigned / BigInt(2);
-  return [ min, max ];
+  return [min, max];
 };
 
-export function transformFormDataToMethodArgs(formData: ContractMethodFormFields) {
+export function transformFormDataToMethodArgs(
+  formData: ContractMethodFormFields
+) {
   const result: Array<unknown> = [];
 
   for (const field in formData) {
     const value = formData[field];
     if (value !== undefined) {
-      _set(result, field.replaceAll(':', '.'), value);
+      _set(result, field.replaceAll(":", "."), value);
     }
   }
 
@@ -37,11 +44,14 @@ function filterOurEmptyItems(array: Array<unknown>): Array<unknown> {
   //    2. When the user adds and removes items from a field array.
   //        In this scenario, empty items need to be filtered out to maintain the correct sequence of arguments.
   return array
-    .map((item) => Array.isArray(item) ? filterOurEmptyItems(item) : item)
+    .map((item) => (Array.isArray(item) ? filterOurEmptyItems(item) : item))
     .filter((item) => item !== undefined);
 }
 
-export function getFieldLabel(input: SmartContractMethodInput, isRequired?: boolean) {
-  const name = input.name || input.internalType || '<unnamed argument>';
-  return `${ name } (${ input.type })${ isRequired ? '*' : '' }`;
+export function getFieldLabel(
+  input: SmartContractMethodInput,
+  isRequired?: boolean
+) {
+  const name = input.name || input.internalType || "<unnamed argument>";
+  return `${name} (${input.type})${isRequired ? "*" : ""}`;
 }

@@ -1,15 +1,18 @@
-import type { ApiData, Metadata } from './types';
+import type { ApiData, Metadata } from "./types";
 
-import type { Route } from 'nextjs-routes';
+import type { Route } from "nextjs-routes";
 
-import config from 'configs/app';
-import getNetworkTitle from 'lib/networks/getNetworkTitle';
+import config from "configs/app";
+import getNetworkTitle from "lib/networks/getNetworkTitle";
 
-import compileValue from './compileValue';
-import getPageOgType from './getPageOgType';
-import * as templates from './templates';
+import compileValue from "./compileValue";
+import getPageOgType from "./getPageOgType";
+import * as templates from "./templates";
 
-export default function generate<R extends Route>(route: R, apiData?: ApiData<R>): Metadata {
+export default function generate<R extends Route>(
+  route: R,
+  apiData?: ApiData<R>
+): Metadata {
   const params = {
     ...route.query,
     ...apiData,
@@ -17,9 +20,17 @@ export default function generate<R extends Route>(route: R, apiData?: ApiData<R>
     network_title: getNetworkTitle(),
   };
 
-  const compiledTitle = compileValue(templates.title.make(route.pathname), params);
-  const title = compiledTitle ? compiledTitle + (config.meta.promoteBlockscoutInTitle ? ' | Zytron' : '') : '';
-  const description = compileValue(templates.description.make(route.pathname), params);
+  const compiledTitle = compileValue(
+    templates.title.make(route.pathname),
+    params
+  );
+  const title = compiledTitle
+    ? compiledTitle + (config.meta.promoteBlockscoutInTitle ? " | Zytron" : "")
+    : "";
+  const description = compileValue(
+    templates.description.make(route.pathname),
+    params
+  );
 
   const pageOgType = getPageOgType(route.pathname);
 
@@ -28,8 +39,9 @@ export default function generate<R extends Route>(route: R, apiData?: ApiData<R>
     description,
     opengraph: {
       title: title,
-      description: pageOgType !== 'Regular page' ? config.meta.og.description : '',
-      imageUrl: pageOgType !== 'Regular page' ? config.meta.og.imageUrl : '',
+      description:
+        pageOgType !== "Regular page" ? config.meta.og.description : "",
+      imageUrl: pageOgType !== "Regular page" ? config.meta.og.imageUrl : "",
     },
   };
 }

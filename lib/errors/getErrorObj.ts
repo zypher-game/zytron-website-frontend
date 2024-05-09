@@ -1,5 +1,5 @@
 export default function getErrorObj(error: unknown) {
-  if (typeof error !== 'object') {
+  if (typeof error !== "object") {
     return;
   }
 

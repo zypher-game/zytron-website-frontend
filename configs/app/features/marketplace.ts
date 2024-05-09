@@ -1,30 +1,36 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import chain from '../chain';
-import { getEnvValue, getExternalAssetFilePath } from '../utils';
+import chain from "../chain";
+import { getEnvValue, getExternalAssetFilePath } from "../utils";
 
 // config file will be downloaded at run-time and saved in the public folder
-const enabled = getEnvValue('NEXT_PUBLIC_MARKETPLACE_ENABLED');
-const configUrl = getExternalAssetFilePath('NEXT_PUBLIC_MARKETPLACE_CONFIG_URL');
-const submitFormUrl = getEnvValue('NEXT_PUBLIC_MARKETPLACE_SUBMIT_FORM');
-const suggestIdeasFormUrl = getEnvValue('NEXT_PUBLIC_MARKETPLACE_SUGGEST_IDEAS_FORM');
-const categoriesUrl = getExternalAssetFilePath('NEXT_PUBLIC_MARKETPLACE_CATEGORIES_URL');
-const adminServiceApiHost = getEnvValue('NEXT_PUBLIC_ADMIN_SERVICE_API_HOST');
-const securityReportsUrl = getExternalAssetFilePath('NEXT_PUBLIC_MARKETPLACE_SECURITY_REPORTS_URL');
+const enabled = getEnvValue("NEXT_PUBLIC_MARKETPLACE_ENABLED");
+const configUrl = getExternalAssetFilePath(
+  "NEXT_PUBLIC_MARKETPLACE_CONFIG_URL"
+);
+const submitFormUrl = getEnvValue("NEXT_PUBLIC_MARKETPLACE_SUBMIT_FORM");
+const suggestIdeasFormUrl = getEnvValue(
+  "NEXT_PUBLIC_MARKETPLACE_SUGGEST_IDEAS_FORM"
+);
+const categoriesUrl = getExternalAssetFilePath(
+  "NEXT_PUBLIC_MARKETPLACE_CATEGORIES_URL"
+);
+const adminServiceApiHost = getEnvValue("NEXT_PUBLIC_ADMIN_SERVICE_API_HOST");
+const securityReportsUrl = getExternalAssetFilePath(
+  "NEXT_PUBLIC_MARKETPLACE_SECURITY_REPORTS_URL"
+);
 
-const title = 'Marketplace';
+const title = "Marketplace";
 
-const config: Feature<(
-  { configUrl: string } |
-  { api: { endpoint: string; basePath: string } }
-) & {
-  submitFormUrl: string;
-  categoriesUrl: string | undefined;
-  suggestIdeasFormUrl: string | undefined;
-  securityReportsUrl: string | undefined;
-}
+const config: Feature<
+  ({ configUrl: string } | { api: { endpoint: string; basePath: string } }) & {
+    submitFormUrl: string;
+    categoriesUrl: string | undefined;
+    suggestIdeasFormUrl: string | undefined;
+    securityReportsUrl: string | undefined;
+  }
 > = (() => {
-  if (enabled === 'true' && chain.rpcUrl && submitFormUrl) {
+  if (enabled === "true" && chain.rpcUrl && submitFormUrl) {
     if (configUrl) {
       return Object.freeze({
         title,
@@ -45,7 +51,7 @@ const config: Feature<(
         securityReportsUrl,
         api: {
           endpoint: adminServiceApiHost,
-          basePath: '',
+          basePath: "",
         },
       });
     }

@@ -1,5 +1,5 @@
-import type { ContractMethodCallResult } from '../types';
-import type { SmartContractMethod } from 'types/api/contract';
+import type { ContractMethodCallResult } from "../types";
+import type { SmartContractMethod } from "types/api/contract";
 
 export interface ResultComponentProps<T extends SmartContractMethod> {
   item: T;

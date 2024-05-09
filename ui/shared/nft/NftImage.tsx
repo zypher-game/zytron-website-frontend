@@ -1,7 +1,7 @@
-import { Image } from '@chakra-ui/react';
-import React from 'react';
+import { Image } from "@chakra-ui/react";
+import React from "react";
 
-import { mediaStyleProps } from './utils';
+import { mediaStyleProps } from "./utils";
 
 interface Props {
   src: string;
@@ -15,12 +15,12 @@ const NftImage = ({ src, onLoad, onError, onClick }: Props) => {
     <Image
       w="100%"
       h="100%"
-      src={ src }
+      src={src}
       alt="Token instance image"
-      onError={ onError }
-      onLoad={ onLoad }
-      onClick={ onClick }
-      { ...mediaStyleProps }
+      onError={onError}
+      onLoad={onLoad}
+      onClick={onClick}
+      {...mediaStyleProps}
     />
   );
 };

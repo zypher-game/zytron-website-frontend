@@ -1,5 +1,5 @@
-import { GridItem, chakra } from '@chakra-ui/react';
-import React from 'react';
+import { GridItem, chakra } from "@chakra-ui/react";
+import React from "react";
 
 interface Props {
   className?: string;
@@ -9,8 +9,8 @@ interface Props {
 const DetailsInfoItemDivider = ({ className, id }: Props) => {
   return (
     <GridItem
-      id={ id }
-      className={ className }
+      id={id}
+      className={className}
       colSpan={{ base: undefined, lg: 2 }}
       mt={{ base: 2, lg: 3 }}
       mb={{ base: 0, lg: 3 }}

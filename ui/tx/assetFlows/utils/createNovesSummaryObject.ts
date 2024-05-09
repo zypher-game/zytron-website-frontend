@@ -1,9 +1,9 @@
-import type { NovesResponseData } from 'types/api/noves';
-import type { TxInterpretationSummary } from 'types/api/txInterpretation';
+import type { NovesResponseData } from "types/api/noves";
+import type { TxInterpretationSummary } from "types/api/txInterpretation";
 
-import { createAddressValues } from './getAddressValues';
-import type { NovesTokenInfo, TokensData } from './getTokensData';
-import { getTokensData } from './getTokensData';
+import { createAddressValues } from "./getAddressValues";
+import type { NovesTokenInfo, TokensData } from "./getTokensData";
+import { getTokensData } from "./getTokensData";
 
 export interface SummaryAddress {
   hash: string;
@@ -14,51 +14,79 @@ export interface SummaryAddress {
 export interface SummaryValues {
   match: string;
   value: NovesTokenInfo | SummaryAddress;
-  type: 'token' | 'address';
+  type: "token" | "address";
 }
 
 interface NovesSummary {
   summary_template: string;
-  summary_template_variables: {[x: string]: unknown};
+  summary_template_variables: { [x: string]: unknown };
 }
 
 export const createNovesSummaryObject = (translateData: NovesResponseData) => {
-
   // Remove final dot and add space at the start to avoid matching issues
   const description = translateData.classificationData.description;
-  const removedFinalDot = description.endsWith('.') ? description.slice(0, description.length - 1) : description;
-  let parsedDescription = ' ' + removedFinalDot + ' ';
+  const removedFinalDot = description.endsWith(".")
+    ? description.slice(0, description.length - 1)
+    : description;
+  let parsedDescription = " " + removedFinalDot + " ";
   const tokenData = getTokensData(translateData);
 
-  const idsMatched = tokenData.idList.filter(id => parsedDescription.includes(`#${ id }`));
-  const tokensMatchedByName = tokenData.nameList.filter(name => parsedDescription.toUpperCase().includes(` ${ name.toUpperCase() }`));
-  let tokensMatchedBySymbol = tokenData.symbolList.filter(symbol => parsedDescription.toUpperCase().includes(` ${ symbol.toUpperCase() }`));
+  const idsMatched = tokenData.idList.filter((id) =>
+    parsedDescription.includes(`#${id}`)
+  );
+  const tokensMatchedByName = tokenData.nameList.filter((name) =>
+    parsedDescription.toUpperCase().includes(` ${name.toUpperCase()}`)
+  );
+  let tokensMatchedBySymbol = tokenData.symbolList.filter((symbol) =>
+    parsedDescription.toUpperCase().includes(` ${symbol.toUpperCase()}`)
+  );
 
   // Filter symbols if they're already matched by name
-  tokensMatchedBySymbol = tokensMatchedBySymbol.filter(symbol => !tokensMatchedByName.includes(tokenData.bySymbol[symbol]?.name || ''));
+  tokensMatchedBySymbol = tokensMatchedBySymbol.filter(
+    (symbol) =>
+      !tokensMatchedByName.includes(tokenData.bySymbol[symbol]?.name || "")
+  );
 
   const summaryValues: Array<SummaryValues> = [];
 
   if (idsMatched.length) {
-    parsedDescription = removeIds(tokensMatchedByName, tokensMatchedBySymbol, idsMatched, tokenData, parsedDescription);
+    parsedDescription = removeIds(
+      tokensMatchedByName,
+      tokensMatchedBySymbol,
+      idsMatched,
+      tokenData,
+      parsedDescription
+    );
   }
 
   if (tokensMatchedByName.length) {
-    const values = createTokensSummaryValues(tokensMatchedByName, tokenData.byName);
+    const values = createTokensSummaryValues(
+      tokensMatchedByName,
+      tokenData.byName
+    );
     summaryValues.push(...values);
   }
 
   if (tokensMatchedBySymbol.length) {
-    const values = createTokensSummaryValues(tokensMatchedBySymbol, tokenData.bySymbol);
+    const values = createTokensSummaryValues(
+      tokensMatchedBySymbol,
+      tokenData.bySymbol
+    );
     summaryValues.push(...values);
   }
 
-  const addressSummaryValues = createAddressValues(translateData, parsedDescription);
+  const addressSummaryValues = createAddressValues(
+    translateData,
+    parsedDescription
+  );
   if (addressSummaryValues.length) {
     summaryValues.push(...addressSummaryValues);
   }
 
-  return createSummaryTemplate(summaryValues, parsedDescription) as TxInterpretationSummary;
+  return createSummaryTemplate(
+    summaryValues,
+    parsedDescription
+  ) as TxInterpretationSummary;
 };
 
 const removeIds = (
@@ -66,22 +94,25 @@ const removeIds = (
   tokensMatchedBySymbol: Array<string>,
   idsMatched: Array<string>,
   tokenData: TokensData,
-  parsedDescription: string,
+  parsedDescription: string
 ) => {
   // Remove ids from the description since we already have that info in the token object
   let description = parsedDescription;
 
-  tokensMatchedByName.forEach(name => {
-    const hasId = idsMatched.includes(tokenData.byName[name].id || '');
+  tokensMatchedByName.forEach((name) => {
+    const hasId = idsMatched.includes(tokenData.byName[name].id || "");
     if (hasId) {
-      description = description.replaceAll(`#${ tokenData.byName[name].id }`, '');
+      description = description.replaceAll(`#${tokenData.byName[name].id}`, "");
     }
   });
 
-  tokensMatchedBySymbol.forEach(name => {
-    const hasId = idsMatched.includes(tokenData.bySymbol[name].id || '');
+  tokensMatchedBySymbol.forEach((name) => {
+    const hasId = idsMatched.includes(tokenData.bySymbol[name].id || "");
     if (hasId) {
-      description = description.replaceAll(`#${ tokenData.bySymbol[name].id }`, '');
+      description = description.replaceAll(
+        `#${tokenData.bySymbol[name].id}`,
+        ""
+      );
     }
   });
 
@@ -92,18 +123,21 @@ const createTokensSummaryValues = (
   matchedStrings: Array<string>,
   tokens: {
     [x: string]: NovesTokenInfo;
-  },
+  }
 ) => {
-  const summaryValues: Array<SummaryValues> = matchedStrings.map(match => ({
+  const summaryValues: Array<SummaryValues> = matchedStrings.map((match) => ({
     match,
-    type: 'token',
+    type: "token",
     value: tokens[match],
   }));
 
   return summaryValues;
 };
 
-const createSummaryTemplate = (summaryValues: Array<SummaryValues | undefined>, parsedDescription: string) => {
+const createSummaryTemplate = (
+  summaryValues: Array<SummaryValues | undefined>,
+  parsedDescription: string
+) => {
   let newDescription = parsedDescription;
 
   const result: NovesSummary = {
@@ -116,7 +150,10 @@ const createSummaryTemplate = (summaryValues: Array<SummaryValues | undefined>, 
   }
 
   const createTemplate = (data: SummaryValues, index = 0) => {
-    newDescription = newDescription.replaceAll(new RegExp(` ${ data.match } `, 'gi'), `{${ data.match }}`);
+    newDescription = newDescription.replaceAll(
+      new RegExp(` ${data.match} `, "gi"),
+      `{${data.match}}`
+    );
 
     const variable = {
       type: data.type,

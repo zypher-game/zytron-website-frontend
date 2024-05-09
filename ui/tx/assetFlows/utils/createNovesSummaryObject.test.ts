@@ -1,17 +1,18 @@
-import * as transactionMock from 'mocks/noves/transaction';
+import * as transactionMock from "mocks/noves/transaction";
 
-import { createNovesSummaryObject } from './createNovesSummaryObject';
+import { createNovesSummaryObject } from "./createNovesSummaryObject";
 
-it('creates interpretation summary object', async() => {
+it("creates interpretation summary object", async () => {
   const result = createNovesSummaryObject(transactionMock.transaction);
 
   expect(result).toEqual({
-    summary_template: ' Called function \'stake\' on contract{0xef326CdAdA59D3A740A76bB5f4F88Fb2}',
+    summary_template:
+      " Called function 'stake' on contract{0xef326CdAdA59D3A740A76bB5f4F88Fb2}",
     summary_template_variables: {
-      '0xef326CdAdA59D3A740A76bB5f4F88Fb2': {
-        type: 'address',
+      "0xef326CdAdA59D3A740A76bB5f4F88Fb2": {
+        type: "address",
         value: {
-          hash: '0xef326CdAdA59D3A740A76bB5f4F88Fb2f1076164',
+          hash: "0xef326CdAdA59D3A740A76bB5f4F88Fb2f1076164",
           is_contract: true,
         },
       },

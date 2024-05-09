@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface Props {
   activeTabIndex: number;
@@ -7,7 +7,12 @@ interface Props {
   isMobile?: boolean;
 }
 
-export default function useScrollToActiveTab({ activeTabIndex, tabsRefs, listRef, isMobile }: Props) {
+export default function useScrollToActiveTab({
+  activeTabIndex,
+  tabsRefs,
+  listRef,
+  isMobile,
+}: Props) {
   React.useEffect(() => {
     if (activeTabIndex < tabsRefs.length && isMobile) {
       window.setTimeout(() => {
@@ -18,14 +23,14 @@ export default function useScrollToActiveTab({ activeTabIndex, tabsRefs, listRef
 
           listRef.current.scrollTo({
             left: activeTabRect.left + listRef.current.scrollLeft - 16,
-            behavior: 'smooth',
+            behavior: "smooth",
           });
         }
 
-      // have to wait until DOM is updated and all styles to tabs is applied
+        // have to wait until DOM is updated and all styles to tabs is applied
       }, 300);
     }
-  // run only when tab index or device type is changed
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ activeTabIndex, isMobile ]);
+    // run only when tab index or device type is changed
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTabIndex, isMobile]);
 }

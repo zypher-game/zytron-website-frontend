@@ -1,9 +1,9 @@
-import { Skeleton, chakra } from '@chakra-ui/react';
-import React from 'react';
+import { Skeleton, chakra } from "@chakra-ui/react";
+import React from "react";
 
-import type { Step } from './types';
+import type { Step } from "./types";
 
-import VerificationStep from './VerificationStep';
+import VerificationStep from "./VerificationStep";
 
 export interface Props {
   currentStep: string;
@@ -13,30 +13,36 @@ export interface Props {
   className?: string;
 }
 
-const VerificationSteps = ({ currentStep, steps, isLoading, rightSlot, className }: Props) => {
+const VerificationSteps = ({
+  currentStep,
+  steps,
+  isLoading,
+  rightSlot,
+  className,
+}: Props) => {
   const currentStepIndex = steps.findIndex((step) => {
-    const label = typeof step === 'string' ? step : step.label;
+    const label = typeof step === "string" ? step : step.label;
     return label === currentStep;
   });
 
   return (
     <Skeleton
-      className={ className }
-      isLoaded={ !isLoading }
+      className={className}
+      isLoaded={!isLoading}
       display="flex"
-      gap={ 2 }
+      gap={2}
       alignItems="center"
       flexWrap="wrap"
     >
-      { steps.map((step, index) => (
+      {steps.map((step, index) => (
         <VerificationStep
-          key={ index }
-          step={ step }
-          isLast={ index === steps.length - 1 && !rightSlot }
-          isPassed={ index <= currentStepIndex }
+          key={index}
+          step={step}
+          isLast={index === steps.length - 1 && !rightSlot}
+          isPassed={index <= currentStepIndex}
         />
-      )) }
-      { rightSlot }
+      ))}
+      {rightSlot}
     </Skeleton>
   );
 };

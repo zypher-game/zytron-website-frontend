@@ -1,5 +1,5 @@
-import { Box, chakra } from '@chakra-ui/react';
-import React from 'react';
+import { Box, chakra } from "@chakra-ui/react";
+import React from "react";
 
 interface Props {
   message: string;
@@ -7,7 +7,17 @@ interface Props {
 }
 
 const FieldError = ({ message, className }: Props) => {
-  return <Box className={ className } color="error" fontSize="sm" mt={ 2 } wordBreak="break-word">{ message }</Box>;
+  return (
+    <Box
+      className={className}
+      color="error"
+      fontSize="sm"
+      mt={2}
+      wordBreak="break-word"
+    >
+      {message}
+    </Box>
+  );
 };
 
 export default chakra(FieldError);

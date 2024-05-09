@@ -1,7 +1,7 @@
-import { chakra } from '@chakra-ui/react';
-import React from 'react';
+import { chakra } from "@chakra-ui/react";
+import React from "react";
 
-import { mediaStyleProps, videoPlayProps } from './utils';
+import { mediaStyleProps, videoPlayProps } from "./utils";
 
 interface Props {
   src: string;
@@ -13,13 +13,13 @@ interface Props {
 const NftVideo = ({ src, onLoad, onError, onClick }: Props) => {
   return (
     <chakra.video
-      { ...videoPlayProps }
-      src={ src }
-      onCanPlayThrough={ onLoad }
-      onError={ onError }
+      {...videoPlayProps}
+      src={src}
+      onCanPlayThrough={onLoad}
+      onError={onError}
       borderRadius="md"
-      onClick={ onClick }
-      { ...mediaStyleProps }
+      onClick={onClick}
+      {...mediaStyleProps}
     />
   );
 };

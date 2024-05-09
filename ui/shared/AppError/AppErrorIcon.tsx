@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import type { IconName } from 'ui/shared/IconSvg';
-import IconSvg from 'ui/shared/IconSvg';
+import type { IconName } from "ui/shared/IconSvg";
+import IconSvg from "ui/shared/IconSvg";
 
 const ICONS: Record<string, IconName> = {
-  '404': 'error-pages/404',
-  '422': 'error-pages/422',
-  '429': 'error-pages/429',
-  '500': 'error-pages/500',
+  "404": "error-pages/404",
+  "422": "error-pages/422",
+  "429": "error-pages/429",
+  "500": "error-pages/500",
 };
 
 interface Props {
@@ -15,7 +15,14 @@ interface Props {
 }
 
 const AppErrorIcon = ({ statusCode }: Props) => {
-  return <IconSvg name={ ICONS[String(statusCode)] || ICONS['500'] } width="200px" height="100px" color="text"/>;
+  return (
+    <IconSvg
+      name={ICONS[String(statusCode)] || ICONS["500"]}
+      width="200px"
+      height="100px"
+      color="text"
+    />
+  );
 };
 
 export default AppErrorIcon;

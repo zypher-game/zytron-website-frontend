@@ -1,17 +1,17 @@
-import type { ColorMode } from '@chakra-ui/react';
-import type { Size, ChakraStylesConfig } from 'chakra-react-select';
+import type { ColorMode } from "@chakra-ui/react";
+import type { Size, ChakraStylesConfig } from "chakra-react-select";
 
-import type { Option } from './types';
+import type { Option } from "./types";
 
 function getValueContainerStyles(size?: Size) {
   switch (size) {
-    case 'sm':
-    case 'md': {
+    case "sm":
+    case "md": {
       return {
         paddingLeft: 4,
       };
     }
-    case 'lg': {
+    case "lg": {
       return {
         paddingLeft: 6,
       };
@@ -24,15 +24,15 @@ function getValueContainerStyles(size?: Size) {
 
 function getSingleValueStyles(size?: Size) {
   switch (size) {
-    case 'sm':
-    case 'md': {
+    case "sm":
+    case "md": {
       return {
-        top: '26px',
+        top: "26px",
       };
     }
-    case 'lg': {
+    case "lg": {
       return {
-        top: '38px',
+        top: "38px",
       };
     }
     default: {
@@ -41,14 +41,18 @@ function getSingleValueStyles(size?: Size) {
   }
 }
 
-const getChakraStyles: (colorMode: ColorMode) => ChakraStylesConfig<Option> = (colorMode) => {
-  const emptyInputBorderColor = colorMode === 'dark' ? 'gray.700' : 'gray.100';
-  const filledInputBorderColor = colorMode === 'dark' ? 'gray.600' : 'gray.300';
+const getChakraStyles: (colorMode: ColorMode) => ChakraStylesConfig<Option> = (
+  colorMode
+) => {
+  const emptyInputBorderColor = colorMode === "dark" ? "gray.700" : "gray.100";
+  const filledInputBorderColor = colorMode === "dark" ? "gray.600" : "gray.300";
 
   return {
     control: (provided, state) => ({
       ...provided,
-      borderColor: state.hasValue ? filledInputBorderColor : emptyInputBorderColor,
+      borderColor: state.hasValue
+        ? filledInputBorderColor
+        : emptyInputBorderColor,
     }),
     inputContainer: (provided) => ({
       ...provided,
@@ -63,7 +67,7 @@ const getChakraStyles: (colorMode: ColorMode) => ChakraStylesConfig<Option> = (c
     singleValue: (provided, state) => ({
       ...provided,
       mx: 0,
-      transform: 'none',
+      transform: "none",
       ...getSingleValueStyles(state.selectProps.size),
     }),
   };

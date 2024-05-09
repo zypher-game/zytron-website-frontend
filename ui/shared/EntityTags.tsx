@@ -1,18 +1,27 @@
-import type { ThemingProps } from '@chakra-ui/react';
-import { Flex, chakra, useDisclosure, Popover, PopoverTrigger, PopoverContent, PopoverBody, Box } from '@chakra-ui/react';
-import React from 'react';
+import type { ThemingProps } from "@chakra-ui/react";
+import {
+  Flex,
+  chakra,
+  useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  Box,
+} from "@chakra-ui/react";
+import React from "react";
 
-import type { UserTags } from 'types/api/addressParams';
+import type { UserTags } from "types/api/addressParams";
 
-import config from 'configs/app';
-import useIsMobile from 'lib/hooks/useIsMobile';
-import Tag from 'ui/shared/chakra/Tag';
+import config from "configs/app";
+import useIsMobile from "lib/hooks/useIsMobile";
+import Tag from "ui/shared/chakra/Tag";
 
 interface TagData {
   label: string;
   display_name: string;
-  colorScheme?: ThemingProps<'Tag'>['colorScheme'];
-  variant?: ThemingProps<'Tag'>['variant'];
+  colorScheme?: ThemingProps<"Tag">["colorScheme"];
+  variant?: ThemingProps<"Tag">["variant"];
 }
 
 interface Props {
@@ -24,7 +33,14 @@ interface Props {
   contentAfter?: React.ReactNode;
 }
 
-const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoading, contentAfter }: Props) => {
+const EntityTags = ({
+  className,
+  data,
+  tagsBefore = [],
+  tagsAfter = [],
+  isLoading,
+  contentAfter,
+}: Props) => {
   const isMobile = useIsMobile();
   const { isOpen, onToggle, onClose } = useDisclosure();
 
@@ -34,12 +50,11 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
     ...(data?.public_tags || []),
     ...(data?.watchlist_names || []),
     ...tagsAfter,
-  ]
-    .filter(Boolean);
+  ].filter(Boolean);
 
-  const metaSuitesPlaceholder = config.features.metasuites.isEnabled ?
-    <Box display="none" id="meta-suites__address-tag" data-ready={ !isLoading }/> :
-    null;
+  const metaSuitesPlaceholder = config.features.metasuites.isEnabled ? (
+    <Box display="none" id="meta-suites__address-tag" data-ready={!isLoading} />
+  ) : null;
 
   if (tags.length === 0 && !contentAfter) {
     return metaSuitesPlaceholder;
@@ -49,43 +64,44 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
     if (isMobile && tags.length > 2) {
       return (
         <>
-          {
-            tags
-              .slice(0, 2)
-              .map((tag) => (
-                <Tag
-                  key={ tag.label }
-                  isLoading={ isLoading }
-                  isTruncated
-                  maxW={{ base: '115px', lg: 'initial' }}
-                  colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-                  variant={ 'variant' in tag ? tag.variant : 'subtle' }
-                >
-                  { tag.display_name }
-                </Tag>
-              ))
-          }
-          { metaSuitesPlaceholder }
-          <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
+          {tags.slice(0, 2).map((tag) => (
+            <Tag
+              key={tag.label}
+              isLoading={isLoading}
+              isTruncated
+              maxW={{ base: "115px", lg: "initial" }}
+              colorScheme={"colorScheme" in tag ? tag.colorScheme : "gray"}
+              variant={"variant" in tag ? tag.variant : "subtle"}
+            >
+              {tag.display_name}
+            </Tag>
+          ))}
+          {metaSuitesPlaceholder}
+          <Popover
+            isOpen={isOpen}
+            onClose={onClose}
+            placement="bottom-start"
+            isLazy
+          >
             <PopoverTrigger>
-              <Tag isLoading={ isLoading }onClick={ onToggle }>+{ tags.length - 1 }</Tag>
+              <Tag isLoading={isLoading} onClick={onToggle}>
+                +{tags.length - 1}
+              </Tag>
             </PopoverTrigger>
             <PopoverContent w="240px">
-              <PopoverBody >
-                <Flex columnGap={ 2 } rowGap={ 2 } flexWrap="wrap">
-                  {
-                    tags
-                      .slice(2)
-                      .map((tag) => (
-                        <Tag
-                          key={ tag.label }
-                          colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-                          variant={ 'variant' in tag ? tag.variant : 'subtle' }
-                        >
-                          { tag.display_name }
-                        </Tag>
-                      ))
-                  }
+              <PopoverBody>
+                <Flex columnGap={2} rowGap={2} flexWrap="wrap">
+                  {tags.slice(2).map((tag) => (
+                    <Tag
+                      key={tag.label}
+                      colorScheme={
+                        "colorScheme" in tag ? tag.colorScheme : "gray"
+                      }
+                      variant={"variant" in tag ? tag.variant : "subtle"}
+                    >
+                      {tag.display_name}
+                    </Tag>
+                  ))}
                 </Flex>
               </PopoverBody>
             </PopoverContent>
@@ -96,27 +112,34 @@ const EntityTags = ({ className, data, tagsBefore = [], tagsAfter = [], isLoadin
 
     return (
       <>
-        { tags.map((tag) => (
+        {tags.map((tag) => (
           <Tag
-            key={ tag.label }
-            isLoading={ isLoading }
+            key={tag.label}
+            isLoading={isLoading}
             isTruncated
-            maxW={{ base: '115px', lg: 'initial' }}
-            colorScheme={ 'colorScheme' in tag ? tag.colorScheme : 'gray' }
-            variant={ 'variant' in tag ? tag.variant : 'subtle' }
+            maxW={{ base: "115px", lg: "initial" }}
+            colorScheme={"colorScheme" in tag ? tag.colorScheme : "gray"}
+            variant={"variant" in tag ? tag.variant : "subtle"}
           >
-            { tag.display_name }
+            {tag.display_name}
           </Tag>
-        )) }
-        { metaSuitesPlaceholder }
+        ))}
+        {metaSuitesPlaceholder}
       </>
     );
   })();
 
   return (
-    <Flex className={ className } columnGap={ 2 } rowGap={ 2 } flexWrap="wrap" alignItems="center" flexGrow={ 1 }>
-      { content }
-      { contentAfter }
+    <Flex
+      className={className}
+      columnGap={2}
+      rowGap={2}
+      flexWrap="wrap"
+      alignItems="center"
+      flexGrow={1}
+    >
+      {content}
+      {contentAfter}
     </Flex>
   );
 };

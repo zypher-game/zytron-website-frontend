@@ -1,7 +1,7 @@
-import type { Channel } from 'phoenix';
-import { useEffect, useRef, useState } from 'react';
+import type { Channel } from "phoenix";
+import { useEffect, useRef, useState } from "react";
 
-import { useSocket } from './context';
+import { useSocket } from "./context";
 
 const CHANNEL_REGISTRY: Record<string, Channel> = {};
 
@@ -14,9 +14,16 @@ interface Params {
   onSocketError?: () => void;
 }
 
-export default function useSocketChannel({ topic, params, isDisabled, onJoin, onSocketClose, onSocketError }: Params) {
+export default function useSocketChannel({
+  topic,
+  params,
+  isDisabled,
+  onJoin,
+  onSocketClose,
+  onSocketError,
+}: Params) {
   const socket = useSocket();
-  const [ channel, setChannel ] = useState<Channel>();
+  const [channel, setChannel] = useState<Channel>();
   const onCloseRef = useRef<string>();
   const onErrorRef = useRef<string>();
 
@@ -25,7 +32,7 @@ export default function useSocketChannel({ topic, params, isDisabled, onJoin, on
 
   useEffect(() => {
     const cleanUpRefs = () => {
-      const refs = [ onCloseRef.current, onErrorRef.current ].filter(Boolean);
+      const refs = [onCloseRef.current, onErrorRef.current].filter(Boolean);
       refs.length > 0 && socket?.off(refs);
     };
 
@@ -37,14 +44,14 @@ export default function useSocketChannel({ topic, params, isDisabled, onJoin, on
     }
 
     return cleanUpRefs;
-  }, [ onSocketClose, onSocketError, socket, isDisabled ]);
+  }, [onSocketClose, onSocketError, socket, isDisabled]);
 
   useEffect(() => {
     if (isDisabled && channel) {
       channel.leave();
       setChannel(undefined);
     }
-  }, [ channel, isDisabled ]);
+  }, [channel, isDisabled]);
 
   useEffect(() => {
     if (socket === null || isDisabled || !topic) {
@@ -54,13 +61,13 @@ export default function useSocketChannel({ topic, params, isDisabled, onJoin, on
     let ch: Channel;
     if (CHANNEL_REGISTRY[topic]) {
       ch = CHANNEL_REGISTRY[topic];
-      onJoinRef.current?.(ch, '');
+      onJoinRef.current?.(ch, "");
     } else {
       ch = socket.channel(topic);
       CHANNEL_REGISTRY[topic] = ch;
       ch.join()
-        .receive('ok', (message) => onJoinRef.current?.(ch, message))
-        .receive('error', () => {
+        .receive("ok", (message) => onJoinRef.current?.(ch, message))
+        .receive("error", () => {
           onSocketError?.();
         });
     }
@@ -72,7 +79,7 @@ export default function useSocketChannel({ topic, params, isDisabled, onJoin, on
       delete CHANNEL_REGISTRY[topic];
       setChannel(undefined);
     };
-  }, [ socket, topic, params, isDisabled, onSocketError ]);
+  }, [socket, topic, params, isDisabled, onSocketError]);
 
   return channel;
 }

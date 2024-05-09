@@ -1,13 +1,15 @@
-import getErrorObj from './getErrorObj';
+import getErrorObj from "./getErrorObj";
 
-export default function getErrorObjPayload<Payload extends object>(error: unknown): Payload | undefined {
+export default function getErrorObjPayload<Payload extends object>(
+  error: unknown
+): Payload | undefined {
   const errorObj = getErrorObj(error);
 
-  if (!errorObj || !('payload' in errorObj)) {
+  if (!errorObj || !("payload" in errorObj)) {
     return;
   }
 
-  if (typeof errorObj.payload !== 'object') {
+  if (typeof errorObj.payload !== "object") {
     return;
   }
 

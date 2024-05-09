@@ -1,7 +1,7 @@
-import { watchAccount, getAccount } from '@wagmi/core';
-import React from 'react';
-import type { Config } from 'wagmi';
-import { useConfig } from 'wagmi';
+import { watchAccount, getAccount } from "@wagmi/core";
+import React from "react";
+import type { Config } from "wagmi";
+import { useConfig } from "wagmi";
 
 export function getWalletAccount(config: Config) {
   try {
@@ -13,7 +13,7 @@ export function getWalletAccount(config: Config) {
 
 export default function useWatchAccount() {
   const config = useConfig();
-  const [ account, setAccount ] = React.useState(getWalletAccount(config));
+  const [account, setAccount] = React.useState(getWalletAccount(config));
 
   React.useEffect(() => {
     if (!account) {
@@ -25,7 +25,7 @@ export default function useWatchAccount() {
         setAccount(account);
       },
     });
-  }, [ account, config ]);
+  }, [account, config]);
 
   return account;
 }

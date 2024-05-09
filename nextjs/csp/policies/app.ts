@@ -1,15 +1,12 @@
-import type CspDev from 'csp-dev';
+import type CspDev from "csp-dev";
 
-import { getFeaturePayload } from 'configs/app/features/types';
+import { getFeaturePayload } from "configs/app/features/types";
 
-import config from 'configs/app';
+import config from "configs/app";
 
-import { KEY_WORDS } from '../utils';
+import { KEY_WORDS } from "../utils";
 
-const MAIN_DOMAINS = [
-  `*.${ config.app.host }`,
-  config.app.host,
-].filter(Boolean);
+const MAIN_DOMAINS = [`*.${config.app.host}`, config.app.host].filter(Boolean);
 
 const getCspReportUrl = () => {
   try {
@@ -21,8 +18,9 @@ const getCspReportUrl = () => {
     const url = new URL(process.env.SENTRY_CSP_REPORT_URI);
 
     // https://docs.sentry.io/product/security-policy-reporting/#additional-configuration
-    url.searchParams.set('sentry_environment', sentryFeature.environment);
-    sentryFeature.release && url.searchParams.set('sentry_release', sentryFeature.release);
+    url.searchParams.set("sentry_environment", sentryFeature.environment);
+    sentryFeature.release &&
+      url.searchParams.set("sentry_release", sentryFeature.release);
 
     return url.toString();
   } catch (error) {
@@ -31,22 +29,24 @@ const getCspReportUrl = () => {
 };
 
 export function app(): CspDev.DirectiveDescriptor {
-  const marketplaceFeaturePayload = getFeaturePayload(config.features.marketplace);
+  const marketplaceFeaturePayload = getFeaturePayload(
+    config.features.marketplace
+  );
 
   return {
-    'default-src': [
+    "default-src": [
       // KEY_WORDS.NONE,
       // https://bugzilla.mozilla.org/show_bug.cgi?id=1242902
       // need 'self' here to avoid an error with prefetch nextjs chunks in firefox
       KEY_WORDS.SELF,
     ],
 
-    'connect-src': [
+    "connect-src": [
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 
       // webpack hmr in safari doesn't recognize localhost as 'self' for some reason
-      config.app.isDev ? 'ws://localhost:3000/_next/webpack-hmr' : '',
+      config.app.isDev ? "ws://localhost:3000/_next/webpack-hmr" : "",
 
       // APIs
       config.api.endpoint,
@@ -56,29 +56,31 @@ export function app(): CspDev.DirectiveDescriptor {
       getFeaturePayload(config.features.verifiedTokens)?.api.endpoint,
       getFeaturePayload(config.features.addressVerification)?.api.endpoint,
       getFeaturePayload(config.features.nameService)?.api.endpoint,
-      marketplaceFeaturePayload && 'api' in marketplaceFeaturePayload ? marketplaceFeaturePayload.api.endpoint : '',
+      marketplaceFeaturePayload && "api" in marketplaceFeaturePayload
+        ? marketplaceFeaturePayload.api.endpoint
+        : "",
 
       // chain RPC server
       config.chain.rpcUrl,
-      'https://infragrid.v.network', // RPC providers
+      "https://infragrid.v.network", // RPC providers
 
       // github (spec for api-docs page)
-      'raw.githubusercontent.com',
+      "raw.githubusercontent.com",
     ].filter(Boolean),
 
-    'script-src': [
+    "script-src": [
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 
       // next.js generates and rebuilds source maps in dev using eval()
       // https://github.com/vercel/next.js/issues/14221#issuecomment-657258278
-      config.app.isDev ? KEY_WORDS.UNSAFE_EVAL : '',
+      config.app.isDev ? KEY_WORDS.UNSAFE_EVAL : "",
 
       // hash of ColorModeScript
-      '\'sha256-e7MRMmTzLsLQvIy1iizO1lXf7VWYoQ6ysj5fuUzvRwE=\'',
+      "'sha256-e7MRMmTzLsLQvIy1iizO1lXf7VWYoQ6ysj5fuUzvRwE='",
     ],
 
-    'style-src': [
+    "style-src": [
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 
@@ -90,7 +92,7 @@ export function app(): CspDev.DirectiveDescriptor {
       KEY_WORDS.UNSAFE_INLINE,
     ],
 
-    'img-src': [
+    "img-src": [
       KEY_WORDS.SELF,
       KEY_WORDS.DATA,
       ...MAIN_DOMAINS,
@@ -107,41 +109,32 @@ export function app(): CspDev.DirectiveDescriptor {
       //        that loose img-src directive alone could cause serious flaws on the site as long as we keep script-src and connect-src strict
       //
       // feel free to propose alternative solution and fix this
-      '*',
+      "*",
     ],
 
-    'media-src': [
-      '*', // see comment for img-src directive
+    "media-src": [
+      "*", // see comment for img-src directive
     ],
 
-    'font-src': [
-      KEY_WORDS.DATA,
-      ...MAIN_DOMAINS,
-    ],
+    "font-src": [KEY_WORDS.DATA, ...MAIN_DOMAINS],
 
-    'object-src': [
-      KEY_WORDS.NONE,
-    ],
+    "object-src": [KEY_WORDS.NONE],
 
-    'base-uri': [
-      KEY_WORDS.NONE,
-    ],
+    "base-uri": [KEY_WORDS.NONE],
 
-    'frame-src': [
+    "frame-src": [
       // could be a marketplace app or NFT media (html-page)
-      '*',
+      "*",
     ],
 
-    ...((() => {
+    ...(() => {
       if (!config.features.sentry.isEnabled) {
         return {};
       }
 
       return {
-        'report-uri': [
-          getCspReportUrl(),
-        ].filter(Boolean),
+        "report-uri": [getCspReportUrl()].filter(Boolean),
       };
-    })()),
+    })(),
   };
 }

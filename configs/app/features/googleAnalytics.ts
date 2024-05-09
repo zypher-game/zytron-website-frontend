@@ -1,10 +1,10 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import { getEnvValue } from '../utils';
+import { getEnvValue } from "../utils";
 
-const propertyId = getEnvValue('NEXT_PUBLIC_GOOGLE_ANALYTICS_PROPERTY_ID');
+const propertyId = getEnvValue("NEXT_PUBLIC_GOOGLE_ANALYTICS_PROPERTY_ID");
 
-const title = 'Google analytics';
+const title = "Google analytics";
 
 const config: Feature<{ propertyId: string }> = (() => {
   if (propertyId) {

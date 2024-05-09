@@ -1,14 +1,20 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
-import _debounce from 'lodash/debounce';
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Box, useColorModeValue } from "@chakra-ui/react";
+import _debounce from "lodash/debounce";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 const CUT_HEIGHT = 144;
 
-const AccountPageDescription = ({ children, allowCut = true }: { children: React.ReactNode; allowCut?: boolean }) => {
+const AccountPageDescription = ({
+  children,
+  allowCut = true,
+}: {
+  children: React.ReactNode;
+  allowCut?: boolean;
+}) => {
   const ref = useRef<HTMLParagraphElement>(null);
 
-  const [ needCut, setNeedCut ] = useState(false);
-  const [ expanded, setExpanded ] = useState(false);
+  const [needCut, setNeedCut] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const calculateCut = useCallback(() => {
     const textHeight = ref.current?.offsetHeight;
@@ -17,7 +23,7 @@ const AccountPageDescription = ({ children, allowCut = true }: { children: React
     } else if (needCut && textHeight && textHeight < CUT_HEIGHT) {
       setNeedCut(false);
     }
-  }, [ needCut ]);
+  }, [needCut]);
 
   useEffect(() => {
     if (!allowCut) {
@@ -26,44 +32,51 @@ const AccountPageDescription = ({ children, allowCut = true }: { children: React
 
     calculateCut();
     const resizeHandler = _debounce(calculateCut, 300);
-    window.addEventListener('resize', resizeHandler);
+    window.addEventListener("resize", resizeHandler);
     return function cleanup() {
-      window.removeEventListener('resize', resizeHandler);
+      window.removeEventListener("resize", resizeHandler);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const expand = useCallback(() => {
     setExpanded(true);
   }, []);
 
   const gradient = useColorModeValue(
-    'linear-gradient(360deg, rgba(255, 255, 255, 0.8) 38.1%, rgba(255, 255, 255, 0) 166.67%)',
-    'linear-gradient(360deg, rgba(16, 17, 18, 0.8) 38.1%, rgba(16, 17, 18, 0) 166.67%)',
+    "linear-gradient(360deg, rgba(255, 255, 255, 0.8) 38.1%, rgba(255, 255, 255, 0) 166.67%)",
+    "linear-gradient(360deg, rgba(16, 17, 18, 0.8) 38.1%, rgba(16, 17, 18, 0) 166.67%)"
   );
 
   return (
     <Box position="relative" marginBottom={{ base: 6, lg: 8 }}>
       <Box
-        ref={ ref }
-        maxHeight={ needCut && !expanded ? `${ CUT_HEIGHT }px` : 'auto' }
+        ref={ref}
+        maxHeight={needCut && !expanded ? `${CUT_HEIGHT}px` : "auto"}
         overflow="hidden"
-        style={ needCut && !expanded ? { WebkitLineClamp: '6', WebkitBoxOrient: 'vertical', display: '-webkit-box' } : {} }
+        style={
+          needCut && !expanded
+            ? {
+                WebkitLineClamp: "6",
+                WebkitBoxOrient: "vertical",
+                display: "-webkit-box",
+              }
+            : {}
+        }
       >
-        { children }
+        {children}
       </Box>
-      { needCut && !expanded && (
+      {needCut && !expanded && (
         <Box
           position="absolute"
           bottom="-16px"
-          left={ 0 }
+          left={0}
           width="100%"
           height="63px"
           style={{ background: gradient }}
-          onClick={ expand }
-        >
-        </Box>
-      ) }
+          onClick={expand}
+        ></Box>
+      )}
     </Box>
   );
 };

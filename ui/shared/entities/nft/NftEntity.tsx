@@ -1,16 +1,16 @@
-import { chakra } from '@chakra-ui/react';
-import _omit from 'lodash/omit';
-import React from 'react';
+import { chakra } from "@chakra-ui/react";
+import _omit from "lodash/omit";
+import React from "react";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import * as EntityBase from 'ui/shared/entities/base/components';
-import TruncatedValue from 'ui/shared/TruncatedValue';
+import * as EntityBase from "ui/shared/entities/base/components";
+import TruncatedValue from "ui/shared/TruncatedValue";
 
 const Container = EntityBase.Container;
 
-type IconProps = Pick<EntityProps, 'isLoading' | 'noIcon' | 'iconSize'> & {
-  name?: EntityBase.IconBaseProps['name'];
+type IconProps = Pick<EntityProps, "isLoading" | "noIcon" | "iconSize"> & {
+  name?: EntityBase.IconBaseProps["name"];
 };
 
 const Icon = (props: IconProps) => {
@@ -20,37 +20,33 @@ const Icon = (props: IconProps) => {
 
   return (
     <EntityBase.Icon
-      { ...props }
-      iconSize={ props.iconSize ?? 'lg' }
-      name={ props.name ?? 'nft_shield' }
+      {...props}
+      iconSize={props.iconSize ?? "lg"}
+      name={props.name ?? "nft_shield"}
     />
   );
 };
 
-type LinkProps = EntityBase.LinkBaseProps & Pick<EntityProps, 'hash' | 'id'>;
+type LinkProps = EntityBase.LinkBaseProps & Pick<EntityProps, "hash" | "id">;
 
 const Link = chakra((props: LinkProps) => {
-  const defaultHref = route({ pathname: '/token/[hash]/instance/[id]', query: { hash: props.hash, id: props.id } });
+  const defaultHref = route({
+    pathname: "/token/[hash]/instance/[id]",
+    query: { hash: props.hash, id: props.id },
+  });
 
   return (
-    <EntityBase.Link
-      { ...props }
-      href={ props.href ?? defaultHref }
-    >
-      { props.children }
+    <EntityBase.Link {...props} href={props.href ?? defaultHref}>
+      {props.children}
     </EntityBase.Link>
   );
 });
 
-type ContentProps = Omit<EntityBase.ContentBaseProps, 'text'> & Pick<EntityProps, 'id'>;
+type ContentProps = Omit<EntityBase.ContentBaseProps, "text"> &
+  Pick<EntityProps, "id">;
 
 const Content = chakra((props: ContentProps) => {
-  return (
-    <TruncatedValue
-      isLoading={ props.isLoading }
-      value={ props.id }
-    />
-  );
+  return <TruncatedValue isLoading={props.isLoading} value={props.id} />;
 });
 
 export interface EntityProps extends EntityBase.EntityBaseProps {
@@ -59,14 +55,14 @@ export interface EntityProps extends EntityBase.EntityBaseProps {
 }
 
 const NftEntity = (props: EntityProps) => {
-  const linkProps = _omit(props, [ 'className' ]);
-  const partsProps = _omit(props, [ 'className', 'onClick' ]);
+  const linkProps = _omit(props, ["className"]);
+  const partsProps = _omit(props, ["className", "onClick"]);
 
   return (
-    <Container className={ props.className } w="100%">
-      <Icon { ...partsProps }/>
-      <Link { ...linkProps }>
-        <Content { ...partsProps }/>
+    <Container className={props.className} w="100%">
+      <Icon {...partsProps} />
+      <Link {...linkProps}>
+        <Content {...partsProps} />
       </Link>
     </Container>
   );
@@ -74,9 +70,4 @@ const NftEntity = (props: EntityProps) => {
 
 export default React.memo(chakra(NftEntity));
 
-export {
-  Container,
-  Link,
-  Icon,
-  Content,
-};
+export { Container, Link, Icon, Content };

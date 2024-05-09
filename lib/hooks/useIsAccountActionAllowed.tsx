@@ -1,15 +1,17 @@
-import { useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import { useQueryClient } from "@tanstack/react-query";
+import React from "react";
 
-import type { UserInfo } from 'types/api/account';
+import type { UserInfo } from "types/api/account";
 
-import { resourceKey } from 'lib/api/resources';
-import useLoginUrl from 'lib/hooks/useLoginUrl';
+import { resourceKey } from "lib/api/resources";
+import useLoginUrl from "lib/hooks/useLoginUrl";
 
 export default function useIsAccountActionAllowed() {
   const queryClient = useQueryClient();
 
-  const profileData = queryClient.getQueryData<UserInfo>([ resourceKey('user_info') ]);
+  const profileData = queryClient.getQueryData<UserInfo>([
+    resourceKey("user_info"),
+  ]);
   const isAuth = Boolean(profileData);
   const loginUrl = useLoginUrl();
 
@@ -24,5 +26,5 @@ export default function useIsAccountActionAllowed() {
     }
 
     return true;
-  }, [ isAuth, loginUrl ]);
+  }, [isAuth, loginUrl]);
 }

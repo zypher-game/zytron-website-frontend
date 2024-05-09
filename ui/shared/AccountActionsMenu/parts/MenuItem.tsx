@@ -1,5 +1,5 @@
-import { MenuItem as MenuItemChakra } from '@chakra-ui/react';
-import React from 'react';
+import { MenuItem as MenuItemChakra } from "@chakra-ui/react";
+import React from "react";
 
 interface Props {
   className?: string;
@@ -9,8 +9,8 @@ interface Props {
 
 const MenuItem = ({ className, children, onClick }: Props) => {
   return (
-    <MenuItemChakra className={ className } onClick={ onClick } py={ 2 } px={ 4 }>
-      { children }
+    <MenuItemChakra className={className} onClick={onClick} py={2} px={4}>
+      {children}
     </MenuItemChakra>
   );
 };

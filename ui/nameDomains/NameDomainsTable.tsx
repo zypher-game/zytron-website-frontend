@@ -1,13 +1,13 @@
-import { Table, Tbody, Tr, Th, Link } from '@chakra-ui/react';
-import React from 'react';
+import { Table, Tbody, Tr, Th, Link } from "@chakra-ui/react";
+import React from "react";
 
-import type { EnsDomainLookupResponse } from 'types/api/ens';
+import type { EnsDomainLookupResponse } from "types/api/ens";
 
-import IconSvg from 'ui/shared/IconSvg';
-import { default as Thead } from 'ui/shared/TheadSticky';
+import IconSvg from "ui/shared/IconSvg";
+import { default as Thead } from "ui/shared/TheadSticky";
 
-import NameDomainsTableItem from './NameDomainsTableItem';
-import { type Sort } from './utils';
+import NameDomainsTableItem from "./NameDomainsTableItem";
+import { type Sort } from "./utils";
 
 interface Props {
   data: EnsDomainLookupResponse | undefined;
@@ -17,27 +17,36 @@ interface Props {
 }
 
 const NameDomainsTable = ({ data, isLoading, sort, onSortToggle }: Props) => {
-  const sortIconTransform = sort?.toLowerCase().includes('asc') ? 'rotate(-90deg)' : 'rotate(90deg)';
+  const sortIconTransform = sort?.toLowerCase().includes("asc")
+    ? "rotate(-90deg)"
+    : "rotate(90deg)";
 
   return (
     <Table variant="simple" size="sm">
-      <Thead top={ 80 }>
+      <Thead top={80}>
         <Tr>
           <Th width="25%">Domain</Th>
           <Th width="25%">Address</Th>
-          <Th width="25%" pl={ 9 }>
-            <Link display="flex" alignItems="center" justifyContent="flex-start" position="relative" data-field="registration_date" onClick={ onSortToggle }>
-              { sort?.includes('registration_date') && (
+          <Th width="25%" pl={9}>
+            <Link
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-start"
+              position="relative"
+              data-field="registration_date"
+              onClick={onSortToggle}
+            >
+              {sort?.includes("registration_date") && (
                 <IconSvg
                   name="arrows/east"
-                  boxSize={ 4 }
-                  transform={ sortIconTransform }
+                  boxSize={4}
+                  transform={sortIconTransform}
                   color="link"
                   position="absolute"
-                  left={ -5 }
-                  top={ 0 }
+                  left={-5}
+                  top={0}
                 />
-              ) }
+              )}
               <span>Registered on</span>
             </Link>
           </Th>
@@ -45,7 +54,9 @@ const NameDomainsTable = ({ data, isLoading, sort, onSortToggle }: Props) => {
         </Tr>
       </Thead>
       <Tbody>
-        { data?.items.map((item, index) => <NameDomainsTableItem key={ index } { ...item } isLoading={ isLoading }/>) }
+        {data?.items.map((item, index) => (
+          <NameDomainsTableItem key={index} {...item} isLoading={isLoading} />
+        ))}
       </Tbody>
     </Table>
   );

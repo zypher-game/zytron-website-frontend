@@ -1,38 +1,37 @@
-import { Box, useColorMode } from '@chakra-ui/react';
-import { createGraphiQLFetcher } from '@graphiql/toolkit';
-import { GraphiQL } from 'graphiql';
-import React from 'react';
+import { Box, useColorMode } from "@chakra-ui/react";
+import { createGraphiQLFetcher } from "@graphiql/toolkit";
+import { GraphiQL } from "graphiql";
+import React from "react";
 
-import config from 'configs/app';
-import buildUrl from 'lib/api/buildUrl';
-import 'graphiql/graphiql.css';
-import isBrowser from 'lib/isBrowser';
+import config from "configs/app";
+import buildUrl from "lib/api/buildUrl";
+import "graphiql/graphiql.css";
+import isBrowser from "lib/isBrowser";
 
 const feature = config.features.graphqlApiDocs;
 
 const graphQLStyle = {
-  '.graphiql-container': {
-    backgroundColor: 'unset',
+  ".graphiql-container": {
+    backgroundColor: "unset",
   },
 };
 
 const GraphQL = () => {
-
   const { colorMode } = useColorMode();
 
-  const graphqlTheme = window.localStorage.getItem('graphiql:theme');
+  const graphqlTheme = window.localStorage.getItem("graphiql:theme");
 
   // colorModeState used as a key to re-render GraphiQL conponent after color mode change
-  const [ colorModeState, setColorModeState ] = React.useState(graphqlTheme);
+  const [colorModeState, setColorModeState] = React.useState(graphqlTheme);
 
   React.useEffect(() => {
     if (isBrowser()) {
       if (graphqlTheme !== colorMode) {
-        window.localStorage.setItem('graphiql:theme', colorMode);
+        window.localStorage.setItem("graphiql:theme", colorMode);
         setColorModeState(colorMode);
       }
     }
-  }, [ colorMode, graphqlTheme ]);
+  }, [colorMode, graphqlTheme]);
 
   if (!feature.isEnabled) {
     return null;
@@ -40,7 +39,7 @@ const GraphQL = () => {
 
   const initialQuery = `{
     transaction(
-      hash: "${ feature.defaultTxHash }"
+      hash: "${feature.defaultTxHash}"
     ) {
       hash
       blockNumber
@@ -49,7 +48,7 @@ const GraphQL = () => {
     }
   }`;
 
-  const graphqlUrl = buildUrl('graphql');
+  const graphqlUrl = buildUrl("graphql");
 
   const fetcher = createGraphiQLFetcher({
     url: graphqlUrl,
@@ -61,9 +60,13 @@ const GraphQL = () => {
   });
 
   return (
-    <Box h="100vh" overflowX="scroll" sx={ graphQLStyle }>
-      <Box h="100vh" minW="900px" sx={ graphQLStyle }>
-        <GraphiQL fetcher={ fetcher } defaultQuery={ initialQuery } key={ colorModeState }/>
+    <Box h="100vh" overflowX="scroll" sx={graphQLStyle}>
+      <Box h="100vh" minW="900px" sx={graphQLStyle}>
+        <GraphiQL
+          fetcher={fetcher}
+          defaultQuery={initialQuery}
+          key={colorModeState}
+        />
       </Box>
     </Box>
   );

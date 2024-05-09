@@ -1,10 +1,10 @@
-import type { WalletProvider } from 'types/web3';
+import type { WalletProvider } from "types/web3";
 
 type CPreferences = {
   zone: string;
   width: string;
   height: string;
-}
+};
 
 declare global {
   export interface Window {
@@ -23,7 +23,7 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: 'development' | 'production';
+      NODE_ENV: "development" | "production";
     }
   }
 }

@@ -1,17 +1,17 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import { getEnvValue } from '../utils';
+import { getEnvValue } from "../utils";
 
 function getApiUrl(): string | undefined {
   try {
-    const envValue = getEnvValue('NEXT_PUBLIC_SAFE_TX_SERVICE_URL');
-    return new URL('/api/v1/safes', envValue).toString();
+    const envValue = getEnvValue("NEXT_PUBLIC_SAFE_TX_SERVICE_URL");
+    return new URL("/api/v1/safes", envValue).toString();
   } catch (error) {
     return;
   }
 }
 
-const title = 'Safe address tags';
+const title = "Safe address tags";
 
 const config: Feature<{ apiUrl: string }> = (() => {
   const apiUrl = getApiUrl();

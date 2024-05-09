@@ -1,9 +1,9 @@
-import type { Abi } from 'abitype';
+import type { Abi } from "abitype";
 
-import type { SmartContractWriteMethod } from 'types/api/contract';
+import type { SmartContractWriteMethod } from "types/api/contract";
 
 export const getNativeCoinValue = (value: unknown) => {
-  if (typeof value !== 'string') {
+  if (typeof value !== "string") {
     return BigInt(0);
   }
 
@@ -11,12 +11,15 @@ export const getNativeCoinValue = (value: unknown) => {
 };
 
 export function prepareAbi(abi: Abi, item: SmartContractWriteMethod): Abi {
-  if ('name' in item) {
-    const hasMethodsWithSameName = abi.filter((abiItem) => 'name' in abiItem ? abiItem.name === item.name : false).length > 1;
+  if ("name" in item) {
+    const hasMethodsWithSameName =
+      abi.filter((abiItem) =>
+        "name" in abiItem ? abiItem.name === item.name : false
+      ).length > 1;
 
     if (hasMethodsWithSameName) {
       return abi.filter((abiItem) => {
-        if (!('name' in abiItem)) {
+        if (!("name" in abiItem)) {
           return true;
         }
 

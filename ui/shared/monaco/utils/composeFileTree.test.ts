@@ -1,33 +1,34 @@
-import composeFileTree from './composeFileTree';
+import composeFileTree from "./composeFileTree";
 
 const files = [
   {
-    file_path: 'index.sol',
-    source_code: 'zero',
+    file_path: "index.sol",
+    source_code: "zero",
   },
   {
-    file_path: 'contracts/Zeta.eth.sol',
-    source_code: 'one',
+    file_path: "contracts/Zeta.eth.sol",
+    source_code: "one",
   },
   {
-    file_path: '/_openzeppelin/contracts/utils/Context.sol',
-    source_code: 'two',
+    file_path: "/_openzeppelin/contracts/utils/Context.sol",
+    source_code: "two",
   },
   {
-    file_path: '/_openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol',
-    source_code: 'three',
+    file_path:
+      "/_openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+    source_code: "three",
   },
   {
-    file_path: '/_openzeppelin/contracts/token/ERC20/IERC20.sol',
-    source_code: 'four',
+    file_path: "/_openzeppelin/contracts/token/ERC20/IERC20.sol",
+    source_code: "four",
   },
   {
-    file_path: '/_openzeppelin/contracts/token/ERC20/ERC20.sol',
-    source_code: 'five',
+    file_path: "/_openzeppelin/contracts/token/ERC20/ERC20.sol",
+    source_code: "five",
   },
 ];
 
-test('builds correct file tree', () => {
+test("builds correct file tree", () => {
   const result = composeFileTree(files);
   expect(result).toMatchInlineSnapshot(`
 [

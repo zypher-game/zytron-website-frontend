@@ -1,20 +1,20 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import app from '../app';
-import { getEnvValue } from '../utils';
+import app from "../app";
+import { getEnvValue } from "../utils";
 
-const dsn = getEnvValue('NEXT_PUBLIC_SENTRY_DSN');
+const dsn = getEnvValue("NEXT_PUBLIC_SENTRY_DSN");
 const instance = (() => {
-  const envValue = getEnvValue('NEXT_PUBLIC_APP_INSTANCE');
+  const envValue = getEnvValue("NEXT_PUBLIC_APP_INSTANCE");
   if (envValue) {
     return envValue;
   }
 
-  return app.host?.replace('.blockscout.com', '').replaceAll('-', '_');
+  return app.host?.replace(".blockscout.com", "").replaceAll("-", "_");
 })();
-const environment = getEnvValue('NEXT_PUBLIC_APP_ENV') || 'production';
-const release = getEnvValue('NEXT_PUBLIC_GIT_TAG');
-const title = 'Sentry error monitoring';
+const environment = getEnvValue("NEXT_PUBLIC_APP_ENV") || "production";
+const release = getEnvValue("NEXT_PUBLIC_GIT_TAG");
+const title = "Sentry error monitoring";
 
 const config: Feature<{
   dsn: string;
@@ -31,7 +31,8 @@ const config: Feature<{
       instance,
       release,
       environment,
-      enableTracing: getEnvValue('NEXT_PUBLIC_SENTRY_ENABLE_TRACING') === 'true',
+      enableTracing:
+        getEnvValue("NEXT_PUBLIC_SENTRY_ENABLE_TRACING") === "true",
     });
   }
 

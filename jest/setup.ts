@@ -1,17 +1,17 @@
-import dotenv from 'dotenv';
-import { TextEncoder, TextDecoder } from 'util';
+import dotenv from "dotenv";
+import { TextEncoder, TextDecoder } from "util";
 
-import fetchMock from 'jest-fetch-mock';
+import fetchMock from "jest-fetch-mock";
 
 fetchMock.enableMocks();
 
-const envs = dotenv.config({ path: './configs/envs/.env.jest' });
+const envs = dotenv.config({ path: "./configs/envs/.env.jest" });
 
 Object.assign(global, { TextDecoder, TextEncoder });
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -23,7 +23,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-Object.defineProperty(window, '__envs', {
+Object.defineProperty(window, "__envs", {
   writable: true,
   value: envs.parsed || {},
 });
@@ -35,7 +35,13 @@ global.console = {
   ...console,
   error: (...args) => {
     // silence some irrelevant errors
-    if (args.some((arg) => typeof arg === 'string' && arg.includes('Using kebab-case for css properties'))) {
+    if (
+      args.some(
+        (arg) =>
+          typeof arg === "string" &&
+          arg.includes("Using kebab-case for css properties")
+      )
+    ) {
       return;
     }
     consoleError(...args);

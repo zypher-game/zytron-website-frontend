@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // Returns true if component is just mounted (on first render) and false otherwise.
 export function useFirstMountState(): boolean {

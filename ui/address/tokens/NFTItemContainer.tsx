@@ -1,5 +1,5 @@
-import { Box, useColorModeValue, chakra } from '@chakra-ui/react';
-import React from 'react';
+import { Box, useColorModeValue, chakra } from "@chakra-ui/react";
+import React from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -9,17 +9,17 @@ type Props = {
 const NFTItemContainer = ({ children, className }: Props) => {
   return (
     <Box
-      w={{ base: '100%', lg: '210px' }}
+      w={{ base: "100%", lg: "210px" }}
       border="1px solid"
-      borderColor={ useColorModeValue('blackAlpha.100', 'whiteAlpha.200') }
+      borderColor={useColorModeValue("blackAlpha.100", "whiteAlpha.200")}
       borderRadius="12px"
       p="10px"
       fontSize="sm"
-      fontWeight={ 500 }
+      fontWeight={500}
       lineHeight="20px"
-      className={ className }
+      className={className}
     >
-      { children }
+      {children}
     </Box>
   );
 };

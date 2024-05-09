@@ -1,11 +1,11 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-import { route } from 'nextjs-routes';
+import { route } from "nextjs-routes";
 
-import config from 'configs/app';
-import { DAY } from 'lib/consts';
-import * as cookies from 'lib/cookies';
+import config from "configs/app";
+import { DAY } from "lib/consts";
+import * as cookies from "lib/cookies";
 
 export function account(req: NextRequest) {
   const feature = config.features.account;
@@ -20,12 +20,18 @@ export function account(req: NextRequest) {
   if (!apiTokenCookie) {
     // we don't have any info from router here, so just do straight forward sub-string search (sorry)
     const isAccountRoute =
-        req.nextUrl.pathname.includes('/account/') ||
-        (req.nextUrl.pathname === '/txs' && req.nextUrl.searchParams.get('tab') === 'watchlist');
-    const isProfileRoute = req.nextUrl.pathname.includes('/auth/profile');
+      req.nextUrl.pathname.includes("/account/") ||
+      (req.nextUrl.pathname === "/txs" &&
+        req.nextUrl.searchParams.get("tab") === "watchlist");
+    const isProfileRoute = req.nextUrl.pathname.includes("/auth/profile");
 
-    if ((isAccountRoute || isProfileRoute)) {
-      const authUrl = feature.authUrl + route({ pathname: '/auth/auth0', query: { path: req.nextUrl.pathname } });
+    if (isAccountRoute || isProfileRoute) {
+      const authUrl =
+        feature.authUrl +
+        route({
+          pathname: "/auth/auth0",
+          query: { path: req.nextUrl.pathname },
+        });
       return NextResponse.redirect(authUrl);
     }
   }
@@ -46,12 +52,13 @@ export function account(req: NextRequest) {
 
     // if user hasn't seen email verification page, make redirect to it
     if (!req.cookies.get(cookies.NAMES.CONFIRM_EMAIL_PAGE_VIEWED)) {
-      if (!req.nextUrl.pathname.includes('/auth/unverified-email')) {
-        const url = config.app.baseUrl + route({ pathname: '/auth/unverified-email' });
+      if (!req.nextUrl.pathname.includes("/auth/unverified-email")) {
+        const url =
+          config.app.baseUrl + route({ pathname: "/auth/unverified-email" });
         const res = NextResponse.redirect(url);
         res.cookies.set({
           name: cookies.NAMES.CONFIRM_EMAIL_PAGE_VIEWED,
-          value: 'true',
+          value: "true",
           expires: Date.now() + 7 * DAY,
         });
         return res;

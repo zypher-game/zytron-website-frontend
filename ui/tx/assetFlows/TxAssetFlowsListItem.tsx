@@ -1,12 +1,12 @@
-import { Box, Skeleton, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Skeleton, Text } from "@chakra-ui/react";
+import React from "react";
 
-import IconSvg from 'ui/shared/IconSvg';
-import ListItemMobile from 'ui/shared/ListItemMobile/ListItemMobile';
-import NovesFromTo from 'ui/shared/Noves/NovesFromTo';
+import IconSvg from "ui/shared/IconSvg";
+import ListItemMobile from "ui/shared/ListItemMobile/ListItemMobile";
+import NovesFromTo from "ui/shared/Noves/NovesFromTo";
 
-import NovesActionSnippet from './components/NovesActionSnippet';
-import type { NovesFlowViewItem } from './utils/generateFlowViewData';
+import NovesActionSnippet from "./components/NovesActionSnippet";
+import type { NovesFlowViewItem } from "./utils/generateFlowViewData";
 
 type Props = {
   isPlaceholderData: boolean;
@@ -14,12 +14,10 @@ type Props = {
 };
 
 const TxAssetFlowsListItem = (props: Props) => {
-
   return (
-    <ListItemMobile rowGap={ 4 } w="full" >
-      <Skeleton borderRadius="sm" isLoaded={ !props.isPlaceholderData } w="full">
-
-        <Box display="flex" >
+    <ListItemMobile rowGap={4} w="full">
+      <Skeleton borderRadius="sm" isLoaded={!props.isPlaceholderData} w="full">
+        <Box display="flex">
           <IconSvg
             name="lightning"
             height="5"
@@ -27,17 +25,19 @@ const TxAssetFlowsListItem = (props: Props) => {
             color="text_secondary"
           />
 
-          <Text fontSize="sm" fontWeight={ 500 }>
+          <Text fontSize="sm" fontWeight={500}>
             Action
           </Text>
         </Box>
-
       </Skeleton>
 
-      <NovesActionSnippet item={ props.item } isLoaded={ !props.isPlaceholderData }/>
+      <NovesActionSnippet
+        item={props.item}
+        isLoaded={!props.isPlaceholderData}
+      />
 
       <Box maxW="full">
-        <NovesFromTo item={ props.item } isLoaded={ !props.isPlaceholderData }/>
+        <NovesFromTo item={props.item} isLoaded={!props.isPlaceholderData} />
       </Box>
     </ListItemMobile>
   );

@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js';
+import BigNumber from "bignumber.js";
 
 export const WEI = new BigNumber(10 ** 18);
 export const GWEI = new BigNumber(10 ** 9);
@@ -16,4 +16,4 @@ export const YEAR = 365 * DAY;
 export const Kb = 1_000;
 export const Mb = 1_000 * Kb;
 
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";

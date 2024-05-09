@@ -1,20 +1,21 @@
-import type { PlaywrightTestConfig } from '@playwright/experimental-ct-react';
-import { devices, defineConfig } from '@playwright/experimental-ct-react';
-import react from '@vitejs/plugin-react';
-import svgr from 'vite-plugin-svgr';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import type { PlaywrightTestConfig } from "@playwright/experimental-ct-react";
+import { devices, defineConfig } from "@playwright/experimental-ct-react";
+import react from "@vitejs/plugin-react";
+import svgr from "vite-plugin-svgr";
+import tsconfigPaths from "vite-tsconfig-paths";
 
-import appConfig from 'configs/app';
+import appConfig from "configs/app";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = defineConfig({
-  testDir: './',
+  testDir: "./",
 
   testMatch: /.*\.pw\.tsx/,
 
-  snapshotPathTemplate: '{testDir}/{testFileDir}/__screenshots__/{testFileName}_{projectName}_{arg}{ext}',
+  snapshotPathTemplate:
+    "{testDir}/{testFileDir}/__screenshots__/{testFileName}_{projectName}_{arg}{ext}",
 
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
@@ -34,14 +35,14 @@ const config: PlaywrightTestConfig = defineConfig({
   workers: 1,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL: appConfig.app.baseUrl,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
@@ -68,24 +69,41 @@ const config: PlaywrightTestConfig = defineConfig({
           // The solution described here - https://github.com/vitejs/vite/issues/9703#issuecomment-1216662109
           // doesn't seam to work well with our setup
           // so for now we just mock these modules in tests
-          { find: '@metamask/post-message-stream', replacement: './playwright/mocks/modules/@metamask/post-message-stream.js' },
-          { find: '@metamask/providers', replacement: './playwright/mocks/modules/@metamask/providers.js' },
+          {
+            find: "@metamask/post-message-stream",
+            replacement:
+              "./playwright/mocks/modules/@metamask/post-message-stream.js",
+          },
+          {
+            find: "@metamask/providers",
+            replacement: "./playwright/mocks/modules/@metamask/providers.js",
+          },
 
           // '@metamask/sdk imports the browser module as UMD, but @wagmi/connectors expects it to be ESM
           // so we do a little remapping here
-          { find: '@metamask/sdk', replacement: './node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js' },
+          {
+            find: "@metamask/sdk",
+            replacement:
+              "./node_modules/@metamask/sdk/dist/browser/es/metamask-sdk.js",
+          },
 
           // Mock for growthbook to test feature flags
-          { find: 'lib/growthbook/useFeatureValue', replacement: './playwright/mocks/lib/growthbook/useFeatureValue.js' },
+          {
+            find: "lib/growthbook/useFeatureValue",
+            replacement: "./playwright/mocks/lib/growthbook/useFeatureValue.js",
+          },
 
           // The createWeb3Modal() function from web3modal/wagmi/react somehow pollutes the global styles which causes the tests to fail
           // We don't call this function in TestApp and since we use useWeb3Modal() and useWeb3ModalState() hooks in the code, we have to mock the module
           // Otherwise it will complain that createWeb3Modal() is no called before the hooks are used
-          { find: /^@web3modal\/wagmi\/react$/, replacement: './playwright/mocks/modules/@web3modal/wagmi/react.js' },
+          {
+            find: /^@web3modal\/wagmi\/react$/,
+            replacement: "./playwright/mocks/modules/@web3modal/wagmi/react.js",
+          },
         ],
       },
       define: {
-        'process.env': '__envs', // Port process.env over window.__envs
+        "process.env": "__envs", // Port process.env over window.__envs
       },
     },
   },
@@ -95,27 +113,27 @@ const config: PlaywrightTestConfig = defineConfig({
   // when adding or deleting a project, make sure to update github workflow accordingly
   projects: [
     {
-      name: 'default',
+      name: "default",
       grepInvert: /-@default/,
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices["Desktop Chrome"],
         viewport: { width: 1200, height: 750 },
       },
     },
     {
-      name: 'mobile',
+      name: "mobile",
       grep: /\+@mobile/,
       use: {
-        ...devices['iPhone 13 Pro'],
+        ...devices["iPhone 13 Pro"],
       },
     },
     {
-      name: 'dark-color-mode',
+      name: "dark-color-mode",
       grep: /\+@dark-mode/,
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices["Desktop Chrome"],
         viewport: { width: 1200, height: 750 },
-        colorScheme: 'dark',
+        colorScheme: "dark",
       },
     },
   ],

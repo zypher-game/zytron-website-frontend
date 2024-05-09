@@ -1,11 +1,11 @@
-import { tagAnatomy as parts } from '@chakra-ui/anatomy';
+import { tagAnatomy as parts } from "@chakra-ui/anatomy";
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
-} from '@chakra-ui/styled-system';
+} from "@chakra-ui/styled-system";
 
-import getDefaultTransitionProps from '../../utils/getDefaultTransitionProps';
-import Badge from '../Badge';
+import getDefaultTransitionProps from "../../utils/getDefaultTransitionProps";
+import Badge from "../Badge";
 const transitionProps = getDefaultTransitionProps();
 
 const { defineMultiStyleConfig, definePartsStyle } =
@@ -22,20 +22,20 @@ const sizes = {
     container: {
       minH: 6,
       minW: 6,
-      fontSize: 'sm',
+      fontSize: "sm",
       px: 2,
-      py: '2px',
+      py: "2px",
       lineHeight: 5,
     },
   }),
 };
 
 const baseStyleContainer = defineStyle({
-  display: 'inline-block',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  borderRadius: 'sm',
+  display: "inline-block",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  borderRadius: "sm",
   ...transitionProps,
 });
 
@@ -48,9 +48,9 @@ const Tag = defineMultiStyleConfig({
   variants,
   sizes,
   defaultProps: {
-    size: 'md',
-    variant: 'subtle',
-    colorScheme: 'gray',
+    size: "md",
+    variant: "subtle",
+    colorScheme: "gray",
   },
 });
 

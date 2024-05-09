@@ -1,17 +1,20 @@
-import type { Transaction, TransactionsSortingValue } from 'types/api/transaction';
+import type {
+  Transaction,
+  TransactionsSortingValue,
+} from "types/api/transaction";
 
-import compareBns from 'lib/bigint/compareBns';
+import compareBns from "lib/bigint/compareBns";
 
 export default function sortTxs(sorting: TransactionsSortingValue | undefined) {
   return function sortingFn(tx1: Transaction, tx2: Transaction) {
     switch (sorting) {
-      case 'value-desc':
+      case "value-desc":
         return compareBns(tx2.value, tx1.value);
-      case 'value-asc':
+      case "value-asc":
         return compareBns(tx1.value, tx2.value);
-      case 'fee-desc':
+      case "fee-desc":
         return compareBns(tx2.fee.value || 0, tx1.fee.value || 0);
-      case 'fee-asc':
+      case "fee-asc":
         return compareBns(tx1.fee.value || 0, tx2.fee.value || 0);
       default:
         return 0;
@@ -19,7 +22,9 @@ export default function sortTxs(sorting: TransactionsSortingValue | undefined) {
   };
 }
 
-export function sortTxsFromSocket(sorting: TransactionsSortingValue | undefined) {
+export function sortTxsFromSocket(
+  sorting: TransactionsSortingValue | undefined
+) {
   if (sorting) {
     return sortTxs(sorting);
   }

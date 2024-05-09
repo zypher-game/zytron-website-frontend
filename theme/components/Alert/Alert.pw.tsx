@@ -1,44 +1,44 @@
-import type { AlertProps } from '@chakra-ui/react';
-import { Alert, AlertIcon, AlertTitle } from '@chakra-ui/react';
-import { test, expect } from '@playwright/experimental-ct-react';
-import React from 'react';
+import type { AlertProps } from "@chakra-ui/react";
+import { Alert, AlertIcon, AlertTitle } from "@chakra-ui/react";
+import { test, expect } from "@playwright/experimental-ct-react";
+import React from "react";
 
-import TestApp from 'playwright/TestApp';
+import TestApp from "playwright/TestApp";
 
 test.use({ viewport: { width: 400, height: 720 } });
 
 const TEST_CASES: Array<AlertProps> = [
   {
-    status: 'info',
+    status: "info",
   },
   {
-    status: 'warning',
+    status: "warning",
   },
   {
-    status: 'success',
+    status: "success",
   },
   {
-    status: 'error',
+    status: "error",
   },
   {
-    status: 'info',
-    colorScheme: 'gray',
+    status: "info",
+    colorScheme: "gray",
   },
 ];
 
 TEST_CASES.forEach((props) => {
-  const testName = Object.entries(props).map(([ key, value ]) => `${ key }=${ value }`).join(', ');
+  const testName = Object.entries(props)
+    .map(([key, value]) => `${key}=${value}`)
+    .join(", ");
 
-  test(`${ testName } +@dark-mode`, async({ mount }) => {
+  test(`${testName} +@dark-mode`, async ({ mount }) => {
     const component = await mount(
       <TestApp>
-        <Alert { ...props }>
-          <AlertIcon/>
-          <AlertTitle>
-            This is alert text
-          </AlertTitle>
+        <Alert {...props}>
+          <AlertIcon />
+          <AlertTitle>This is alert text</AlertTitle>
         </Alert>
-      </TestApp>,
+      </TestApp>
     );
 
     await expect(component).toHaveScreenshot();

@@ -1,11 +1,11 @@
-import { Skeleton } from '@chakra-ui/react';
-import React from 'react';
+import { Skeleton } from "@chakra-ui/react";
+import React from "react";
 
-import type { TxBlob } from 'types/api/blobs';
+import type { TxBlob } from "types/api/blobs";
 
-import BlobDataType from 'ui/shared/blob/BlobDataType';
-import BlobEntity from 'ui/shared/entities/blob/BlobEntity';
-import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
+import BlobDataType from "ui/shared/blob/BlobDataType";
+import BlobEntity from "ui/shared/entities/blob/BlobEntity";
+import ListItemMobileGrid from "ui/shared/ListItemMobile/ListItemMobileGrid";
 
 interface Props {
   data: TxBlob;
@@ -13,25 +13,35 @@ interface Props {
 }
 
 const TxBlobListItem = ({ data, isLoading }: Props) => {
-  const size = data.blob_data ? data.blob_data.replace('0x', '').length / 2 : '-';
+  const size = data.blob_data
+    ? data.blob_data.replace("0x", "").length / 2
+    : "-";
 
   return (
     <ListItemMobileGrid.Container>
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Blob hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>
+        Blob hash
+      </ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <BlobEntity hash={ data.hash } isLoading={ isLoading }/>
+        <BlobEntity hash={data.hash} isLoading={isLoading} />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Data type</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>
+        Data type
+      </ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        { data.blob_data ? <BlobDataType isLoading={ isLoading } data={ data.blob_data }/> : '-' }
+        {data.blob_data ? (
+          <BlobDataType isLoading={isLoading} data={data.blob_data} />
+        ) : (
+          "-"
+        )}
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Size, bytes</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>
+        Size, bytes
+      </ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading }>
-          { size.toLocaleString() }
-        </Skeleton>
+        <Skeleton isLoaded={!isLoading}>{size.toLocaleString()}</Skeleton>
       </ListItemMobileGrid.Value>
     </ListItemMobileGrid.Container>
   );

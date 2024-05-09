@@ -1,25 +1,31 @@
-import { test, expect } from '@playwright/experimental-ct-react';
-import React from 'react';
+import { test, expect } from "@playwright/experimental-ct-react";
+import React from "react";
 
-import { SECOND } from 'lib/consts';
-import * as statsMock from 'mocks/stats/index';
-import contextWithEnvs from 'playwright/fixtures/contextWithEnvs';
-import TestApp from 'playwright/TestApp';
+import { SECOND } from "lib/consts";
+import * as statsMock from "mocks/stats/index";
+import contextWithEnvs from "playwright/fixtures/contextWithEnvs";
+import TestApp from "playwright/TestApp";
 
-import GasInfoTooltip from './GasInfoTooltip';
-import GasPrice from './GasPrice';
+import GasInfoTooltip from "./GasInfoTooltip";
+import GasPrice from "./GasPrice";
 
 const dataUpdatedAt = Date.now() - 30 * SECOND;
 
 test.use({ viewport: { width: 300, height: 300 } });
 
-test('all data', async({ mount, page }) => {
+test("all data", async ({ mount, page }) => {
   await mount(
     <TestApp>
-      <GasInfoTooltip data={ statsMock.base } dataUpdatedAt={ dataUpdatedAt } isOpen>
-        <span>Gas <GasPrice data={ statsMock.base.gas_prices.average }/></span>
+      <GasInfoTooltip
+        data={statsMock.base}
+        dataUpdatedAt={dataUpdatedAt}
+        isOpen
+      >
+        <span>
+          Gas <GasPrice data={statsMock.base.gas_prices.average} />
+        </span>
       </GasInfoTooltip>
-    </TestApp>,
+    </TestApp>
   );
 
   // await page.getByText(/gas/i).hover();
@@ -27,13 +33,20 @@ test('all data', async({ mount, page }) => {
   await expect(page).toHaveScreenshot();
 });
 
-test('without primary unit price', async({ mount, page }) => {
+test("without primary unit price", async ({ mount, page }) => {
   await mount(
     <TestApp>
-      <GasInfoTooltip data={ statsMock.withoutFiatPrices } dataUpdatedAt={ dataUpdatedAt } isOpen>
-        <span>Gas: <GasPrice data={ statsMock.withoutFiatPrices.gas_prices.average }/></span>
+      <GasInfoTooltip
+        data={statsMock.withoutFiatPrices}
+        dataUpdatedAt={dataUpdatedAt}
+        isOpen
+      >
+        <span>
+          Gas:{" "}
+          <GasPrice data={statsMock.withoutFiatPrices.gas_prices.average} />
+        </span>
       </GasInfoTooltip>
-    </TestApp>,
+    </TestApp>
   );
 
   // await page.getByText(/gas/i).hover();
@@ -41,13 +54,20 @@ test('without primary unit price', async({ mount, page }) => {
   await expect(page).toHaveScreenshot();
 });
 
-test('without secondary unit price', async({ mount, page }) => {
+test("without secondary unit price", async ({ mount, page }) => {
   await mount(
     <TestApp>
-      <GasInfoTooltip data={ statsMock.withoutGweiPrices } dataUpdatedAt={ dataUpdatedAt } isOpen>
-        <span>Gas: <GasPrice data={ statsMock.withoutGweiPrices.gas_prices.average }/></span>
+      <GasInfoTooltip
+        data={statsMock.withoutGweiPrices}
+        dataUpdatedAt={dataUpdatedAt}
+        isOpen
+      >
+        <span>
+          Gas:{" "}
+          <GasPrice data={statsMock.withoutGweiPrices.gas_prices.average} />
+        </span>
       </GasInfoTooltip>
-    </TestApp>,
+    </TestApp>
   );
 
   // await page.getByText(/gas/i).hover();
@@ -55,13 +75,20 @@ test('without secondary unit price', async({ mount, page }) => {
   await expect(page).toHaveScreenshot();
 });
 
-test('no data', async({ mount, page }) => {
+test("no data", async ({ mount, page }) => {
   await mount(
     <TestApp>
-      <GasInfoTooltip data={ statsMock.withoutBothPrices } dataUpdatedAt={ dataUpdatedAt } isOpen>
-        <span>Gas: <GasPrice data={ statsMock.withoutBothPrices.gas_prices.average }/></span>
+      <GasInfoTooltip
+        data={statsMock.withoutBothPrices}
+        dataUpdatedAt={dataUpdatedAt}
+        isOpen
+      >
+        <span>
+          Gas:{" "}
+          <GasPrice data={statsMock.withoutBothPrices.gas_prices.average} />
+        </span>
       </GasInfoTooltip>
-    </TestApp>,
+    </TestApp>
   );
 
   // await page.getByText(/gas/i).hover();
@@ -71,19 +98,26 @@ test('no data', async({ mount, page }) => {
 
 const oneUnitTest = test.extend({
   context: contextWithEnvs([
-    { name: 'NEXT_PUBLIC_GAS_TRACKER_UNITS', value: '["gwei"]' },
+    { name: "NEXT_PUBLIC_GAS_TRACKER_UNITS", value: '["gwei"]' },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ]) as any,
 });
 
-oneUnitTest.describe('one unit', () => {
-  oneUnitTest('with data', async({ mount, page }) => {
+oneUnitTest.describe("one unit", () => {
+  oneUnitTest("with data", async ({ mount, page }) => {
     await mount(
       <TestApp>
-        <GasInfoTooltip data={ statsMock.withoutFiatPrices } dataUpdatedAt={ dataUpdatedAt } isOpen>
-          <span>Gas: <GasPrice data={ statsMock.withoutFiatPrices.gas_prices.average }/></span>
+        <GasInfoTooltip
+          data={statsMock.withoutFiatPrices}
+          dataUpdatedAt={dataUpdatedAt}
+          isOpen
+        >
+          <span>
+            Gas:{" "}
+            <GasPrice data={statsMock.withoutFiatPrices.gas_prices.average} />
+          </span>
         </GasInfoTooltip>
-      </TestApp>,
+      </TestApp>
     );
 
     // await page.getByText(/gas/i).hover();
@@ -91,13 +125,20 @@ oneUnitTest.describe('one unit', () => {
     await expect(page).toHaveScreenshot();
   });
 
-  oneUnitTest('without data', async({ mount, page }) => {
+  oneUnitTest("without data", async ({ mount, page }) => {
     await mount(
       <TestApp>
-        <GasInfoTooltip data={ statsMock.withoutGweiPrices } dataUpdatedAt={ dataUpdatedAt } isOpen>
-          <span>Gas: <GasPrice data={ statsMock.withoutGweiPrices.gas_prices.average }/></span>
+        <GasInfoTooltip
+          data={statsMock.withoutGweiPrices}
+          dataUpdatedAt={dataUpdatedAt}
+          isOpen
+        >
+          <span>
+            Gas:{" "}
+            <GasPrice data={statsMock.withoutGweiPrices.gas_prices.average} />
+          </span>
         </GasInfoTooltip>
-      </TestApp>,
+      </TestApp>
     );
 
     // await page.getByText(/gas/i).hover();

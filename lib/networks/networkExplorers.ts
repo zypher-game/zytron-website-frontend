@@ -1,9 +1,9 @@
-import _compose from 'lodash/fp/compose';
-import _mapValues from 'lodash/mapValues';
+import _compose from "lodash/fp/compose";
+import _mapValues from "lodash/mapValues";
 
-import type { NetworkExplorer } from 'types/networks';
+import type { NetworkExplorer } from "types/networks";
 
-import config from 'configs/app';
+import config from "configs/app";
 
 // for easy .env update
 // const NETWORK_EXPLORERS = JSON.stringify([
@@ -25,14 +25,18 @@ import config from 'configs/app';
 //   },
 // ]).replaceAll('"', '\'');
 
-const stripTrailingSlash = (str: string) => str[str.length - 1] === '/' ? str.slice(0, -1) : str;
-const addLeadingSlash = (str: string) => str[0] === '/' ? str : '/' + str;
+const stripTrailingSlash = (str: string) =>
+  str[str.length - 1] === "/" ? str.slice(0, -1) : str;
+const addLeadingSlash = (str: string) => (str[0] === "/" ? str : "/" + str);
 
 const networkExplorers: Array<NetworkExplorer> = (() => {
   return config.UI.explorers.items.map((explorer) => ({
     ...explorer,
     baseUrl: stripTrailingSlash(explorer.baseUrl),
-    paths: _mapValues(explorer.paths, _compose(stripTrailingSlash, addLeadingSlash)),
+    paths: _mapValues(
+      explorer.paths,
+      _compose(stripTrailingSlash, addLeadingSlash)
+    ),
   }));
 })();
 

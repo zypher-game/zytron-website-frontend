@@ -1,6 +1,6 @@
-import BigNumber from 'bignumber.js';
+import BigNumber from "bignumber.js";
 
-import { ZERO } from 'lib/consts';
+import { ZERO } from "lib/consts";
 
 interface Params {
   value: string;
@@ -10,9 +10,19 @@ interface Params {
   decimals?: string | null;
 }
 
-export default function getCurrencyValue({ value, accuracy, accuracyUsd, decimals, exchangeRate }: Params) {
-  const valueCurr = BigNumber(value).div(BigNumber(10 ** Number(decimals || '18')));
-  const valueResult = accuracy ? valueCurr.dp(accuracy).toFormat() : valueCurr.toFormat();
+export default function getCurrencyValue({
+  value,
+  accuracy,
+  accuracyUsd,
+  decimals,
+  exchangeRate,
+}: Params) {
+  const valueCurr = BigNumber(value).div(
+    BigNumber(10 ** Number(decimals || "18"))
+  );
+  const valueResult = accuracy
+    ? valueCurr.dp(accuracy).toFormat()
+    : valueCurr.toFormat();
 
   let usdResult: string | undefined;
   let usdBn = ZERO;
@@ -22,7 +32,9 @@ export default function getCurrencyValue({ value, accuracy, accuracyUsd, decimal
     usdBn = valueCurr.times(exchangeRateBn);
     if (accuracyUsd && !usdBn.isEqualTo(0)) {
       const usdBnDp = usdBn.dp(accuracyUsd);
-      usdResult = usdBnDp.isEqualTo(0) ? usdBn.precision(accuracyUsd).toFormat() : usdBnDp.toFormat();
+      usdResult = usdBnDp.isEqualTo(0)
+        ? usdBn.precision(accuracyUsd).toFormat()
+        : usdBnDp.toFormat();
     } else {
       usdResult = usdBn.toFormat();
     }

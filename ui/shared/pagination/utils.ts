@@ -1,4 +1,4 @@
-import type { PaginationParams } from './types';
+import type { PaginationParams } from "./types";
 
 export const emptyPagination: PaginationParams = {
   page: 1,

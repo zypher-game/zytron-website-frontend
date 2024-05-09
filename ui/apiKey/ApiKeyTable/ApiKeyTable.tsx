@@ -1,15 +1,9 @@
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-} from '@chakra-ui/react';
-import React from 'react';
+import { Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react";
+import React from "react";
 
-import type { ApiKeys, ApiKey } from 'types/api/account';
+import type { ApiKeys, ApiKey } from "types/api/account";
 
-import ApiKeyTableItem from './ApiKeyTableItem';
+import ApiKeyTableItem from "./ApiKeyTableItem";
 
 interface Props {
   data?: ApiKeys;
@@ -19,25 +13,31 @@ interface Props {
   limit: number;
 }
 
-const ApiKeyTable = ({ data, isLoading, onDeleteClick, onEditClick, limit }: Props) => {
+const ApiKeyTable = ({
+  data,
+  isLoading,
+  onDeleteClick,
+  onEditClick,
+  limit,
+}: Props) => {
   return (
     <Table variant="simple" minWidth="600px">
       <Thead>
         <Tr>
-          <Th>{ `API key token (limit ${ limit } keys)` }</Th>
+          <Th>{`API key token (limit ${limit} keys)`}</Th>
           <Th width="108px"></Th>
         </Tr>
       </Thead>
       <Tbody>
-        { data?.map((item, index) => (
+        {data?.map((item, index) => (
           <ApiKeyTableItem
-            key={ item.api_key + (isLoading ? index : '') }
-            item={ item }
-            isLoading={ isLoading }
-            onDeleteClick={ onDeleteClick }
-            onEditClick={ onEditClick }
+            key={item.api_key + (isLoading ? index : "")}
+            item={item}
+            isLoading={isLoading}
+            onDeleteClick={onDeleteClick}
+            onEditClick={onEditClick}
           />
-        )) }
+        ))}
       </Tbody>
     </Table>
   );

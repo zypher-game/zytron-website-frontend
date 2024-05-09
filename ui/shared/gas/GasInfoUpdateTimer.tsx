@@ -1,7 +1,7 @@
-import { CircularProgress, chakra, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import { CircularProgress, chakra, useColorModeValue } from "@chakra-ui/react";
+import React from "react";
 
-import dayjs from 'lib/date/dayjs';
+import dayjs from "lib/date/dayjs";
 
 interface Props {
   startTime: number;
@@ -12,8 +12,8 @@ interface Props {
 
 const getValue = (startDate: dayjs.Dayjs, duration: number) => {
   const now = dayjs();
-  const diff = now.diff(startDate, 'ms');
-  const value = diff / duration * 100;
+  const diff = now.diff(startDate, "ms");
+  const value = (diff / duration) * 100;
 
   if (value >= 99) {
     return 99;
@@ -22,9 +22,16 @@ const getValue = (startDate: dayjs.Dayjs, duration: number) => {
   return value;
 };
 
-const GasInfoUpdateTimer = ({ startTime, duration, className, size = 4 }: Props) => {
-  const [ value, setValue ] = React.useState(getValue(dayjs(startTime), duration));
-  const trackColor = useColorModeValue('blackAlpha.50', 'whiteAlpha.100');
+const GasInfoUpdateTimer = ({
+  startTime,
+  duration,
+  className,
+  size = 4,
+}: Props) => {
+  const [value, setValue] = React.useState(
+    getValue(dayjs(startTime), duration)
+  );
+  const trackColor = useColorModeValue("blackAlpha.50", "whiteAlpha.100");
 
   React.useEffect(() => {
     const startDate = dayjs(startTime);
@@ -40,9 +47,16 @@ const GasInfoUpdateTimer = ({ startTime, duration, className, size = 4 }: Props)
     return () => {
       window.clearInterval(intervalId);
     };
-  }, [ startTime, duration ]);
+  }, [startTime, duration]);
 
-  return <CircularProgress className={ className } value={ value } trackColor={ trackColor } size={ size }/>;
+  return (
+    <CircularProgress
+      className={className}
+      value={value}
+      trackColor={trackColor}
+      size={size}
+    />
+  );
 };
 
 export default React.memo(chakra(GasInfoUpdateTimer));

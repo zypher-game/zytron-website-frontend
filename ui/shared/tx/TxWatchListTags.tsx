@@ -1,9 +1,9 @@
-import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import { Flex } from "@chakra-ui/react";
+import React from "react";
 
-import type { Transaction } from 'types/api/transaction';
+import type { Transaction } from "types/api/transaction";
 
-import Tag from 'ui/shared/chakra/Tag';
+import Tag from "ui/shared/chakra/Tag";
 
 interface Props {
   tx: Transaction;
@@ -21,19 +21,25 @@ const TxWatchListTags = ({ tx, isLoading }: Props) => {
   }
 
   return (
-    <Flex columnGap={ 2 } rowGap={ 2 } flexWrap="wrap" overflow="hidden" maxW="100%">
-      { tags.map((tag) => (
+    <Flex
+      columnGap={2}
+      rowGap={2}
+      flexWrap="wrap"
+      overflow="hidden"
+      maxW="100%"
+    >
+      {tags.map((tag) => (
         <Tag
-          key={ tag.label }
-          isLoading={ isLoading }
+          key={tag.label}
+          isLoading={isLoading}
           isTruncated
           // maxW={{ base: '115px', lg: 'initial' }}
           colorScheme="gray"
           variant="subtle"
         >
-          { tag.display_name }
+          {tag.display_name}
         </Tag>
-      )) }
+      ))}
     </Flex>
   );
 };

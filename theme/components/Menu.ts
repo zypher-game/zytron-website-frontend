@@ -1,39 +1,39 @@
-import { menuAnatomy as parts } from '@chakra-ui/anatomy';
+import { menuAnatomy as parts } from "@chakra-ui/anatomy";
 import {
   createMultiStyleConfigHelpers,
   cssVar,
   defineStyle,
-} from '@chakra-ui/styled-system';
+} from "@chakra-ui/styled-system";
 
 const { defineMultiStyleConfig, definePartsStyle } =
   createMultiStyleConfigHelpers(parts.keys);
 
-const $bg = cssVar('menu-bg');
-const $shadow = cssVar('menu-shadow');
+const $bg = cssVar("menu-bg");
+const $shadow = cssVar("menu-shadow");
 
 const baseStyleList = defineStyle({
-  [$bg.variable]: '#fff',
-  [$shadow.variable]: 'shadows.2xl',
+  [$bg.variable]: "#fff",
+  [$shadow.variable]: "shadows.2xl",
   _dark: {
-    [$bg.variable]: 'colors.gray.900',
-    [$shadow.variable]: 'shadows.dark-lg',
+    [$bg.variable]: "colors.gray.900",
+    [$shadow.variable]: "shadows.dark-lg",
   },
-  borderWidth: '0',
+  borderWidth: "0",
   bg: $bg.reference,
   boxShadow: $shadow.reference,
 });
 
 const baseStyleItem = defineStyle({
   _focus: {
-    [$bg.variable]: 'transparent',
+    [$bg.variable]: "transparent",
     _dark: {
-      [$bg.variable]: 'transparent',
+      [$bg.variable]: "transparent",
     },
   },
   _hover: {
-    [$bg.variable]: 'colors.blue.50',
+    [$bg.variable]: "colors.blue.50",
     _dark: {
-      [$bg.variable]: 'colors.whiteAlpha.100',
+      [$bg.variable]: "colors.whiteAlpha.100",
     },
   },
   bg: $bg.reference,

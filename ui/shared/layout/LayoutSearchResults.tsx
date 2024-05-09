@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import type { Props } from './types';
+import type { Props } from "./types";
 
-import * as Layout from './components';
+import * as Layout from "./components";
 
 const LayoutSearchResults = ({ children }: Props) => {
-
   return (
     <Layout.Container>
-      <Layout.TopRow/>
-      { children }
+      <Layout.TopRow />
+      {children}
     </Layout.Container>
   );
 };

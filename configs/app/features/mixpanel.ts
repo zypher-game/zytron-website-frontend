@@ -1,10 +1,10 @@
-import type { Feature } from './types';
+import type { Feature } from "./types";
 
-import { getEnvValue } from '../utils';
+import { getEnvValue } from "../utils";
 
-const projectToken = getEnvValue('NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN');
+const projectToken = getEnvValue("NEXT_PUBLIC_MIXPANEL_PROJECT_TOKEN");
 
-const title = 'Mixpanel analytics';
+const title = "Mixpanel analytics";
 
 const config: Feature<{ projectToken: string }> = (() => {
   if (projectToken) {

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { SECOND } from 'lib/consts';
+import { SECOND } from "lib/consts";
 
-import { growthBook } from './init';
+import { growthBook } from "./init";
 
 export default function useLoadFeatures() {
   React.useEffect(() => {

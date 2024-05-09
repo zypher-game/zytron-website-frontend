@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 
-import type { StaticRoute } from 'nextjs-routes';
-import { route } from 'nextjs-routes';
+import type { StaticRoute } from "nextjs-routes";
+import { route } from "nextjs-routes";
 
-import type { ResourceError } from 'lib/api/resources';
-import useFetch from 'lib/hooks/useFetch';
+import type { ResourceError } from "lib/api/resources";
+import useFetch from "lib/hooks/useFetch";
 
-import type { MediaType } from './utils';
-import { getPreliminaryMediaType } from './utils';
+import type { MediaType } from "./utils";
+import { getPreliminaryMediaType } from "./utils";
 
 interface Params {
   imageUrl: string | null;
@@ -21,10 +21,16 @@ interface ReturnType {
   url: string | null;
 }
 
-export default function useNftMediaInfo({ imageUrl, animationUrl, isEnabled }: Params): ReturnType | null {
-
+export default function useNftMediaInfo({
+  imageUrl,
+  animationUrl,
+  isEnabled,
+}: Params): ReturnType | null {
   const primaryQuery = useNftMediaTypeQuery(animationUrl, isEnabled);
-  const secondaryQuery = useNftMediaTypeQuery(imageUrl, !primaryQuery.isPending && !primaryQuery.data);
+  const secondaryQuery = useNftMediaTypeQuery(
+    imageUrl,
+    !primaryQuery.isPending && !primaryQuery.data
+  );
 
   return React.useMemo(() => {
     if (primaryQuery.isPending) {
@@ -50,15 +56,22 @@ export default function useNftMediaInfo({ imageUrl, animationUrl, isEnabled }: P
     }
 
     return null;
-  }, [ animationUrl, imageUrl, primaryQuery.data, primaryQuery.isPending, secondaryQuery.data, secondaryQuery.isPending ]);
+  }, [
+    animationUrl,
+    imageUrl,
+    primaryQuery.data,
+    primaryQuery.isPending,
+    secondaryQuery.data,
+    secondaryQuery.isPending,
+  ]);
 }
 
 function useNftMediaTypeQuery(url: string | null, enabled: boolean) {
   const fetch = useFetch();
 
   return useQuery<unknown, ResourceError<unknown>, ReturnType | null>({
-    queryKey: [ 'nft-media-type', url ],
-    queryFn: async() => {
+    queryKey: ["nft-media-type", url],
+    queryFn: async () => {
       if (!url) {
         return null;
       }
@@ -75,12 +88,19 @@ function useNftMediaTypeQuery(url: string | null, enabled: boolean) {
         return { type: preliminaryType, url };
       }
 
-      const type = await (async() => {
+      const type = await (async () => {
         try {
-          const mediaTypeResourceUrl = route({ pathname: '/node-api/media-type' as StaticRoute<'/api/media-type'>['pathname'], query: { url } });
-          const response = await fetch<{ type: MediaType | undefined }, ResourceError>(mediaTypeResourceUrl, undefined, { resource: 'media-type' });
+          const mediaTypeResourceUrl = route({
+            pathname:
+              "/node-api/media-type" as StaticRoute<"/api/media-type">["pathname"],
+            query: { url },
+          });
+          const response = await fetch<
+            { type: MediaType | undefined },
+            ResourceError
+          >(mediaTypeResourceUrl, undefined, { resource: "media-type" });
 
-          return 'type' in response ? response.type : undefined;
+          return "type" in response ? response.type : undefined;
         } catch (error) {
           return;
         }

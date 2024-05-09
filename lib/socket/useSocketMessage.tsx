@@ -1,8 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-import type { SocketMessageParams } from 'lib/socket/types';
+import type { SocketMessageParams } from "lib/socket/types";
 
-export default function useSocketMessage({ channel, event, handler }: SocketMessageParams) {
+export default function useSocketMessage({
+  channel,
+  event,
+  handler,
+}: SocketMessageParams) {
   const handlerRef = useRef(handler);
   handlerRef.current = handler;
 
@@ -18,5 +22,5 @@ export default function useSocketMessage({ channel, event, handler }: SocketMess
     return () => {
       channel.off(event, ref);
     };
-  }, [ channel, event ]);
+  }, [channel, event]);
 }

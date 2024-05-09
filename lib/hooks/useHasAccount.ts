@@ -1,6 +1,6 @@
-import config from 'configs/app';
-import { useAppContext } from 'lib/contexts/app';
-import * as cookies from 'lib/cookies';
+import config from "configs/app";
+import { useAppContext } from "lib/contexts/app";
+import * as cookies from "lib/cookies";
 
 export default function useHasAccount() {
   const appProps = useAppContext();

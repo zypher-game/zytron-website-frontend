@@ -228,9 +228,9 @@ module.exports = {
     quotes: [
       "error",
       {
-        // "double",
+        "double",
         //'single',
-        allowTemplateLiterals: true,
+        // allowTemplateLiterals: true,
       },
     ],
     "space-before-function-paren": ["error", "never"],

@@ -1,31 +1,32 @@
-import type { UseQueryResult } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import type { Chain, GetBlockReturnType } from 'viem';
+import type { UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import type { Chain, GetBlockReturnType } from "viem";
 
-import type { BlockWithdrawalsResponse } from 'types/api/block';
+import type { BlockWithdrawalsResponse } from "types/api/block";
 
-import config from 'configs/app';
-import type { ResourceError } from 'lib/api/resources';
-import { retry } from 'lib/api/useQueryClientConfig';
-import { SECOND } from 'lib/consts';
-import hexToDecimal from 'lib/hexToDecimal';
-import { publicClient } from 'lib/web3/client';
-import { GET_BLOCK } from 'stubs/RPC';
-import { generateListStub } from 'stubs/utils';
-import { WITHDRAWAL } from 'stubs/withdrawals';
-import { unknownAddress } from 'ui/shared/address/utils';
-import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
-import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
-import { emptyPagination } from 'ui/shared/pagination/utils';
+import config from "configs/app";
+import type { ResourceError } from "lib/api/resources";
+import { retry } from "lib/api/useQueryClientConfig";
+import { SECOND } from "lib/consts";
+import hexToDecimal from "lib/hexToDecimal";
+import { publicClient } from "lib/web3/client";
+import { GET_BLOCK } from "stubs/RPC";
+import { generateListStub } from "stubs/utils";
+import { WITHDRAWAL } from "stubs/withdrawals";
+import { unknownAddress } from "ui/shared/address/utils";
+import type { QueryWithPagesResult } from "ui/shared/pagination/useQueryWithPages";
+import useQueryWithPages from "ui/shared/pagination/useQueryWithPages";
+import { emptyPagination } from "ui/shared/pagination/utils";
 
-import type { BlockQuery } from './useBlockQuery';
+import type { BlockQuery } from "./useBlockQuery";
 
-type RpcResponseType = GetBlockReturnType<Chain, false, 'latest'> | null;
+type RpcResponseType = GetBlockReturnType<Chain, false, "latest"> | null;
 
-export type BlockWithdrawalsQuery = QueryWithPagesResult<'block_withdrawals'> & {
-  isDegradedData: boolean;
-};
+export type BlockWithdrawalsQuery =
+  QueryWithPagesResult<"block_withdrawals"> & {
+    isDegradedData: boolean;
+  };
 
 interface Params {
   heightOrHash: string;
@@ -33,21 +34,28 @@ interface Params {
   tab: string;
 }
 
-export default function useBlockWithdrawalsQuery({ heightOrHash, blockQuery, tab }: Params): BlockWithdrawalsQuery {
-  const [ isRefetchEnabled, setRefetchEnabled ] = React.useState(false);
+export default function useBlockWithdrawalsQuery({
+  heightOrHash,
+  blockQuery,
+  tab,
+}: Params): BlockWithdrawalsQuery {
+  const [isRefetchEnabled, setRefetchEnabled] = React.useState(false);
 
   const apiQuery = useQueryWithPages({
-    resourceName: 'block_withdrawals',
+    resourceName: "block_withdrawals",
     pathParams: { height_or_hash: heightOrHash },
     options: {
       enabled:
-        tab === 'withdrawals' &&
+        tab === "withdrawals" &&
         config.features.beaconChain.isEnabled &&
-        !blockQuery.isPlaceholderData && !blockQuery.isDegradedData,
-      placeholderData: generateListStub<'block_withdrawals'>(WITHDRAWAL, 50, { next_page_params: {
-        index: 5,
-        items_count: 50,
-      } }),
+        !blockQuery.isPlaceholderData &&
+        !blockQuery.isDegradedData,
+      placeholderData: generateListStub<"block_withdrawals">(WITHDRAWAL, 50, {
+        next_page_params: {
+          index: 5,
+          items_count: 50,
+        },
+      }),
       refetchOnMount: false,
       retry: (failureCount, error) => {
         if (isRefetchEnabled) {
@@ -62,14 +70,20 @@ export default function useBlockWithdrawalsQuery({ heightOrHash, blockQuery, tab
     },
   });
 
-  const rpcQuery = useQuery<RpcResponseType, unknown, BlockWithdrawalsResponse | null>({
-    queryKey: [ 'RPC', 'block', { heightOrHash } ],
-    queryFn: async() => {
+  const rpcQuery = useQuery<
+    RpcResponseType,
+    unknown,
+    BlockWithdrawalsResponse | null
+  >({
+    queryKey: ["RPC", "block", { heightOrHash }],
+    queryFn: async () => {
       if (!publicClient) {
         return null;
       }
 
-      const blockParams = heightOrHash.startsWith('0x') ? { blockHash: heightOrHash as `0x${ string }` } : { blockNumber: BigInt(heightOrHash) };
+      const blockParams = heightOrHash.startsWith("0x")
+        ? { blockHash: heightOrHash as `0x${string}` }
+        : { blockNumber: BigInt(heightOrHash) };
       return publicClient.getBlock(blockParams).catch(() => null);
     },
     select: (block) => {
@@ -78,25 +92,28 @@ export default function useBlockWithdrawalsQuery({ heightOrHash, blockQuery, tab
       }
 
       return {
-        items: block.withdrawals
-          ?.map((withdrawal) => {
-            return {
-              amount: hexToDecimal(withdrawal.amount).toString(),
-              index: hexToDecimal(withdrawal.index),
-              validator_index: hexToDecimal(withdrawal.validatorIndex),
-              receiver: { ...unknownAddress, hash: withdrawal.address },
-            };
-          })
-          .sort((a, b) => b.index - a.index) ?? [],
+        items:
+          block.withdrawals
+            ?.map((withdrawal) => {
+              return {
+                amount: hexToDecimal(withdrawal.amount).toString(),
+                index: hexToDecimal(withdrawal.index),
+                validator_index: hexToDecimal(withdrawal.validatorIndex),
+                receiver: { ...unknownAddress, hash: withdrawal.address },
+              };
+            })
+            .sort((a, b) => b.index - a.index) ?? [],
         next_page_params: null,
       };
     },
     placeholderData: GET_BLOCK,
     enabled:
       publicClient !== undefined &&
-      tab === 'withdrawals' &&
+      tab === "withdrawals" &&
       config.features.beaconChain.isEnabled &&
-      (blockQuery.isDegradedData || apiQuery.isError || apiQuery.errorUpdateCount > 0),
+      (blockQuery.isDegradedData ||
+        apiQuery.isError ||
+        apiQuery.errorUpdateCount > 0),
     retry: false,
     refetchOnMount: false,
   });
@@ -111,27 +128,34 @@ export default function useBlockWithdrawalsQuery({ heightOrHash, blockQuery, tab
     } else if (!apiQuery.isError) {
       setRefetchEnabled(false);
     }
-  }, [ apiQuery.errorUpdateCount, apiQuery.isError, apiQuery.isPlaceholderData ]);
+  }, [apiQuery.errorUpdateCount, apiQuery.isError, apiQuery.isPlaceholderData]);
 
   React.useEffect(() => {
     if (!rpcQuery.isPlaceholderData && !rpcQuery.data) {
       setRefetchEnabled(false);
     }
-  }, [ rpcQuery.data, rpcQuery.isPlaceholderData ]);
+  }, [rpcQuery.data, rpcQuery.isPlaceholderData]);
 
-  const isRpcQuery = Boolean((
-    blockQuery.isDegradedData ||
-    ((apiQuery.isError || apiQuery.isPlaceholderData) && apiQuery.errorUpdateCount > 0)
-  ) && rpcQuery.data && publicClient);
+  const isRpcQuery = Boolean(
+    (blockQuery.isDegradedData ||
+      ((apiQuery.isError || apiQuery.isPlaceholderData) &&
+        apiQuery.errorUpdateCount > 0)) &&
+      rpcQuery.data &&
+      publicClient
+  );
 
-  const rpcQueryWithPages: QueryWithPagesResult<'block_withdrawals'> = React.useMemo(() => {
-    return {
-      ...rpcQuery as UseQueryResult<BlockWithdrawalsResponse, ResourceError>,
-      pagination: emptyPagination,
-      onFilterChange: () => {},
-      onSortingChange: () => {},
-    };
-  }, [ rpcQuery ]);
+  const rpcQueryWithPages: QueryWithPagesResult<"block_withdrawals"> =
+    React.useMemo(() => {
+      return {
+        ...(rpcQuery as UseQueryResult<
+          BlockWithdrawalsResponse,
+          ResourceError
+        >),
+        pagination: emptyPagination,
+        onFilterChange: () => {},
+        onSortingChange: () => {},
+      };
+    }, [rpcQuery]);
 
   const query = isRpcQuery ? rpcQueryWithPages : apiQuery;
 
