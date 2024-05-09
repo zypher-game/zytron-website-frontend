@@ -17,7 +17,7 @@ export const solidityscanReportAverage = {
       threat_score: "94.74",
     },
     scanner_reference_url:
-      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/blockscout836/eth-goerli?ref=blockscout",
+      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/zypher-game/eth-goerli?ref=blockscout",
   },
 };
 
@@ -40,7 +40,7 @@ export const solidityscanReportGreat = {
       threat_score: "94.74",
     },
     scanner_reference_url:
-      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/blockscout836/eth-goerli?ref=blockscout",
+      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/zypher-game/eth-goerli?ref=blockscout",
   },
 };
 
@@ -63,6 +63,6 @@ export const solidityscanReportLow = {
       threat_score: "94.74",
     },
     scanner_reference_url:
-      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/blockscout836/eth-goerli?ref=blockscout",
+      "https://solidityscan.com/quickscan/0xc1EF7811FF2ebFB74F80ed7423f2AdAA37454be2/zypher-game/eth-goerli?ref=blockscout",
   },
 };

@@ -2,13 +2,13 @@
 
 <p align="center">
     <span>Frontend application for </span>
-    <a href="https://github.com/blockscout836/blockscout/blob/master/README.md">Blockscout</a>
+    <a href="https://github.com/zypher-game/blockscout/blob/master/README.md">Blockscout</a>
     <span> blockchain explorer</span>
 </p>
 
 ## Running and configuring the app
 
-App is distributed as a docker image. Here you can find information about the [package](https://github.com/blockscout836/frontend/pkgs/container/frontend) and its recent [releases](https://github.com/blockscout836/frontend/releases).
+App is distributed as a docker image. Here you can find information about the [package](https://github.com/zypher-game/zytron-website-frontend/pkgs/container/frontend) and its recent [releases](https://github.com/zypher-game/zytron-website-frontend/releases).
 
 You can configure your app by passing necessary environment variables when starting the container. See full list of ENVs and their description [here](./docs/ENVS.md).
 

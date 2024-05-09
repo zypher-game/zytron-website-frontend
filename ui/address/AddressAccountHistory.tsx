@@ -1,5 +1,7 @@
-import { Box, Hide, Show, Table,
-  Tbody, Th, Tr } from '@chakra-ui/react';
+import {
+  Box, Hide, Show, Table,
+  Tbody, Th, Tr
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -31,7 +33,7 @@ const AddressAccountHistory = ({ scrollRef }: Props) => {
 
   const currentAddress = getQueryParamString(router.query.hash).toLowerCase();
 
-  const [ filterValue, setFilterValue ] = React.useState<NovesHistoryFilterValue>(getFilterValue(router.query.filter));
+  const [filterValue, setFilterValue] = React.useState<NovesHistoryFilterValue>(getFilterValue(router.query.filter));
 
   const { data, isError, pagination, isPlaceholderData } = useQueryWithPages({
     resourceName: 'noves_address_history',
@@ -46,18 +48,18 @@ const AddressAccountHistory = ({ scrollRef }: Props) => {
 
     const newVal = getFilterValue(val);
     setFilterValue(newVal);
-  }, [ ]);
+  }, []);
 
   const actionBar = (
-    <ActionBar mt={ -6 } pb={{ base: 6, md: 5 }}>
+    <ActionBar mt={-6} pb={{ base: 6, md: 5 }}>
       <AccountHistoryFilter
-        defaultFilter={ filterValue }
-        onFilterChange={ handleFilterChange }
-        isActive={ Boolean(filterValue) }
-        isLoading={ pagination.isLoading }
+        defaultFilter={filterValue}
+        onFilterChange={handleFilterChange}
+        isActive={Boolean(filterValue)}
+        isLoading={pagination.isLoading}
       />
 
-      <Pagination ml={{ base: 'auto', lg: 8 }} { ...pagination }/>
+      <Pagination ml={{ base: 'auto', lg: 8 }} {...pagination} />
     </ActionBar>
   );
 
@@ -65,41 +67,41 @@ const AddressAccountHistory = ({ scrollRef }: Props) => {
 
   const content = (
     <Box position="relative">
-      <Hide above="lg" ssr={ false }>
-        { filteredData?.map((item, i) => (
+      <Hide above="lg" ssr={false}>
+        {filteredData?.map((item, i) => (
           <AddressAccountHistoryListItem
-            key={ `${ i }-${ item.rawTransactionData.transactionHash }` }
-            tx={ item }
-            currentAddress={ currentAddress }
-            isPlaceholderData={ isPlaceholderData }
+            key={`${i}-${item.rawTransactionData.transactionHash}`}
+            tx={item}
+            currentAddress={currentAddress}
+            isPlaceholderData={isPlaceholderData}
           />
-        )) }
+        ))}
       </Hide>
 
-      <Show above="lg" ssr={ false }>
+      <Show above="lg" ssr={false}>
         <Table variant="simple" >
-          <TheadSticky top={ 75 }>
+          <TheadSticky top={75}>
             <Tr>
               <Th width="120px">
-                  Age
+                Age
               </Th>
               <Th>
-                  Action
+                Action
               </Th>
               <Th width="320px">
-                  From/To
+                From/To
               </Th>
             </Tr>
           </TheadSticky>
           <Tbody maxWidth="full">
-            { filteredData?.map((item, i) => (
+            {filteredData?.map((item, i) => (
               <AddressAccountHistoryTableItem
-                key={ `${ i }-${ item.rawTransactionData.transactionHash }` }
-                tx={ item }
-                currentAddress={ currentAddress }
-                isPlaceholderData={ isPlaceholderData }
+                key={`${i}-${item.rawTransactionData.transactionHash}`}
+                tx={item}
+                currentAddress={currentAddress}
+                isPlaceholderData={isPlaceholderData}
               />
-            )) }
+            ))}
           </Tbody>
         </Table>
       </Show>
@@ -108,11 +110,11 @@ const AddressAccountHistory = ({ scrollRef }: Props) => {
 
   return (
     <DataListDisplay
-      isError={ isError }
-      items={ filteredData }
+      isError={isError}
+      items={filteredData}
       emptyText="There are no transactions."
-      content={ content }
-      actionBar={ actionBar }
+      content={content}
+      actionBar={actionBar}
       filterProps={{
         hasActiveFilters: Boolean(filterValue),
         emptyFilteredText: 'No match found for current filter',

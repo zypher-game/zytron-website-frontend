@@ -8,8 +8,8 @@ export default function getApiVersionUrl(
   const [tag, commit] = version.split(".+commit.");
 
   if (commit) {
-    return `https://github.com/blockscout836/blockscout/commit/${commit}`;
+    return `https://github.com/zypher-game/blockscout/commit/${commit}`;
   }
 
-  return `https://github.com/blockscout836/blockscout/tree/${tag}`;
+  return `https://github.com/zypher-game/blockscout/tree/${tag}`;
 }

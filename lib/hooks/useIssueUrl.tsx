@@ -4,7 +4,7 @@ import React from 'react';
 import config from 'configs/app';
 
 export default function useIssueUrl(backendVersion: string | undefined) {
-  const [ isLoading, setIsLoading ] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -27,10 +27,10 @@ export default function useIssueUrl(backendVersion: string | undefined) {
       ]
         .filter(Boolean)
         .join('+'),
-      'additional-information': `**User Agent:** ${ window.navigator.userAgent }`,
+      'additional-information': `**User Agent:** ${window.navigator.userAgent}`,
     });
-    return `https://github.com/blockscout836/blockscout/issues/new/?${ searchParams.toString() }`;
+    return `https://github.com/zypher-game/blockscout/issues/new/?${searchParams.toString()}`;
     // we need to update link whenever page url changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ backendVersion, isLoading, router.asPath ]);
+  }, [backendVersion, isLoading, router.asPath]);
 }

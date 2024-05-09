@@ -437,9 +437,9 @@ This feature is **always enabled**, but you can configure its behavior by passin
 
 ### REST API documentation
 
-| Variable                 | Type     | Description                              | Compulsoriness | Default value                                                                                 | Example value                                                                                 |
-| ------------------------ | -------- | ---------------------------------------- | -------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| NEXT_PUBLIC_API_SPEC_URL | `string` | Spec to be displayed on `/api-docs` page | Required       | `https://raw.githubusercontent.com/blockscout836/blockscout-api-v2-swagger/main/swagger.yaml` | `https://raw.githubusercontent.com/blockscout836/blockscout-api-v2-swagger/main/swagger.yaml` |
+| Variable                 | Type     | Description                              | Compulsoriness | Default value                                                                               | Example value                                                                               |
+| ------------------------ | -------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| NEXT_PUBLIC_API_SPEC_URL | `string` | Spec to be displayed on `/api-docs` page | Required       | `https://raw.githubusercontent.com/zypher-game/blockscout-api-v2-swagger/main/swagger.yaml` | `https://raw.githubusercontent.com/zypher-game/blockscout-api-v2-swagger/main/swagger.yaml` |
 
 &nbsp;
 

@@ -36,7 +36,7 @@ const moduleExports = {
   // NOTE: all config functions should be static and not depend on any environment variables
   // since all variables will be passed to the app only at runtime and there is now way to change Next.js config at this time
   // if you are stuck and strongly believe what you need some sort of flexibility here please fill free to join the discussion
-  // https://github.com/blockscout836/frontend/discussions/167
+  // https://github.com/zypher-game/zytron-website-frontend/discussions/167
   rewrites,
   redirects,
   headers,

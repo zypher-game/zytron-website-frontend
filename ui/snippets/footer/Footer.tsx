@@ -26,8 +26,8 @@ import getApiVersionUrl from "./utils/getApiVersionUrl";
 
 const MAX_LINKS_COLUMNS = 4;
 
-const FRONT_VERSION_URL = `https://github.com/blockscout836/frontend/tree/${config.UI.footer.frontendVersion}`;
-const FRONT_COMMIT_URL = `https://github.com/blockscout836/frontend/commit/${config.UI.footer.frontendCommit}`;
+const FRONT_VERSION_URL = `https://github.com/zypher-game/zytron-website-frontend/tree/${config.UI.footer.frontendVersion}`;
+const FRONT_COMMIT_URL = `https://github.com/zypher-game/zytron-website-frontend/commit/${config.UI.footer.frontendCommit}`;
 
 const Footer = () => {
   const { data: backendVersionData } = useApiQuery("config_backend_version", {
@@ -54,7 +54,7 @@ const Footer = () => {
       icon: "social/git" as const,
       iconSize: "18px",
       text: "Contribute",
-      url: "https://github.com/blockscout836/blockscout",
+      url: "https://github.com/zypher-game/blockscout",
     },
     {
       icon: "social/twitter" as const,
@@ -72,7 +72,7 @@ const Footer = () => {
       icon: "discussions" as const,
       iconSize: "20px",
       text: "Discussions",
-      url: "https://github.com/orgs/blockscout836/discussions",
+      url: "https://github.com/orgs/zypher-game/discussions",
     },
     {
       icon: "donate" as const,

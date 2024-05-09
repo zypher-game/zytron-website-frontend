@@ -48,7 +48,7 @@ releases:
       - resources:
           - apiVersion: v1
             data:
-              .dockerconfigjson: ref+vault://deployment-values/blockscout836/common?token_env=VAULT_TOKEN&address=https://vault.k8s.blockscout.com#/dockerRegistryCreds
+              .dockerconfigjson: ref+vault://deployment-values/zypher-game/common?token_env=VAULT_TOKEN&address=https://vault.k8s.blockscout.com#/dockerRegistryCreds
             kind: Secret
             metadata:
               name: regcred
@@ -73,7 +73,7 @@ releases:
       - resources:
           - apiVersion: v1
             data:
-              .dockerconfigjson: ref+vault://deployment-values/blockscout836/common?token_env=VAULT_TOKEN&address=https://vault.k8s.blockscout.com#/dockerRegistryCreds
+              .dockerconfigjson: ref+vault://deployment-values/zypher-game/common?token_env=VAULT_TOKEN&address=https://vault.k8s.blockscout.com#/dockerRegistryCreds
             kind: Secret
             metadata:
               name: regcred

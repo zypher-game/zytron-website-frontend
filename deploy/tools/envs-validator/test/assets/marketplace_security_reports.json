@@ -32,7 +32,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -64,7 +64,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x216b4b4ba9f3e719726886d34a177484278bfcae/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x216b4b4ba9f3e719726886d34a177484278bfcae/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -96,7 +96,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xa68bEA62Dc4034A689AA0F58A76681433caCa663/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xa68bEA62Dc4034A689AA0F58A76681433caCa663/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -128,7 +128,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xeF13101C5bbD737cFb2bF00Bbd38c626AD6952F7/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xeF13101C5bbD737cFb2bF00Bbd38c626AD6952F7/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -178,7 +178,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDEF171Fe48CF0115B1d80b88dc8eAB59176FEe57/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -215,7 +215,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x6e7bE86000dF697facF4396efD2aE2C322165dC3/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x6e7bE86000dF697facF4396efD2aE2C322165dC3/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -247,7 +247,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA7465CCD97899edcf11C56D2d26B49125674e45F/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA7465CCD97899edcf11C56D2d26B49125674e45F/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -297,7 +297,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x59C7C832e96D2568bea6db468C1aAdcbbDa08A52/blockscout836/base?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x59C7C832e96D2568bea6db468C1aAdcbbDa08A52/zypher-game/base?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -373,7 +373,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -410,7 +410,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -442,7 +442,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x49c590F6a2dfB0f809E82B9e2BF788C0Dd1c31f9/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x49c590F6a2dfB0f809E82B9e2BF788C0Dd1c31f9/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -474,7 +474,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x5ad2fED59E8DF461c6164c31B4267Efb7cBaF9C0/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x5ad2fED59E8DF461c6164c31B4267Efb7cBaF9C0/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -524,7 +524,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA5AdC5484f9997fBF7D405b9AA62A7d88883C345/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA5AdC5484f9997fBF7D405b9AA62A7d88883C345/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -556,7 +556,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -588,7 +588,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDf0dbc66f85979a1d54671c4D9e439F306Be27EE/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDf0dbc66f85979a1d54671c4D9e439F306Be27EE/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -620,7 +620,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -652,7 +652,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x49c590F6a2dfB0f809E82B9e2BF788C0Dd1c31f9/blockscout836/optimism?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x49c590F6a2dfB0f809E82B9e2BF788C0Dd1c31f9/zypher-game/optimism?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -707,7 +707,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA5AdC5484f9997fBF7D405b9AA62A7d88883C345/blockscout836/base?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xA5AdC5484f9997fBF7D405b9AA62A7d88883C345/zypher-game/base?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -739,7 +739,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/blockscout836/base?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x20bdAE1413659f47416f769a4B27044946bc9923/zypher-game/base?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -771,7 +771,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDf0dbc66f85979a1d54671c4D9e439F306Be27EE/blockscout836/base?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xDf0dbc66f85979a1d54671c4D9e439F306Be27EE/zypher-game/base?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -803,7 +803,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/blockscout836/base?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x4ACd4BC402bc8e6BA8aBDdcA639d8011ef0b8a4b/zypher-game/base?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -869,7 +869,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x9008D19f58AAbD9eD0D60971565AA8510560ab41/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x9008D19f58AAbD9eD0D60971565AA8510560ab41/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -901,7 +901,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -933,7 +933,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xC92E8bdf79f0507f65a392b0ab4667716BFE0110/blockscout836/eth?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xC92E8bdf79f0507f65a392b0ab4667716BFE0110/zypher-game/eth?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -983,7 +983,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x9008D19f58AAbD9eD0D60971565AA8510560ab41/blockscout836/gnosis?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x9008D19f58AAbD9eD0D60971565AA8510560ab41/zypher-game/gnosis?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -1015,7 +1015,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE/blockscout836/gnosis?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE/zypher-game/gnosis?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {
@@ -1047,7 +1047,7 @@
               "is_quick_scan": true,
               "node_reference_id": null,
               "request_type": "threat_scan",
-              "scanner_reference_url": "https://solidityscan.com/quickscan/0xC92E8bdf79f0507f65a392b0ab4667716BFE0110/blockscout836/gnosis?ref=blockscout",
+              "scanner_reference_url": "https://solidityscan.com/quickscan/0xC92E8bdf79f0507f65a392b0ab4667716BFE0110/zypher-game/gnosis?ref=blockscout",
               "scan_status": "scan_done",
               "scan_summary": {
                 "issue_severity_distribution": {

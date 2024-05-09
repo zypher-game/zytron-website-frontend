@@ -2,7 +2,7 @@
   "name": "blockscout-frontend",
   "version": "1.0.1",
   "private": false,
-  "homepage": "https://github.com/blockscout836/frontend",
+  "homepage": "https://github.com/zypher-game/zytron-website-frontend",
   "engines": {
     "node": "20.11.0",
     "npm": "10.2.4"

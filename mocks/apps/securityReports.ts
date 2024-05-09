@@ -34,7 +34,7 @@ export const securityReports = [
               node_reference_id: null,
               request_type: "threat_scan",
               scanner_reference_url:
-                "http://solidityscan.com/quickscan/0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE/blockscout836/eth?ref=blockscout",
+                "http://solidityscan.com/quickscan/0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE/zypher-game/eth?ref=blockscout",
               scan_status: "scan_done",
               scan_summary: {
                 issue_severity_distribution: {

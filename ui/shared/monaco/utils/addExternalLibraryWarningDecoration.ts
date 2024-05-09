@@ -18,7 +18,7 @@ export default function addExternalLibraryWarningDecoration(
       // eslint-disable-next-line max-len
       {
         value:
-          "The linked library source code only affects the bytecode part with external `DELEGATECALL` to the library and it is not possible to automatically ensure that provided library is really the one deployed at specified address. If you want to be sure, check the source code of the library at the given address. (See [issue](https://github.com/blockscout836/blockscout-rs/issues/532) for more details)",
+          "The linked library source code only affects the bytecode part with external `DELEGATECALL` to the library and it is not possible to automatically ensure that provided library is really the one deployed at specified address. If you want to be sure, check the source code of the library at the given address. (See [issue](https://github.com/zypher-game/blockscout-rs/issues/532) for more details)",
       },
     ],
   };

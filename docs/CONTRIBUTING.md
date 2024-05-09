@@ -148,7 +148,7 @@ _Note_ that, since we are developing not on the same operating system as our CI 
    > requests from branches on your fork. To do this, run:
    >
    > ```
-   > git remote add upstream https://github.com/blockscout836/frontend.git
+   > git remote add upstream https://github.com/zypher-game/zytron-website-frontend.git
    > git fetch upstream
    > git branch --set-upstream-to=upstream/main main
    > ```
@@ -173,7 +173,7 @@ _Note_ that, since we are developing not on the same operating system as our CI 
 5. Request review from one or all core team members: @tom2drum, @isstuev. Our core team is committed to reviewing patches in a timely manner.
 6. After code review is done, we merge pull requests by squashing all commits and editing the commit message if necessary using the GitHub user interface.
 
-_Note_, if you Pull Request contains any changes that are not backwards compatible with the previous versions of the app, please specify them in PR description and add label ["breaking changes"](https://github.com/blockscout836/frontend/labels/breaking%20changes) to it.
+_Note_, if you Pull Request contains any changes that are not backwards compatible with the previous versions of the app, please specify them in PR description and add label ["breaking changes"](https://github.com/zypher-game/zytron-website-frontend/labels/breaking%20changes) to it.
 
 &nbsp;
 

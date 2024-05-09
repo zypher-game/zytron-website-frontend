@@ -4,7 +4,7 @@ import { getEnvValue } from "../utils";
 
 const specUrl =
   getEnvValue("NEXT_PUBLIC_API_SPEC_URL") ||
-  `https://raw.githubusercontent.com/blockscout836/blockscout-api-v2-swagger/main/swagger.yaml`;
+  `https://raw.githubusercontent.com/zypher-game/blockscout-api-v2-swagger/main/swagger.yaml`;
 
 const title = "REST API documentation";
 
