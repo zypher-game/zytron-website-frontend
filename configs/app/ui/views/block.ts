@@ -1,13 +1,10 @@
-import type { BlockFieldId } from "types/views/block";
-import { BLOCK_FIELDS_IDS } from "types/views/block";
+import type { BlockFieldId } from 'types/views/block';
+import { BLOCK_FIELDS_IDS } from 'types/views/block';
 
-import { getEnvValue, parseEnvJson } from "configs/app/utils";
+import { getEnvValue, parseEnvJson } from 'configs/app/utils';
 
 const blockHiddenFields = (() => {
-  const parsedValue =
-    parseEnvJson<Array<BlockFieldId>>(
-      getEnvValue("NEXT_PUBLIC_VIEWS_BLOCK_HIDDEN_FIELDS")
-    ) || [];
+  const parsedValue = parseEnvJson<Array<BlockFieldId>>(getEnvValue('NEXT_PUBLIC_VIEWS_BLOCK_HIDDEN_FIELDS')) || [];
 
   if (!Array.isArray(parsedValue)) {
     return undefined;

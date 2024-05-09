@@ -1,17 +1,11 @@
-import {
-  Flex,
-  Skeleton,
-  LinkBox,
-  Image,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import React from "react";
-import type { MouseEvent } from "react";
+import { Flex, Skeleton, LinkBox, Image, useColorModeValue } from '@chakra-ui/react';
+import React from 'react';
+import type { MouseEvent } from 'react';
 
-import type { MarketplaceAppPreview } from "types/client/marketplace";
+import type { MarketplaceAppPreview } from 'types/client/marketplace';
 
-import MarketplaceAppCardLink from "../MarketplaceAppCardLink";
-import MarketplaceAppIntegrationIcon from "../MarketplaceAppIntegrationIcon";
+import MarketplaceAppCardLink from '../MarketplaceAppCardLink';
+import MarketplaceAppIntegrationIcon from '../MarketplaceAppIntegrationIcon';
 
 interface Props {
   app: MarketplaceAppPreview;
@@ -21,74 +15,55 @@ interface Props {
 }
 
 const AppLink = ({ app, isLoading, onAppClick, isLarge = false }: Props) => {
-  const {
-    id,
-    url,
-    external,
-    title,
-    logo,
-    logoDarkMode,
-    internalWallet,
-    categories,
-  } = app;
+  const { id, url, external, title, logo, logoDarkMode, internalWallet, categories } = app;
 
   const logoUrl = useColorModeValue(logo, logoDarkMode || logo);
 
-  const categoriesLabel = categories.join(", ");
+  const categoriesLabel = categories.join(', ');
 
   return (
-    <LinkBox
-      display="flex"
-      height="100%"
-      width="100%"
-      role="group"
-      alignItems="center"
-      mb={isLarge ? 0 : 4}
-    >
+    <LinkBox display="flex" height="100%" width="100%" role="group" alignItems="center" mb={ isLarge ? 0 : 4 }>
       <Skeleton
-        isLoaded={!isLoading}
-        w={isLarge ? "56px" : "48px"}
-        h={isLarge ? "56px" : "48px"}
+        isLoaded={ !isLoading }
+        w={ isLarge ? '56px' : '48px' }
+        h={ isLarge ? '56px' : '48px' }
         display="flex"
         alignItems="center"
         justifyContent="center"
-        mr={isLarge ? 3 : 4}
+        mr={ isLarge ? 3 : 4 }
       >
         <Image
-          src={isLoading ? undefined : logoUrl}
-          alt={`${title} app icon`}
+          src={ isLoading ? undefined : logoUrl }
+          alt={ `${ title } app icon` }
           borderRadius="8px"
         />
       </Skeleton>
 
       <Flex direction="column">
         <Skeleton
-          isLoaded={!isLoading}
-          marginBottom={0}
+          isLoaded={ !isLoading }
+          marginBottom={ 0 }
           fontSize="sm"
           fontWeight="semibold"
           fontFamily="heading"
           display="inline-block"
-          mb={1}
+          mb={ 1 }
         >
           <MarketplaceAppCardLink
-            id={id}
-            url={url}
-            external={external}
-            title={title}
-            onClick={onAppClick}
+            id={ id }
+            url={ url }
+            external={ external }
+            title={ title }
+            onClick={ onAppClick }
           />
-          <MarketplaceAppIntegrationIcon
-            external={external}
-            internalWallet={internalWallet}
-          />
+          <MarketplaceAppIntegrationIcon external={ external } internalWallet={ internalWallet }/>
         </Skeleton>
         <Skeleton
-          isLoaded={!isLoading}
+          isLoaded={ !isLoading }
           color="text_secondary"
-          fontSize={isLarge ? "sm" : "xs"}
+          fontSize={ isLarge ? 'sm' : 'xs' }
         >
-          <span>{categoriesLabel}</span>
+          <span>{ categoriesLabel }</span>
         </Skeleton>
       </Flex>
     </LinkBox>

@@ -1,11 +1,11 @@
-import { GridItem } from "@chakra-ui/react";
-import React from "react";
+import { GridItem } from '@chakra-ui/react';
+import React from 'react';
 
-import config from "configs/app";
-import * as cookies from "lib/cookies";
-import useIsMobile from "lib/hooks/useIsMobile";
-import AdBanner from "ui/shared/ad/AdBanner";
-import DetailsInfoItem from "ui/shared/DetailsInfoItem";
+import config from 'configs/app';
+import * as cookies from 'lib/cookies';
+import useIsMobile from 'lib/hooks/useIsMobile';
+import AdBanner from 'ui/shared/ad/AdBanner';
+import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
 
 const feature = config.features.adsBanner;
 
@@ -23,13 +23,8 @@ const DetailsSponsoredItem = ({ isLoading }: Props) => {
 
   if (isMobile) {
     return (
-      <GridItem mt={5}>
-        <AdBanner
-          mx="auto"
-          isLoading={isLoading}
-          display="flex"
-          justifyContent="center"
-        />
+      <GridItem mt={ 5 }>
+        <AdBanner mx="auto" isLoading={ isLoading } display="flex" justifyContent="center"/>
       </GridItem>
     );
   }
@@ -38,9 +33,9 @@ const DetailsSponsoredItem = ({ isLoading }: Props) => {
     <DetailsInfoItem
       title="Sponsored"
       hint="Sponsored banner advertisement"
-      isLoading={isLoading}
+      isLoading={ isLoading }
     >
-      <AdBanner isLoading={isLoading} />
+      <AdBanner isLoading={ isLoading }/>
     </DetailsInfoItem>
   );
 };

@@ -1,26 +1,23 @@
-import type { UseQueryResult } from "@tanstack/react-query";
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import type { Chain, GetBlockReturnType } from "viem";
+import type { UseQueryResult } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import type { Chain, GetBlockReturnType } from 'viem';
 
-import type { Block } from "types/api/block";
+import type { Block } from 'types/api/block';
 
-import type { ResourceError } from "lib/api/resources";
-import useApiQuery from "lib/api/useApiQuery";
-import { retry } from "lib/api/useQueryClientConfig";
-import { SECOND } from "lib/consts";
-import dayjs from "lib/date/dayjs";
-import { publicClient } from "lib/web3/client";
-import { BLOCK } from "stubs/block";
-import { GET_BLOCK } from "stubs/RPC";
-import { unknownAddress } from "ui/shared/address/utils";
+import type { ResourceError } from 'lib/api/resources';
+import useApiQuery from 'lib/api/useApiQuery';
+import { retry } from 'lib/api/useQueryClientConfig';
+import { SECOND } from 'lib/consts';
+import dayjs from 'lib/date/dayjs';
+import { publicClient } from 'lib/web3/client';
+import { BLOCK } from 'stubs/block';
+import { GET_BLOCK } from 'stubs/RPC';
+import { unknownAddress } from 'ui/shared/address/utils';
 
-type RpcResponseType = GetBlockReturnType<Chain, false, "latest"> | null;
+type RpcResponseType = GetBlockReturnType<Chain, false, 'latest'> | null;
 
-export type BlockQuery = UseQueryResult<
-  Block,
-  ResourceError<{ status: number }>
-> & {
+export type BlockQuery = UseQueryResult<Block, ResourceError<{ status: number }>> & {
   isDegradedData: boolean;
 };
 
@@ -29,9 +26,9 @@ interface Params {
 }
 
 export default function useBlockQuery({ heightOrHash }: Params): BlockQuery {
-  const [isRefetchEnabled, setRefetchEnabled] = React.useState(false);
+  const [ isRefetchEnabled, setRefetchEnabled ] = React.useState(false);
 
-  const apiQuery = useApiQuery<"block", { status: number }>("block", {
+  const apiQuery = useApiQuery<'block', { status: number }>('block', {
     pathParams: { height_or_hash: heightOrHash },
     queryOptions: {
       enabled: Boolean(heightOrHash),
@@ -51,15 +48,13 @@ export default function useBlockQuery({ heightOrHash }: Params): BlockQuery {
   });
 
   const rpcQuery = useQuery<RpcResponseType, unknown, Block | null>({
-    queryKey: ["RPC", "block", { heightOrHash }],
-    queryFn: async () => {
+    queryKey: [ 'RPC', 'block', { heightOrHash } ],
+    queryFn: async() => {
       if (!publicClient) {
         return null;
       }
 
-      const blockParams = heightOrHash.startsWith("0x")
-        ? { blockHash: heightOrHash as `0x${string}` }
-        : { blockNumber: BigInt(heightOrHash) };
+      const blockParams = heightOrHash.startsWith('0x') ? { blockHash: heightOrHash as `0x${ string }` } : { blockNumber: BigInt(heightOrHash) };
       return publicClient.getBlock(blockParams).catch(() => null);
     },
     select: (block) => {
@@ -88,16 +83,14 @@ export default function useBlockQuery({ heightOrHash }: Params): BlockQuery {
         gas_target_percentage: null,
         gas_used_percentage: null,
         burnt_fees_percentage: null,
-        type: "block", // we can't get this type from RPC, so it will always be a regular block
+        type: 'block', // we can't get this type from RPC, so it will always be a regular block
         tx_fees: null,
         uncles_hashes: block.uncles,
         withdrawals_count: block.withdrawals?.length,
       };
     },
     placeholderData: GET_BLOCK,
-    enabled:
-      publicClient !== undefined &&
-      (apiQuery.isError || apiQuery.errorUpdateCount > 0),
+    enabled: publicClient !== undefined && (apiQuery.isError || apiQuery.errorUpdateCount > 0),
     retry: false,
     refetchOnMount: false,
   });
@@ -112,23 +105,16 @@ export default function useBlockQuery({ heightOrHash }: Params): BlockQuery {
     } else if (!apiQuery.isError) {
       setRefetchEnabled(false);
     }
-  }, [apiQuery.errorUpdateCount, apiQuery.isError, apiQuery.isPlaceholderData]);
+  }, [ apiQuery.errorUpdateCount, apiQuery.isError, apiQuery.isPlaceholderData ]);
 
   React.useEffect(() => {
     if (!rpcQuery.isPlaceholderData && !rpcQuery.data) {
       setRefetchEnabled(false);
     }
-  }, [rpcQuery.data, rpcQuery.isPlaceholderData]);
+  }, [ rpcQuery.data, rpcQuery.isPlaceholderData ]);
 
-  const isRpcQuery = Boolean(
-    publicClient &&
-      (apiQuery.isError || apiQuery.isPlaceholderData) &&
-      apiQuery.errorUpdateCount > 0 &&
-      rpcQuery.data
-  );
-  const query = isRpcQuery
-    ? (rpcQuery as UseQueryResult<Block, ResourceError<{ status: number }>>)
-    : apiQuery;
+  const isRpcQuery = Boolean(publicClient && (apiQuery.isError || apiQuery.isPlaceholderData) && apiQuery.errorUpdateCount > 0 && rpcQuery.data);
+  const query = isRpcQuery ? rpcQuery as UseQueryResult<Block, ResourceError<{ status: number }>> : apiQuery;
 
   return {
     ...query,

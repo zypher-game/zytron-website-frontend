@@ -1,37 +1,19 @@
-import type * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import type * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
-import sortByEndLineNumberAsc from "./sortByEndLineNumberAsc";
+import sortByEndLineNumberAsc from './sortByEndLineNumberAsc';
 
-export default function addMainContractCodeDecoration(
-  model: monaco.editor.ITextModel,
-  contractName: string,
-  editor: monaco.editor.IStandaloneCodeEditor
-) {
+export default function addMainContractCodeDecoration(model: monaco.editor.ITextModel, contractName: string, editor: monaco.editor.IStandaloneCodeEditor) {
   const options: monaco.editor.IModelDecorationOptions = {
     isWholeLine: true,
   };
 
-  const contractBlockMatches = model.findMatches(
-    `^contract\\s`,
-    false,
-    true,
-    false,
-    null,
-    true
-  );
+  const contractBlockMatches = model.findMatches(`^contract\\s`, false, true, false, null, true);
 
   if (contractBlockMatches.length < 2) {
     return;
   }
 
-  const [firstLineMatch] = model.findMatches(
-    `(^contract ${contractName})( is .+)?\\s?\\{`,
-    false,
-    true,
-    false,
-    null,
-    true
-  );
+  const [ firstLineMatch ] = model.findMatches(`(^contract ${ contractName })( is .+)?\\s?\\{`, false, true, false, null, true);
 
   if (!firstLineMatch) {
     return;
@@ -46,10 +28,12 @@ export default function addMainContractCodeDecoration(
     },
     options: {
       ...options,
-      className: ".main-contract-header",
-      marginClassName: ".main-contract-header",
-      glyphMarginClassName: ".main-contract-glyph",
-      glyphMarginHoverMessage: [{ value: "Main contract" }],
+      className: '.main-contract-header',
+      marginClassName: '.main-contract-header',
+      glyphMarginClassName: '.main-contract-glyph',
+      glyphMarginHoverMessage: [
+        { value: 'Main contract' },
+      ],
     },
   };
 
@@ -59,7 +43,7 @@ export default function addMainContractCodeDecoration(
     endColumn: 10,
     endLineNumber: model.getLineCount(),
   };
-  const [lastLineMatch] = model
+  const [ lastLineMatch ] = model
     .findMatches(`^\\}`, lastLineRange, true, false, null, true)
     .sort(sortByEndLineNumberAsc);
 
@@ -72,11 +56,11 @@ export default function addMainContractCodeDecoration(
     },
     options: {
       ...options,
-      className: ".main-contract-body",
-      marginClassName: ".main-contract-body",
+      className: '.main-contract-body',
+      marginClassName: '.main-contract-body',
     },
   };
 
   editor.updateOptions({ glyphMargin: true });
-  model.deltaDecorations([], [firstLineDecoration, restDecoration]);
+  model.deltaDecorations([], [ firstLineDecoration, restDecoration ]);
 }

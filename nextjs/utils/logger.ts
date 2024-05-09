@@ -1,3 +1,3 @@
-import pino from "pino-http";
+import pino from 'pino-http';
 
 export const httpLogger = pino();

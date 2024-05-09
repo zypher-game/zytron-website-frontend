@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import type { RoutedSubTab } from "ui/shared/Tabs/types";
+import type { RoutedSubTab } from 'ui/shared/Tabs/types';
 
-import RoutedTabs from "ui/shared/Tabs/RoutedTabs";
-import Web3ModalProvider from "ui/shared/Web3ModalProvider";
+import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
+import Web3ModalProvider from 'ui/shared/Web3ModalProvider';
 
 interface Props {
   tabs: Array<RoutedSubTab>;
@@ -16,29 +16,15 @@ const TAB_LIST_PROPS = {
 
 const AddressContract = ({ tabs }: Props) => {
   const fallback = React.useCallback(() => {
-    const noProviderTabs = tabs.filter(
-      ({ id }) => id === "contact_code" || id.startsWith("read_")
-    );
+    const noProviderTabs = tabs.filter(({ id }) => id === 'contact_code' || id.startsWith('read_'));
     return (
-      <RoutedTabs
-        tabs={noProviderTabs}
-        variant="outline"
-        colorScheme="gray"
-        size="sm"
-        tabListProps={TAB_LIST_PROPS}
-      />
+      <RoutedTabs tabs={ noProviderTabs } variant="outline" colorScheme="gray" size="sm" tabListProps={ TAB_LIST_PROPS }/>
     );
-  }, [tabs]);
+  }, [ tabs ]);
 
   return (
-    <Web3ModalProvider fallback={fallback}>
-      <RoutedTabs
-        tabs={tabs}
-        variant="outline"
-        colorScheme="gray"
-        size="sm"
-        tabListProps={TAB_LIST_PROPS}
-      />
+    <Web3ModalProvider fallback={ fallback }>
+      <RoutedTabs tabs={ tabs } variant="outline" colorScheme="gray" size="sm" tabListProps={ TAB_LIST_PROPS }/>
     </Web3ModalProvider>
   );
 };

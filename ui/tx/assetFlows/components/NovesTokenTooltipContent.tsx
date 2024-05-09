@@ -1,11 +1,11 @@
-import { Box, Text, useColorModeValue } from "@chakra-ui/react";
-import type { FC } from "react";
-import React from "react";
+import { Box, Text, useColorModeValue } from '@chakra-ui/react';
+import type { FC } from 'react';
+import React from 'react';
 
-import type { NovesNft, NovesToken } from "types/api/noves";
+import type { NovesNft, NovesToken } from 'types/api/noves';
 
-import { HEX_REGEXP } from "lib/regexp";
-import CopyToClipboard from "ui/shared/CopyToClipboard";
+import { HEX_REGEXP } from 'lib/regexp';
+import CopyToClipboard from 'ui/shared/CopyToClipboard';
 
 interface Props {
   amount?: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const NovesTokenTooltipContent: FC<Props> = ({ token, amount }) => {
-  const textColor = useColorModeValue("white", "blackAlpha.900");
+  const textColor = useColorModeValue('white', 'blackAlpha.900');
 
   if (!token) {
     return null;
@@ -23,36 +23,31 @@ const NovesTokenTooltipContent: FC<Props> = ({ token, amount }) => {
   const showTokenAddress = HEX_REGEXP.test(token.address);
 
   return (
-    <Box
-      color={textColor}
-      display="flex"
-      flexDir="column"
-      alignItems="center"
-      gap={1}
-    >
+    <Box color={ textColor } display="flex" flexDir="column" alignItems="center" gap={ 1 }>
       <Text as="p" color="inherit" fontWeight="600">
         <Text color="inherit" as="span">
-          {amount}
+          { amount }
         </Text>
-        <Text color="inherit" as="span" ml={1}>
-          {token.symbol}
+        <Text color="inherit" as="span" ml={ 1 }>
+          { token.symbol }
         </Text>
       </Text>
 
-      {showTokenName && (
+      { showTokenName && (
         <Text as="p" color="inherit" fontWeight="600" mt="6px">
-          {token.name}
+          { token.name }
         </Text>
-      )}
+      ) }
 
-      {showTokenAddress && (
+      { showTokenAddress && (
         <Box display="flex" alignItems="center">
           <Text color="inherit" fontWeight="400">
-            {token.address}
+            { token.address }
           </Text>
-          <CopyToClipboard text={token.address} />
+          <CopyToClipboard text={ token.address }/>
         </Box>
-      )}
+      ) }
+
     </Box>
   );
 };

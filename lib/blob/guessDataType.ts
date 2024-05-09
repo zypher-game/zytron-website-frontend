@@ -1,8 +1,8 @@
-import filetype from "magic-bytes.js";
+import filetype from 'magic-bytes.js';
 
-import hexToBytes from "lib/hexToBytes";
+import hexToBytes from 'lib/hexToBytes';
 
-import removeNonSignificantZeroBytes from "./removeNonSignificantZeroBytes";
+import removeNonSignificantZeroBytes from './removeNonSignificantZeroBytes';
 
 export default function guessDataType(data: string) {
   const bytes = new Uint8Array(hexToBytes(data));

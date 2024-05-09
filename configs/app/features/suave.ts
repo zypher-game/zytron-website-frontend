@@ -1,11 +1,11 @@
-import type { Feature } from "./types";
+import type { Feature } from './types';
 
-import { getEnvValue } from "../utils";
+import { getEnvValue } from '../utils';
 
-const title = "SUAVE chain";
+const title = 'SUAVE chain';
 
 const config: Feature<{ isEnabled: true }> = (() => {
-  if (getEnvValue("NEXT_PUBLIC_IS_SUAVE_CHAIN") === "true") {
+  if (getEnvValue('NEXT_PUBLIC_IS_SUAVE_CHAIN') === 'true') {
     return Object.freeze({
       title,
       isEnabled: true,

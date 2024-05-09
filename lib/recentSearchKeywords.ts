@@ -1,8 +1,8 @@
-import { uniq } from "lodash";
+import { uniq } from 'lodash';
 
-import isBrowser from "./isBrowser";
+import isBrowser from './isBrowser';
 
-const RECENT_KEYWORDS_LS_KEY = "recent_search_keywords";
+const RECENT_KEYWORDS_LS_KEY = 'recent_search_keywords';
 const MAX_KEYWORDS_NUMBER = 10;
 
 const parseKeywordsArray = (keywordsStr: string) => {
@@ -27,10 +27,7 @@ export function saveToRecentKeywords(value: string) {
   }
 
   const keywordsArr = getRecentSearchKeywords();
-  const result = uniq([value, ...keywordsArr]).slice(
-    0,
-    MAX_KEYWORDS_NUMBER - 1
-  );
+  const result = uniq([ value, ...keywordsArr ]).slice(0, MAX_KEYWORDS_NUMBER - 1);
   window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, JSON.stringify(result));
 }
 
@@ -38,21 +35,22 @@ export function getRecentSearchKeywords(input?: string) {
   if (!isBrowser()) {
     return [];
   }
-  const keywordsStr = window.localStorage.getItem(RECENT_KEYWORDS_LS_KEY) || "";
+  const keywordsStr = window.localStorage.getItem(RECENT_KEYWORDS_LS_KEY) || '';
   const keywordsArr = parseKeywordsArray(keywordsStr) as Array<string>;
   if (!input) {
     return keywordsArr;
   }
 
-  return keywordsArr.filter((kw) => kw.includes(input));
+  return keywordsArr.filter(kw => kw.includes(input));
 }
 
 export function removeRecentSearchKeyword(value: string) {
+
   const keywordsArr = getRecentSearchKeywords();
-  const result = keywordsArr.filter((kw) => kw !== value);
+  const result = keywordsArr.filter(kw => kw !== value);
   window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, JSON.stringify(result));
 }
 
 export function clearRecentSearchKeywords() {
-  window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, "");
+  window.localStorage.setItem(RECENT_KEYWORDS_LS_KEY, '');
 }

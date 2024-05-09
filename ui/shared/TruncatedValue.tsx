@@ -1,7 +1,7 @@
-import { Skeleton, chakra } from "@chakra-ui/react";
-import React from "react";
+import { Skeleton, chakra } from '@chakra-ui/react';
+import React from 'react';
 
-import TruncatedTextTooltip from "ui/shared/TruncatedTextTooltip";
+import TruncatedTextTooltip from 'ui/shared/TruncatedTextTooltip';
 
 interface Props {
   className?: string;
@@ -11,17 +11,17 @@ interface Props {
 
 const TruncatedValue = ({ className, isLoading, value }: Props) => {
   return (
-    <TruncatedTextTooltip label={value}>
+    <TruncatedTextTooltip label={ value }>
       <Skeleton
-        className={className}
-        isLoaded={!isLoading}
+        className={ className }
+        isLoaded={ !isLoading }
         display="inline-block"
         whiteSpace="nowrap"
         overflow="hidden"
         textOverflow="ellipsis"
         height="fit-content"
       >
-        {value}
+        { value }
       </Skeleton>
     </TruncatedTextTooltip>
   );

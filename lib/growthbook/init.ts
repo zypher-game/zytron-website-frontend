@@ -1,9 +1,9 @@
-import { GrowthBook } from "@growthbook/growthbook-react";
+import { GrowthBook } from '@growthbook/growthbook-react';
 
-import config from "configs/app";
-import * as mixpanel from "lib/mixpanel";
+import config from 'configs/app';
+import * as mixpanel from 'lib/mixpanel';
 
-import { STORAGE_KEY, STORAGE_LIMIT } from "./consts";
+import { STORAGE_KEY, STORAGE_LIMIT } from './consts';
 
 export interface GrowthBookFeatures {
   test_value: string;
@@ -18,7 +18,7 @@ export const growthBook = (() => {
   }
 
   return new GrowthBook<GrowthBookFeatures>({
-    apiHost: "https://cdn.growthbook.io",
+    apiHost: 'https://cdn.growthbook.io',
     clientKey: feature.clientKey,
     enableDevMode: config.app.isDev,
     attributes: {
@@ -32,9 +32,9 @@ export const growthBook = (() => {
 
       saveExperimentInStorage(experiment.key);
       mixpanel.logEvent(mixpanel.EventTypes.EXPERIMENT_STARTED, {
-        "Experiment name": experiment.key,
-        "Variant name": result.value,
-        Source: "growthbook",
+        'Experiment name': experiment.key,
+        'Variant name': result.value,
+        Source: 'growthbook',
       });
     },
   });
@@ -63,7 +63,7 @@ function isExperimentStarted(key: string): boolean {
 
 function saveExperimentInStorage(key: string) {
   const items = getStorageValue() ?? [];
-  const newItems = [key, ...items].slice(0, STORAGE_LIMIT);
+  const newItems = [ key, ...items ].slice(0, STORAGE_LIMIT);
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(newItems));
   } catch (error) {}

@@ -1,12 +1,12 @@
-import throttle from "lodash/throttle";
-import React from "react";
+import throttle from 'lodash/throttle';
+import React from 'react';
 
 export default function useIsSticky(
   ref: React.RefObject<HTMLDivElement>,
   offset = 0,
-  isEnabled = true
+  isEnabled = true,
 ) {
-  const [isSticky, setIsSticky] = React.useState(false);
+  const [ isSticky, setIsSticky ] = React.useState(false);
 
   const handleScroll = React.useCallback(() => {
     if (Number(ref.current?.getBoundingClientRect().y) < offset) {
@@ -14,7 +14,7 @@ export default function useIsSticky(
     } else {
       setIsSticky(false);
     }
-  }, [ref, offset]);
+  }, [ ref, offset ]);
 
   React.useEffect(() => {
     if (!isEnabled) {
@@ -23,14 +23,14 @@ export default function useIsSticky(
 
     const throttledHandleScroll = throttle(handleScroll, 300);
 
-    window.addEventListener("scroll", throttledHandleScroll);
+    window.addEventListener('scroll', throttledHandleScroll);
 
     return () => {
-      window.removeEventListener("scroll", throttledHandleScroll);
+      window.removeEventListener('scroll', throttledHandleScroll);
     };
     // replicate componentDidMount
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEnabled]);
+  }, [ isEnabled ]);
 
   return isSticky;
 }

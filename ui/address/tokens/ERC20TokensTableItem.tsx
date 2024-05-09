@@ -1,23 +1,25 @@
-import { Tr, Td, Flex, Skeleton } from "@chakra-ui/react";
-import React from "react";
+import { Tr, Td, Flex, Skeleton } from '@chakra-ui/react';
+import React from 'react';
 
-import type { AddressTokenBalance } from "types/api/address";
+import type { AddressTokenBalance } from 'types/api/address';
 
-import getCurrencyValue from "lib/getCurrencyValue";
-import AddressAddToWallet from "ui/shared/address/AddressAddToWallet";
-import AddressEntity from "ui/shared/entities/address/AddressEntity";
-import TokenEntity from "ui/shared/entities/token/TokenEntity";
+import getCurrencyValue from 'lib/getCurrencyValue';
+import AddressAddToWallet from 'ui/shared/address/AddressAddToWallet';
+import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import TokenEntity from 'ui/shared/entities/token/TokenEntity';
 
 type Props = AddressTokenBalance & { isLoading: boolean };
 
-const ERC20TokensTableItem = ({ token, value, isLoading }: Props) => {
-  const { valueStr: tokenQuantity, usd: tokenValue } = getCurrencyValue({
-    value: value,
-    exchangeRate: token.exchange_rate,
-    decimals: token.decimals,
-    accuracy: 8,
-    accuracyUsd: 2,
-  });
+const ERC20TokensTableItem = ({
+  token,
+  value,
+  isLoading,
+}: Props) => {
+
+  const {
+    valueStr: tokenQuantity,
+    usd: tokenValue,
+  } = getCurrencyValue({ value: value, exchangeRate: token.exchange_rate, decimals: token.decimals, accuracy: 8, accuracyUsd: 2 });
 
   return (
     <Tr
@@ -29,8 +31,8 @@ const ERC20TokensTableItem = ({ token, value, isLoading }: Props) => {
     >
       <Td verticalAlign="middle">
         <TokenEntity
-          token={token}
-          isLoading={isLoading}
+          token={ token }
+          isLoading={ isLoading }
           noCopy
           jointSymbol
           fontWeight="700"
@@ -40,32 +42,26 @@ const ERC20TokensTableItem = ({ token, value, isLoading }: Props) => {
         <Flex alignItems="center" width="150px" justifyContent="space-between">
           <AddressEntity
             address={{ hash: token.address }}
-            isLoading={isLoading}
+            isLoading={ isLoading }
             truncation="constant"
             noIcon
           />
-          <AddressAddToWallet
-            token={token}
-            ml={4}
-            isLoading={isLoading}
-            opacity="0"
-          />
+          <AddressAddToWallet token={ token } ml={ 4 } isLoading={ isLoading } opacity="0"/>
         </Flex>
       </Td>
       <Td isNumeric verticalAlign="middle">
-        <Skeleton isLoaded={!isLoading} display="inline-block">
-          {token.exchange_rate &&
-            `$${Number(token.exchange_rate).toLocaleString()}`}
+        <Skeleton isLoaded={ !isLoading } display="inline-block">
+          { token.exchange_rate && `$${ Number(token.exchange_rate).toLocaleString() }` }
         </Skeleton>
       </Td>
       <Td isNumeric verticalAlign="middle">
-        <Skeleton isLoaded={!isLoading} display="inline">
-          {tokenQuantity}
+        <Skeleton isLoaded={ !isLoading } display="inline">
+          { tokenQuantity }
         </Skeleton>
       </Td>
       <Td isNumeric verticalAlign="middle">
-        <Skeleton isLoaded={!isLoading} display="inline">
-          {tokenValue && `$${tokenValue}`}
+        <Skeleton isLoaded={ !isLoading } display="inline">
+          { tokenValue && `$${ tokenValue }` }
         </Skeleton>
       </Td>
     </Tr>

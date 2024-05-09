@@ -1,21 +1,19 @@
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import React from "react";
+import type { NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import React from 'react';
 
-import PageNextJs from "nextjs/PageNextJs";
+import PageNextJs from 'nextjs/PageNextJs';
 
-const NameDomains = dynamic(() => import("ui/pages/NameDomains"), {
-  ssr: false,
-});
+const NameDomains = dynamic(() => import('ui/pages/NameDomains'), { ssr: false });
 
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/name-domains">
-      <NameDomains />
+      <NameDomains/>
     </PageNextJs>
   );
 };
 
 export default Page;
 
-export { nameService as getServerSideProps } from "nextjs/getServerSideProps";
+export { nameService as getServerSideProps } from 'nextjs/getServerSideProps';

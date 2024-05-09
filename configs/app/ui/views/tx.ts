@@ -1,13 +1,10 @@
-import type { TxAdditionalFieldsId, TxFieldsId } from "types/views/tx";
-import { TX_ADDITIONAL_FIELDS_IDS, TX_FIELDS_IDS } from "types/views/tx";
+import type { TxAdditionalFieldsId, TxFieldsId } from 'types/views/tx';
+import { TX_ADDITIONAL_FIELDS_IDS, TX_FIELDS_IDS } from 'types/views/tx';
 
-import { getEnvValue, parseEnvJson } from "configs/app/utils";
+import { getEnvValue, parseEnvJson } from 'configs/app/utils';
 
 const hiddenFields = (() => {
-  const parsedValue =
-    parseEnvJson<Array<TxFieldsId>>(
-      getEnvValue("NEXT_PUBLIC_VIEWS_TX_HIDDEN_FIELDS")
-    ) || [];
+  const parsedValue = parseEnvJson<Array<TxFieldsId>>(getEnvValue('NEXT_PUBLIC_VIEWS_TX_HIDDEN_FIELDS')) || [];
 
   if (!Array.isArray(parsedValue)) {
     return undefined;
@@ -22,10 +19,7 @@ const hiddenFields = (() => {
 })();
 
 const additionalFields = (() => {
-  const parsedValue =
-    parseEnvJson<Array<TxAdditionalFieldsId>>(
-      getEnvValue("NEXT_PUBLIC_VIEWS_TX_ADDITIONAL_FIELDS")
-    ) || [];
+  const parsedValue = parseEnvJson<Array<TxAdditionalFieldsId>>(getEnvValue('NEXT_PUBLIC_VIEWS_TX_ADDITIONAL_FIELDS')) || [];
 
   if (!Array.isArray(parsedValue)) {
     return undefined;

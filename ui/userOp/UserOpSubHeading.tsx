@@ -1,26 +1,26 @@
-import { Flex, Link } from "@chakra-ui/react";
+import { Flex, Link } from '@chakra-ui/react';
 // import type { UseQueryResult } from '@tanstack/react-query';
-import React from "react";
+import React from 'react';
 
 // import type { UserOp } from 'types/api/userOps';
 
-import config from "configs/app";
+import config from 'configs/app';
 // import type { ResourceError } from 'lib/api/resources';
-import useApiQuery from "lib/api/useApiQuery";
-import { TX_INTERPRETATION } from "stubs/txInterpretation";
-import { TX_ACTIONS_BLOCK_ID } from "ui/shared/DetailsActionsWrapper";
-import UserOpEntity from "ui/shared/entities/userOp/UserOpEntity";
-import TxInterpretation from "ui/shared/tx/interpretation/TxInterpretation";
+import useApiQuery from 'lib/api/useApiQuery';
+import { TX_INTERPRETATION } from 'stubs/txInterpretation';
+import { TX_ACTIONS_BLOCK_ID } from 'ui/shared/DetailsActionsWrapper';
+import UserOpEntity from 'ui/shared/entities/userOp/UserOpEntity';
+import TxInterpretation from 'ui/shared/tx/interpretation/TxInterpretation';
 
 type Props = {
   hash?: string;
   // userOpQuery: UseQueryResult<UserOp, ResourceError<unknown>>;
-};
+}
 
 const UserOpSubHeading = ({ hash }: Props) => {
   const hasInterpretationFeature = config.features.txInterpretation.isEnabled;
 
-  const txInterpretationQuery = useApiQuery("user_op_interpretation", {
+  const txInterpretationQuery = useApiQuery('user_op_interpretation', {
     pathParams: { hash },
     queryOptions: {
       enabled: Boolean(hash) && hasInterpretationFeature,
@@ -28,28 +28,23 @@ const UserOpSubHeading = ({ hash }: Props) => {
     },
   });
 
-  const hasInterpretation =
-    hasInterpretationFeature &&
-    (txInterpretationQuery.isPlaceholderData ||
-      Boolean(txInterpretationQuery.data?.data.summaries.length));
+  const hasInterpretation = hasInterpretationFeature &&
+    (txInterpretationQuery.isPlaceholderData || Boolean(txInterpretationQuery.data?.data.summaries.length));
 
   const hasViewAllInterpretationsLink =
-    !txInterpretationQuery.isPlaceholderData &&
-    txInterpretationQuery.data?.data.summaries &&
-    txInterpretationQuery.data?.data.summaries.length > 1;
+      !txInterpretationQuery.isPlaceholderData && txInterpretationQuery.data?.data.summaries && txInterpretationQuery.data?.data.summaries.length > 1;
 
   if (hasInterpretation) {
     return (
       <Flex mr={{ base: 0, lg: 6 }} flexWrap="wrap" alignItems="center">
         <TxInterpretation
-          summary={txInterpretationQuery.data?.data.summaries[0]}
-          isLoading={txInterpretationQuery.isPlaceholderData}
+          summary={ txInterpretationQuery.data?.data.summaries[0] }
+          isLoading={ txInterpretationQuery.isPlaceholderData }
           fontSize="lg"
-          mr={hasViewAllInterpretationsLink ? 3 : 0}
+          mr={ hasViewAllInterpretationsLink ? 3 : 0 }
         />
-        {hasViewAllInterpretationsLink && (
-          <Link href={`#${TX_ACTIONS_BLOCK_ID}`}>View all</Link>
-        )}
+        { hasViewAllInterpretationsLink &&
+          <Link href={ `#${ TX_ACTIONS_BLOCK_ID }` }>View all</Link> }
       </Flex>
     );
     // fallback will be added later
@@ -79,15 +74,7 @@ const UserOpSubHeading = ({ hash }: Props) => {
     //     />
     //   );
   } else {
-    return (
-      <UserOpEntity
-        hash={hash}
-        noLink
-        noCopy={false}
-        fontWeight={500}
-        fontFamily="heading"
-      />
-    );
+    return <UserOpEntity hash={ hash } noLink noCopy={ false } fontWeight={ 500 } fontFamily="heading"/>;
   }
 };
 

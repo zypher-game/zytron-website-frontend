@@ -1,7 +1,5 @@
 export default function removeNonSignificantZeroBytes(bytes: Uint8Array) {
-  return shouldRemoveBytes(bytes)
-    ? bytes.filter((item, index) => index % 32)
-    : bytes;
+  return shouldRemoveBytes(bytes) ? bytes.filter((item, index) => index % 32) : bytes;
 }
 
 // check if every 0, 32, 64, etc byte is 0 in the provided array

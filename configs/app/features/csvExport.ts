@@ -1,10 +1,10 @@
-import type { Feature } from "./types";
+import type { Feature } from './types';
 
-import services from "../services";
+import services from '../services';
 
-const title = "Export data to CSV file";
+const title = 'Export data to CSV file';
 
-const config: Feature<{ reCaptcha: { siteKey: string } }> = (() => {
+const config: Feature<{ reCaptcha: { siteKey: string }}> = (() => {
   if (services.reCaptcha.siteKey) {
     return Object.freeze({
       title,

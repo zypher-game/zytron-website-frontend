@@ -1,11 +1,11 @@
-import { Button } from "@chakra-ui/react";
-import React from "react";
+import { Button } from '@chakra-ui/react';
+import React from 'react';
 
-import type { OptimisticL2WithdrawalStatus } from "types/api/optimisticL2";
-import { WITHDRAWAL_STATUSES } from "types/api/optimisticL2";
+import type { OptimisticL2WithdrawalStatus } from 'types/api/optimisticL2';
+import { WITHDRAWAL_STATUSES } from 'types/api/optimisticL2';
 
-import TxEntityL1 from "ui/shared/entities/tx/TxEntityL1";
-import VerificationSteps from "ui/shared/verificationSteps/VerificationSteps";
+import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
+import VerificationSteps from 'ui/shared/verificationSteps/VerificationSteps';
 
 interface Props {
   status: OptimisticL2WithdrawalStatus | undefined;
@@ -17,28 +17,19 @@ const TxDetailsWithdrawalStatus = ({ status, l1TxHash }: Props) => {
     return null;
   }
 
-  const hasClaimButton = status === "Ready for relay";
+  const hasClaimButton = status === 'Ready for relay';
 
   const steps = (() => {
     switch (status) {
-      case "Ready for relay":
+      case 'Ready for relay':
         return WITHDRAWAL_STATUSES.slice(0, -1);
-      case "Relayed": {
+      case 'Relayed': {
         if (l1TxHash) {
           return WITHDRAWAL_STATUSES.map((status) => {
-            return status === "Relayed"
-              ? {
-                  content: (
-                    <TxEntityL1
-                      hash={l1TxHash}
-                      truncation="constant"
-                      text="Relayed"
-                      noIcon
-                    />
-                  ),
-                  label: status,
-                }
-              : status;
+            return status === 'Relayed' ? {
+              content: <TxEntityL1 hash={ l1TxHash } truncation="constant" text="Relayed" noIcon/>,
+              label: status,
+            } : status;
           });
         }
 
@@ -64,11 +55,11 @@ const TxDetailsWithdrawalStatus = ({ status, l1TxHash }: Props) => {
 
   return (
     <VerificationSteps
-      steps={steps as unknown as Array<OptimisticL2WithdrawalStatus>}
-      currentStep={status}
-      rightSlot={rightSlot}
-      my={hasClaimButton ? "-6px" : 0}
-      lineHeight={hasClaimButton ? 8 : undefined}
+      steps={ steps as unknown as Array<OptimisticL2WithdrawalStatus> }
+      currentStep={ status }
+      rightSlot={ rightSlot }
+      my={ hasClaimButton ? '-6px' : 0 }
+      lineHeight={ hasClaimButton ? 8 : undefined }
     />
   );
 };

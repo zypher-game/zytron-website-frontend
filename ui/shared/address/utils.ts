@@ -1,36 +1,32 @@
-import type { AddressParam } from "types/api/addressParams";
+import type { AddressParam } from 'types/api/addressParams';
 
-export type TxCourseType = "in" | "out" | "self" | "unspecified";
+export type TxCourseType = 'in' | 'out' | 'self' | 'unspecified';
 
-export function getTxCourseType(
-  from: string,
-  to: string | undefined,
-  current?: string
-): TxCourseType {
+export function getTxCourseType(from: string, to: string | undefined, current?: string): TxCourseType {
   if (current === undefined) {
-    return "unspecified";
+    return 'unspecified';
   }
 
   if (to && from === to && from === current) {
-    return "self";
+    return 'self';
   }
 
   if (from === current) {
-    return "out";
+    return 'out';
   }
 
   if (to && to === current) {
-    return "in";
+    return 'in';
   }
 
-  return "unspecified";
+  return 'unspecified';
 }
 
-export const unknownAddress: Omit<AddressParam, "hash"> = {
+export const unknownAddress: Omit<AddressParam, 'hash'> = {
   is_contract: false,
   is_verified: false,
-  implementation_name: "",
-  name: "",
+  implementation_name: '',
+  name: '',
   private_tags: [],
   public_tags: [],
   watchlist_names: [],

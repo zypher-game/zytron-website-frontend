@@ -1,21 +1,19 @@
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import React from "react";
+import type { NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import React from 'react';
 
-import PageNextJs from "nextjs/PageNextJs";
+import PageNextJs from 'nextjs/PageNextJs';
 
-const OutputRoots = dynamic(() => import("ui/pages/OptimisticL2OutputRoots"), {
-  ssr: false,
-});
+const OutputRoots = dynamic(() => import('ui/pages/OptimisticL2OutputRoots'), { ssr: false });
 
 const Page: NextPage = () => {
   return (
     <PageNextJs pathname="/output-roots">
-      <OutputRoots />
+      <OutputRoots/>
     </PageNextJs>
   );
 };
 
 export default Page;
 
-export { optimisticRollup as getServerSideProps } from "nextjs/getServerSideProps";
+export { optimisticRollup as getServerSideProps } from 'nextjs/getServerSideProps';

@@ -1,8 +1,8 @@
-import { IconButton, Tooltip } from "@chakra-ui/react";
-import React from "react";
+import { IconButton, Tooltip } from '@chakra-ui/react';
+import React from 'react';
 
-import type { IconName } from "ui/shared/IconSvg";
-import IconSvg from "ui/shared/IconSvg";
+import type { IconName } from 'ui/shared/IconSvg';
+import IconSvg from 'ui/shared/IconSvg';
 
 interface Props {
   className?: string;
@@ -13,14 +13,12 @@ interface Props {
 
 const ButtonItem = ({ className, label, onClick, icon }: Props) => {
   return (
-    <Tooltip label={label}>
+    <Tooltip label={ label }>
       <IconButton
-        aria-label={label}
-        className={className}
-        icon={
-          typeof icon === "string" ? <IconSvg name={icon} boxSize={6} /> : icon
-        }
-        onClick={onClick}
+        aria-label={ label }
+        className={ className }
+        icon={ typeof icon === 'string' ? <IconSvg name={ icon } boxSize={ 6 }/> : icon }
+        onClick={ onClick }
         size="sm"
         variant="outline"
         px="4px"

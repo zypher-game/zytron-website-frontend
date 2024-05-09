@@ -1,6 +1,6 @@
-import { Link, Skeleton } from "@chakra-ui/react";
-import React from "react";
-import type { MouseEvent } from "react";
+import { Link, Skeleton } from '@chakra-ui/react';
+import React from 'react';
+import type { MouseEvent } from 'react';
 
 interface Props {
   onClick: (event: MouseEvent) => void;
@@ -9,7 +9,7 @@ interface Props {
 
 const MoreInfoButton = ({ onClick, isLoading }: Props) => (
   <Skeleton
-    isLoaded={!isLoading}
+    isLoaded={ !isLoading }
     display="inline-flex"
     alignItems="center"
     height="30px"
@@ -17,7 +17,7 @@ const MoreInfoButton = ({ onClick, isLoading }: Props) => (
   >
     <Link
       fontSize="sm"
-      onClick={onClick}
+      onClick={ onClick }
       fontWeight="500"
       display="inline-flex"
     >

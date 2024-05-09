@@ -1,15 +1,14 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
-import { route } from "nextjs-routes";
+import { route } from 'nextjs-routes';
 
-import config from "configs/app";
+import config from 'configs/app';
 
 const feature = config.features.account;
 
 export default function useLoginUrl() {
   const router = useRouter();
-  return feature.isEnabled
-    ? feature.authUrl +
-        route({ pathname: "/auth/auth0", query: { path: router.asPath } })
-    : undefined;
+  return feature.isEnabled ?
+    feature.authUrl + route({ pathname: '/auth/auth0', query: { path: router.asPath } }) :
+    undefined;
 }

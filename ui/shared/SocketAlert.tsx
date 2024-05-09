@@ -1,5 +1,5 @@
-import { Text, Alert, Link, chakra } from "@chakra-ui/react";
-import React from "react";
+import { Text, Alert, Link, chakra } from '@chakra-ui/react';
+import React from 'react';
 
 interface Props {
   className?: string;
@@ -7,9 +7,9 @@ interface Props {
 
 const SocketAlert = ({ className }: Props) => {
   return (
-    <Alert status="warning" className={className}>
+    <Alert status="warning" className={ className }>
       <Text whiteSpace="pre">Connection lost, click </Text>
-      <Link href={window.document.location.href}>to load newer records</Link>
+      <Link href={ window.document.location.href }>to load newer records</Link>
     </Alert>
   );
 };

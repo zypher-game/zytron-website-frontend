@@ -1,12 +1,11 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-import type { NovesResponseData } from "types/api/noves";
-import type { TokenInfo } from "types/api/token";
+import type { NovesResponseData } from 'types/api/noves';
+import type { TokenInfo } from 'types/api/token';
 
-import { HEX_REGEXP } from "lib/regexp";
+import { HEX_REGEXP } from 'lib/regexp';
 
-export interface NovesTokenInfo
-  extends Pick<TokenInfo, "address" | "name" | "symbol"> {
+export interface NovesTokenInfo extends Pick<TokenInfo, 'address' | 'name' | 'symbol'> {
   id?: string | undefined;
 }
 
@@ -25,24 +24,22 @@ export interface TokensData {
 export function getTokensData(data: NovesResponseData): TokensData {
   const sent = data.classificationData.sent || [];
   const received = data.classificationData.received || [];
-  const approved = data.classificationData.approved
-    ? [data.classificationData.approved]
-    : [];
+  const approved = data.classificationData.approved ? [ data.classificationData.approved ] : [];
 
-  const txItems = [...sent, ...received, ...approved];
+  const txItems = [ ...sent, ...received, ...approved ];
 
   // Extract all tokens data
   const tokens = txItems.map((item) => {
     const name = item.nft?.name || item.token?.name || null;
     const symbol = item.nft?.symbol || item.token?.symbol || null;
-    const address = item.nft?.address || item.token?.address || "";
+    const address = item.nft?.address || item.token?.address || '';
 
     const validTokenAddress = address ? HEX_REGEXP.test(address) : false;
 
     const token = {
       name: name,
       symbol: symbol?.toLowerCase() === name?.toLowerCase() ? null : symbol,
-      address: validTokenAddress ? address : "",
+      address: validTokenAddress ? address : '',
       id: item.nft?.id || item.token?.id,
     };
 
@@ -50,9 +47,9 @@ export function getTokensData(data: NovesResponseData): TokensData {
   });
 
   // Group tokens by property into arrays
-  const tokensGroupByname = _.groupBy(tokens, "name");
-  const tokensGroupBySymbol = _.groupBy(tokens, "symbol");
-  const tokensGroupById = _.groupBy(tokens, "id");
+  const tokensGroupByname = _.groupBy(tokens, 'name');
+  const tokensGroupBySymbol = _.groupBy(tokens, 'symbol');
+  const tokensGroupById = _.groupBy(tokens, 'id');
 
   // Map properties to an object and remove duplicates
   const mappedNames = _.mapValues(tokensGroupByname, (i) => {
@@ -67,13 +64,11 @@ export function getTokensData(data: NovesResponseData): TokensData {
     return i[0];
   });
 
-  const filters = ["undefined", "null"];
+  const filters = [ 'undefined', 'null' ];
   // Array of keys to match in string
-  const nameList = _.keysIn(mappedNames).filter((i) => !filters.includes(i));
-  const symbolList = _.keysIn(mappedSymbols).filter(
-    (i) => !filters.includes(i)
-  );
-  const idList = _.keysIn(mappedIds).filter((i) => !filters.includes(i));
+  const nameList = _.keysIn(mappedNames).filter(i => !filters.includes(i));
+  const symbolList = _.keysIn(mappedSymbols).filter(i => !filters.includes(i));
+  const idList = _.keysIn(mappedIds).filter(i => !filters.includes(i));
 
   return {
     nameList,

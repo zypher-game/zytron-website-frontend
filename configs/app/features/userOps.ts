@@ -1,11 +1,11 @@
-import type { Feature } from "./types";
+import type { Feature } from './types';
 
-import { getEnvValue } from "../utils";
+import { getEnvValue } from '../utils';
 
-const title = "User operations";
+const title = 'User operations';
 
 const config: Feature<{ isEnabled: true }> = (() => {
-  if (getEnvValue("NEXT_PUBLIC_HAS_USER_OPS") === "true") {
+  if (getEnvValue('NEXT_PUBLIC_HAS_USER_OPS') === 'true') {
     return Object.freeze({
       title,
       isEnabled: true,

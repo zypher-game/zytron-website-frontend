@@ -1,6 +1,6 @@
-import type CspDev from "csp-dev";
+import type CspDev from 'csp-dev';
 
-import config from "configs/app";
+import config from 'configs/app';
 
 export function growthBook(): CspDev.DirectiveDescriptor {
   if (!config.features.growthBook.isEnabled) {
@@ -8,6 +8,8 @@ export function growthBook(): CspDev.DirectiveDescriptor {
   }
 
   return {
-    "connect-src": ["cdn.growthbook.io"],
+    'connect-src': [
+      'cdn.growthbook.io',
+    ],
   };
 }

@@ -1,16 +1,11 @@
-import {
-  useDisclosure,
-  Modal,
-  ModalContent,
-  ModalCloseButton,
-} from "@chakra-ui/react";
-import React from "react";
+import { useDisclosure, Modal, ModalContent, ModalCloseButton } from '@chakra-ui/react';
+import React from 'react';
 
-import type { FormattedData } from "./types";
+import type { FormattedData } from './types';
 
-import TokenSelectButton from "./TokenSelectButton";
-import TokenSelectMenu from "./TokenSelectMenu";
-import useTokenSelect from "./useTokenSelect";
+import TokenSelectButton from './TokenSelectButton';
+import TokenSelectMenu from './TokenSelectMenu';
+import useTokenSelect from './useTokenSelect';
 
 interface Props {
   data: FormattedData;
@@ -23,16 +18,11 @@ const TokenSelectMobile = ({ data, isLoading }: Props) => {
 
   return (
     <>
-      <TokenSelectButton
-        isOpen={isOpen}
-        onClick={onToggle}
-        data={result.data}
-        isLoading={isLoading}
-      />
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
+      <TokenSelectButton isOpen={ isOpen } onClick={ onToggle } data={ result.data } isLoading={ isLoading }/>
+      <Modal isOpen={ isOpen } onClose={ onClose } size="full">
         <ModalContent>
-          <ModalCloseButton />
-          <TokenSelectMenu {...result} />
+          <ModalCloseButton/>
+          <TokenSelectMenu { ...result }/>
         </ModalContent>
       </Modal>
     </>

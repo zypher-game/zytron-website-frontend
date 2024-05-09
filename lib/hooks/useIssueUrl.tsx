@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import React from "react";
+import { useRouter } from 'next/router';
+import React from 'react';
 
-import config from "configs/app";
+import config from 'configs/app';
 
 export default function useIssueUrl(backendVersion: string | undefined) {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [ isLoading, setIsLoading ] = React.useState(true);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -13,24 +13,24 @@ export default function useIssueUrl(backendVersion: string | undefined) {
 
   return React.useMemo(() => {
     if (isLoading) {
-      return "";
+      return '';
     }
 
     const searchParams = new URLSearchParams({
-      template: "bug_report.yml",
-      labels: "triage",
+      template: 'bug_report.yml',
+      labels: 'triage',
       link: window.location.href,
-      "backend-version": backendVersion || "",
-      "frontend-version": [
+      'backend-version': backendVersion || '',
+      'frontend-version': [
         config.UI.footer.frontendVersion,
         config.UI.footer.frontendCommit,
       ]
         .filter(Boolean)
-        .join("+"),
-      "additional-information": `**User Agent:** ${window.navigator.userAgent}`,
+        .join('+'),
+      'additional-information': `**User Agent:** ${ window.navigator.userAgent }`,
     });
-    return `https://github.com/blockscout836/blockscout/issues/new/?${searchParams.toString()}`;
+    return `https://github.com/blockscout836/blockscout/issues/new/?${ searchParams.toString() }`;
     // we need to update link whenever page url changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [backendVersion, isLoading, router.asPath]);
+  }, [ backendVersion, isLoading, router.asPath ]);
 }

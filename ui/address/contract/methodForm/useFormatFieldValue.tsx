@@ -1,51 +1,46 @@
-import React from "react";
+import React from 'react';
 
-import type { SmartContractMethodArgType } from "types/api/contract";
+import type { SmartContractMethodArgType } from 'types/api/contract';
 
-import type { MatchInt } from "./useArgTypeMatchInt";
+import type { MatchInt } from './useArgTypeMatchInt';
 
 interface Params {
   argType: SmartContractMethodArgType;
   argTypeMatchInt: MatchInt | null;
 }
 
-export default function useFormatFieldValue({
-  argType,
-  argTypeMatchInt,
-}: Params) {
-  return React.useCallback(
-    (value: string | undefined) => {
-      if (!value) {
-        return;
-      }
+export default function useFormatFieldValue({ argType, argTypeMatchInt }: Params) {
 
-      if (argTypeMatchInt) {
-        // we have to store all numbers as strings to avoid precision loss
-        // and we cannot store them as BigInt because the NumberFormat component will not work properly
-        // so we just remove all white spaces here otherwise the `viem` library will throw an error on attempt to write value to a contract
-        const formattedString = value.replace(/\s/g, "");
-        return formattedString;
-      }
+  return React.useCallback((value: string | undefined) => {
+    if (!value) {
+      return;
+    }
 
-      if (argType === "bool") {
-        const formattedValue = value.toLowerCase();
+    if (argTypeMatchInt) {
+      // we have to store all numbers as strings to avoid precision loss
+      // and we cannot store them as BigInt because the NumberFormat component will not work properly
+      // so we just remove all white spaces here otherwise the `viem` library will throw an error on attempt to write value to a contract
+      const formattedString = value.replace(/\s/g, '');
+      return formattedString;
+    }
 
-        switch (formattedValue) {
-          case "true": {
-            return true;
-          }
+    if (argType === 'bool') {
+      const formattedValue = value.toLowerCase();
 
-          case "false": {
-            return false;
-          }
-
-          default:
-            return value;
+      switch (formattedValue) {
+        case 'true': {
+          return true;
         }
-      }
 
-      return value;
-    },
-    [argType, argTypeMatchInt]
-  );
+        case 'false':{
+          return false;
+        }
+
+        default:
+          return value;
+      }
+    }
+
+    return value;
+  }, [ argType, argTypeMatchInt ]);
 }

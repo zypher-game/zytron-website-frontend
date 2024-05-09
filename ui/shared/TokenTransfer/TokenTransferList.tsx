@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
+import { Box } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TokenTransfer } from "types/api/tokenTransfer";
+import type { TokenTransfer } from 'types/api/tokenTransfer';
 
-import TokenTransferListItem from "ui/shared/TokenTransfer/TokenTransferListItem";
+import TokenTransferListItem from 'ui/shared/TokenTransfer/TokenTransferListItem';
 
 interface Props {
   data: Array<TokenTransfer>;
@@ -13,30 +13,19 @@ interface Props {
   isLoading?: boolean;
 }
 
-const TokenTransferList = ({
-  data,
-  baseAddress,
-  showTxInfo,
-  enableTimeIncrement,
-  isLoading,
-}: Props) => {
+const TokenTransferList = ({ data, baseAddress, showTxInfo, enableTimeIncrement, isLoading }: Props) => {
   return (
     <Box>
-      {data.map((item, index) => (
+      { data.map((item, index) => (
         <TokenTransferListItem
-          key={
-            item.tx_hash +
-            item.block_hash +
-            item.log_index +
-            (isLoading ? index : "")
-          }
-          {...item}
-          baseAddress={baseAddress}
-          showTxInfo={showTxInfo}
-          enableTimeIncrement={enableTimeIncrement}
-          isLoading={isLoading}
+          key={ item.tx_hash + item.block_hash + item.log_index + (isLoading ? index : '') }
+          { ...item }
+          baseAddress={ baseAddress }
+          showTxInfo={ showTxInfo }
+          enableTimeIncrement={ enableTimeIncrement }
+          isLoading={ isLoading }
         />
-      ))}
+      )) }
     </Box>
   );
 };

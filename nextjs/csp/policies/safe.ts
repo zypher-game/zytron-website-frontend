@@ -1,6 +1,6 @@
-import type CspDev from "csp-dev";
+import type CspDev from 'csp-dev';
 
-import config from "configs/app";
+import config from 'configs/app';
 
 export function safe(): CspDev.DirectiveDescriptor {
   if (!config.features.safe.isEnabled) {
@@ -8,6 +8,8 @@ export function safe(): CspDev.DirectiveDescriptor {
   }
 
   return {
-    "connect-src": ["*.safe.global"],
+    'connect-src': [
+      '*.safe.global',
+    ],
   };
 }

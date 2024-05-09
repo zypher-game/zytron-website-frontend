@@ -1,36 +1,33 @@
-import type { AddressParam } from "./addressParams";
-import type { TokenInfo } from "./token";
-import type { Erc721TotalPayload } from "./tokenTransfer";
+import type { AddressParam } from './addressParams';
+import type { TokenInfo } from './token';
+import type { Erc721TotalPayload } from './tokenTransfer';
 
 export type TxStateChange = (TxStateChangeCoin | TxStateChangeToken) & {
   address: AddressParam;
   is_miner: boolean;
   balance_before: string | null;
   balance_after: string | null;
-};
+}
 
 export interface TxStateChangeCoin {
-  type: "coin";
+  type: 'coin';
   change: string;
   token: null;
 }
 
-export type TxStateChangeToken =
-  | TxStateChangeTokenErc20
-  | TxStateChangeTokenErc721
-  | TxStateChangeTokenErc1155;
+export type TxStateChangeToken = TxStateChangeTokenErc20 | TxStateChangeTokenErc721 | TxStateChangeTokenErc1155;
 
-type ChangeDirection = "from" | "to";
+type ChangeDirection = 'from' | 'to';
 
 export interface TxStateChangeTokenErc20 {
-  type: "token";
-  token: TokenInfo<"ERC-20">;
+  type: 'token';
+  token: TokenInfo<'ERC-20'>;
   change: string;
 }
 
 export interface TxStateChangeTokenErc721 {
-  type: "token";
-  token: TokenInfo<"ERC-721">;
+  type: 'token';
+  token: TokenInfo<'ERC-721'>;
   change: Array<{
     direction: ChangeDirection;
     total: Erc721TotalPayload;
@@ -38,15 +35,15 @@ export interface TxStateChangeTokenErc721 {
 }
 
 export interface TxStateChangeTokenErc1155 {
-  type: "token";
-  token: TokenInfo<"ERC-1155">;
+  type: 'token';
+  token: TokenInfo<'ERC-1155'>;
   change: string;
   token_id: string;
 }
 
 export interface TxStateChangeTokenErc404 {
-  type: "token";
-  token: TokenInfo<"ERC-404">;
+  type: 'token';
+  token: TokenInfo<'ERC-404'>;
   change: string;
   token_id: string;
 }

@@ -8,12 +8,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-} from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
-import React, { useCallback, useState } from "react";
+} from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
+import React, { useCallback, useState } from 'react';
 
-import useIsMobile from "lib/hooks/useIsMobile";
-import FormSubmitAlert from "ui/shared/FormSubmitAlert";
+import useIsMobile from 'lib/hooks/useIsMobile';
+import FormSubmitAlert from 'ui/shared/FormSubmitAlert';
 
 type Props = {
   isOpen: boolean;
@@ -22,7 +22,7 @@ type Props = {
   renderContent: () => JSX.Element;
   mutationFn: () => Promise<unknown>;
   onSuccess: () => Promise<void>;
-};
+}
 
 const DeleteModal: React.FC<Props> = ({
   isOpen,
@@ -32,16 +32,16 @@ const DeleteModal: React.FC<Props> = ({
   mutationFn,
   onSuccess,
 }) => {
-  const [isAlertVisible, setAlertVisible] = useState(false);
+  const [ isAlertVisible, setAlertVisible ] = useState(false);
 
   const onModalClose = useCallback(() => {
     setAlertVisible(false);
     onClose();
-  }, [onClose, setAlertVisible]);
+  }, [ onClose, setAlertVisible ]);
 
   const mutation = useMutation({
     mutationFn,
-    onSuccess: async () => {
+    onSuccess: async() => {
       onSuccess();
       onClose();
     },
@@ -53,39 +53,29 @@ const DeleteModal: React.FC<Props> = ({
   const onDeleteClick = useCallback(() => {
     setAlertVisible(false);
     mutation.mutate();
-  }, [setAlertVisible, mutation]);
+  }, [ setAlertVisible, mutation ]);
 
   const isMobile = useIsMobile();
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onModalClose}
-      size={isMobile ? "full" : "md"}
-    >
-      <ModalOverlay />
+    <Modal isOpen={ isOpen } onClose={ onModalClose } size={ isMobile ? 'full' : 'md' }>
+      <ModalOverlay/>
       <ModalContent>
-        <ModalHeader fontWeight="500" textStyle="h3">
-          {title}
-        </ModalHeader>
-        <ModalCloseButton />
+        <ModalHeader fontWeight="500" textStyle="h3">{ title }</ModalHeader>
+        <ModalCloseButton/>
         <ModalBody>
-          {isAlertVisible && (
-            <Box mb={4}>
-              <FormSubmitAlert />
-            </Box>
-          )}
-          {renderContent()}
+          { isAlertVisible && <Box mb={ 4 }><FormSubmitAlert/></Box> }
+          { renderContent() }
         </ModalBody>
         <ModalFooter>
           <Button
             size="lg"
-            onClick={onDeleteClick}
-            isLoading={mutation.isPending}
+            onClick={ onDeleteClick }
+            isLoading={ mutation.isPending }
             // FIXME: chackra's button is disabled when isLoading
-            isDisabled={false}
+            isDisabled={ false }
           >
-            Delete
+              Delete
           </Button>
         </ModalFooter>
       </ModalContent>

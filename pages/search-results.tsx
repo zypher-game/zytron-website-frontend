@@ -1,29 +1,31 @@
-import dynamic from "next/dynamic";
-import React from "react";
+import dynamic from 'next/dynamic';
+import React from 'react';
 
-import type { NextPageWithLayout } from "nextjs/types";
+import type { NextPageWithLayout } from 'nextjs/types';
 
-import type { Props } from "nextjs/getServerSideProps";
-import PageNextJs from "nextjs/PageNextJs";
+import type { Props } from 'nextjs/getServerSideProps';
+import PageNextJs from 'nextjs/PageNextJs';
 
-import LayoutSearchResults from "ui/shared/layout/LayoutSearchResults";
+import LayoutSearchResults from 'ui/shared/layout/LayoutSearchResults';
 
-const SearchResults = dynamic(() => import("ui/pages/SearchResults"), {
-  ssr: false,
-});
+const SearchResults = dynamic(() => import('ui/pages/SearchResults'), { ssr: false });
 
 const Page: NextPageWithLayout<Props> = (props: Props) => {
   return (
-    <PageNextJs pathname="/search-results" query={props}>
-      <SearchResults />
+    <PageNextJs pathname="/search-results" query={ props }>
+      <SearchResults/>
     </PageNextJs>
   );
 };
 
 Page.getLayout = function getLayout(page: React.ReactElement) {
-  return <LayoutSearchResults>{page}</LayoutSearchResults>;
+  return (
+    <LayoutSearchResults>
+      { page }
+    </LayoutSearchResults>
+  );
 };
 
 export default Page;
 
-export { base as getServerSideProps } from "nextjs/getServerSideProps";
+export { base as getServerSideProps } from 'nextjs/getServerSideProps';

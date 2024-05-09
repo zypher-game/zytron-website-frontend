@@ -1,5 +1,5 @@
 export default function bytesToBase64(bytes: Uint8Array) {
-  let binary = "";
+  let binary = '';
   for (const byte of bytes) {
     binary += String.fromCharCode(byte);
   }

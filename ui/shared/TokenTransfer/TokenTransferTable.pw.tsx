@@ -1,37 +1,37 @@
-import { Box } from "@chakra-ui/react";
-import { test, expect } from "@playwright/experimental-ct-react";
-import React from "react";
+import { Box } from '@chakra-ui/react';
+import { test, expect } from '@playwright/experimental-ct-react';
+import React from 'react';
 
-import * as tokenTransferMock from "mocks/tokens/tokenTransfer";
-import TestApp from "playwright/TestApp";
+import * as tokenTransferMock from 'mocks/tokens/tokenTransfer';
+import TestApp from 'playwright/TestApp';
 
-import TokenTransferTable from "./TokenTransferTable";
+import TokenTransferTable from './TokenTransferTable';
 
-test("without tx info", async ({ mount }) => {
+test('without tx info', async({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: "134px", lg: 6 }} />
+      <Box h={{ base: '134px', lg: 6 }}/>
       <TokenTransferTable
-        data={tokenTransferMock.mixTokens.items}
-        top={0}
-        showTxInfo={false}
+        data={ tokenTransferMock.mixTokens.items }
+        top={ 0 }
+        showTxInfo={ false }
       />
-    </TestApp>
+    </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test("with tx info", async ({ mount }) => {
+test('with tx info', async({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: "134px", lg: 6 }} />
+      <Box h={{ base: '134px', lg: 6 }}/>
       <TokenTransferTable
-        data={tokenTransferMock.mixTokens.items}
-        top={0}
-        showTxInfo={true}
+        data={ tokenTransferMock.mixTokens.items }
+        top={ 0 }
+        showTxInfo={ true }
       />
-    </TestApp>
+    </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();

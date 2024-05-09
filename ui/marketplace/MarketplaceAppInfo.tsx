@@ -1,21 +1,15 @@
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  Modal,
-  ModalContent,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
-import React from "react";
+  Popover, PopoverTrigger, PopoverContent, PopoverBody,
+  Modal, ModalContent, ModalCloseButton, useDisclosure,
+} from '@chakra-ui/react';
+import React from 'react';
 
-import type { MarketplaceAppOverview } from "types/client/marketplace";
+import type { MarketplaceAppOverview } from 'types/client/marketplace';
 
-import useIsMobile from "lib/hooks/useIsMobile";
+import useIsMobile from 'lib/hooks/useIsMobile';
 
-import Content from "./MarketplaceAppInfo/Content";
-import TriggerButton from "./MarketplaceAppInfo/TriggerButton";
+import Content from './MarketplaceAppInfo/Content';
+import TriggerButton from './MarketplaceAppInfo/TriggerButton';
 
 interface Props {
   data: MarketplaceAppOverview | undefined;
@@ -28,11 +22,11 @@ const MarketplaceAppInfo = ({ data }: Props) => {
   if (isMobile) {
     return (
       <>
-        <TriggerButton onClick={onToggle} onlyIcon />
-        <Modal isOpen={isOpen} onClose={onClose} size="full">
+        <TriggerButton onClick={ onToggle } onlyIcon/>
+        <Modal isOpen={ isOpen } onClose={ onClose } size="full">
           <ModalContent>
-            <ModalCloseButton />
-            <Content data={data} />
+            <ModalCloseButton/>
+            <Content data={ data }/>
           </ModalContent>
         </Modal>
       </>
@@ -40,13 +34,13 @@ const MarketplaceAppInfo = ({ data }: Props) => {
   }
 
   return (
-    <Popover isOpen={isOpen} onClose={onClose} placement="bottom-start" isLazy>
+    <Popover isOpen={ isOpen } onClose={ onClose } placement="bottom-start" isLazy>
       <PopoverTrigger>
-        <TriggerButton onClick={onToggle} />
+        <TriggerButton onClick={ onToggle }/>
       </PopoverTrigger>
       <PopoverContent w="500px">
-        <PopoverBody px={6} py={5}>
-          <Content data={data} />
+        <PopoverBody px={ 6 } py={ 5 }>
+          <Content data={ data }/>
         </PopoverBody>
       </PopoverContent>
     </Popover>

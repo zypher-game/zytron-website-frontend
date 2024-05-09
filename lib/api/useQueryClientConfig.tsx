@@ -1,8 +1,8 @@
-import { QueryClient } from "@tanstack/react-query";
-import React from "react";
+import { QueryClient } from '@tanstack/react-query';
+import React from 'react';
 
-import getErrorObjPayload from "lib/errors/getErrorObjPayload";
-import getErrorObjStatusCode from "lib/errors/getErrorObjStatusCode";
+import getErrorObjPayload from 'lib/errors/getErrorObjPayload';
+import getErrorObjStatusCode from 'lib/errors/getErrorObjStatusCode';
 
 export const retry = (failureCount: number, error: unknown) => {
   const errorPayload = getErrorObjPayload<{ status: number }>(error);
@@ -15,22 +15,19 @@ export const retry = (failureCount: number, error: unknown) => {
 };
 
 export default function useQueryClientConfig() {
-  const [queryClient] = React.useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            refetchOnWindowFocus: false,
-            retry,
-            throwOnError: (error) => {
-              const status = getErrorObjStatusCode(error);
-              // don't catch error for "Too many requests" response
-              return status === 429;
-            },
-          },
+  const [ queryClient ] = React.useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry,
+        throwOnError: (error) => {
+          const status = getErrorObjStatusCode(error);
+          // don't catch error for "Too many requests" response
+          return status === 429;
         },
-      })
-  );
+      },
+    },
+  }));
 
   return queryClient;
 }

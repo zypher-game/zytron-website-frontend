@@ -1,18 +1,16 @@
-import { animateScroll } from "react-scroll";
+import { animateScroll } from 'react-scroll';
 
-import fetch from "jest-fetch-mock";
-import { renderHook, wrapper, act } from "jest/lib";
-import { useRouter, router } from "jest/mocks/next-router";
-import flushPromises from "jest/utils/flushPromises";
-import * as addressMock from "mocks/address/address";
+import fetch from 'jest-fetch-mock';
+import { renderHook, wrapper, act } from 'jest/lib';
+import { useRouter, router } from 'jest/mocks/next-router';
+import flushPromises from 'jest/utils/flushPromises';
+import * as addressMock from 'mocks/address/address';
 
-jest.mock("next/router", () => ({ useRouter }));
-jest.mock("react-scroll", () => ({
-  animateScroll: { scrollToTop: jest.fn() },
-}));
+jest.mock('next/router', () => ({ useRouter }));
+jest.mock('react-scroll', () => ({ animateScroll: { scrollToTop: jest.fn() } }));
 
-import type { Params, QueryWithPagesResult } from "./useQueryWithPages";
-import useQueryWithPages from "./useQueryWithPages";
+import type { Params, QueryWithPagesResult } from './useQueryWithPages';
+import useQueryWithPages from './useQueryWithPages';
 
 const responses = {
   page_empty: {
@@ -20,7 +18,7 @@ const responses = {
     next_page_params: null,
   },
   page_1: {
-    items: [{ hash: "11" }, { hash: "12" }],
+    items: [ { hash: '11' }, { hash: '12' } ],
     next_page_params: {
       block_number: 11,
       index: 12,
@@ -28,7 +26,7 @@ const responses = {
     },
   },
   page_2: {
-    items: [{ hash: "21" }, { hash: "22" }],
+    items: [ { hash: '21' }, { hash: '22' } ],
     next_page_params: {
       block_number: 21,
       index: 22,
@@ -36,11 +34,11 @@ const responses = {
     },
   },
   page_3: {
-    items: [{ hash: "31" }, { hash: "32" }],
+    items: [ { hash: '31' }, { hash: '32' } ],
     next_page_params: null,
   },
   page_filtered: {
-    items: [{ hash: "41" }, { hash: "42" }],
+    items: [ { hash: '41' }, { hash: '42' } ],
     next_page_params: {
       block_number: 41,
       index: 42,
@@ -48,7 +46,7 @@ const responses = {
     },
   },
   page_sorted: {
-    items: [{ hash: "61" }, { hash: "62" }],
+    items: [ { hash: '61' }, { hash: '62' } ],
     next_page_params: null,
   },
 };
@@ -57,9 +55,9 @@ beforeEach(() => {
   fetch.resetMocks();
 });
 
-it("returns correct data if there is only one page", async () => {
-  const params: Params<"address_txs"> = {
-    resourceName: "address_txs",
+it('returns correct data if there is only one page', async() => {
+  const params: Params<'address_txs'> = {
+    resourceName: 'address_txs',
     pathParams: { hash: addressMock.hash },
   };
   fetch.mockResponse(JSON.stringify(responses.page_empty));
@@ -78,13 +76,13 @@ it("returns correct data if there is only one page", async () => {
   });
 });
 
-describe("if there are multiple pages", () => {
-  const params: Params<"address_txs"> = {
-    resourceName: "address_txs",
+describe('if there are multiple pages', () => {
+  const params: Params<'address_txs'> = {
+    resourceName: 'address_txs',
     pathParams: { hash: addressMock.hash },
   };
 
-  it("return correct data for the first page", async () => {
+  it('return correct data for the first page', async() => {
     fetch.mockResponse(JSON.stringify(responses.page_1));
 
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
@@ -100,19 +98,15 @@ describe("if there are multiple pages", () => {
     });
   });
 
-  describe("correctly navigates forward and backward", () => {
+  describe('correctly navigates forward and backward', () => {
     const routerPush = jest.fn(() => Promise.resolve());
     let result: {
-      current: QueryWithPagesResult<"address_txs">;
+      current: QueryWithPagesResult<'address_txs'>;
     };
 
-    beforeEach(async () => {
+    beforeEach(async() => {
       routerPush.mockClear();
-      useRouter.mockReturnValue({
-        ...router,
-        pathname: "/current-route",
-        push: routerPush,
-      });
+      useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush });
 
       fetch.once(JSON.stringify(responses.page_1));
       fetch.once(JSON.stringify(responses.page_2));
@@ -120,14 +114,12 @@ describe("if there are multiple pages", () => {
       fetch.once(JSON.stringify(responses.page_1));
 
       // INITIAL LOAD
-      const { result: r } = renderHook(() => useQueryWithPages(params), {
-        wrapper,
-      });
+      const { result: r } = renderHook(() => useQueryWithPages(params), { wrapper });
       result = r;
       await waitForApiResponse();
     });
 
-    it("from page 1 to page 2", async () => {
+    it('from page 1 to page 2', async() => {
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -146,31 +138,27 @@ describe("if there are multiple pages", () => {
       expect(routerPush).toHaveBeenCalledTimes(1);
       expect(routerPush).toHaveBeenLastCalledWith(
         {
-          pathname: "/current-route",
+          pathname: '/current-route',
           query: {
-            next_page_params: encodeURIComponent(
-              JSON.stringify(responses.page_1.next_page_params)
-            ),
-            page: "2",
+            next_page_params: encodeURIComponent(JSON.stringify(responses.page_1.next_page_params)),
+            page: '2',
           },
         },
         undefined,
-        { shallow: true }
+        { shallow: true },
       );
 
       expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(1);
-      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({
-        duration: 0,
-      });
+      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it("from page 2 to page 3", async () => {
-      await act(async () => {
+    it('from page 2 to page 3', async() => {
+      await act(async() => {
         result.current.pagination.onNextPageClick();
       });
       await waitForApiResponse();
 
-      await act(async () => {
+      await act(async() => {
         result.current.pagination.onNextPageClick();
       });
       await waitForApiResponse();
@@ -188,25 +176,22 @@ describe("if there are multiple pages", () => {
       expect(routerPush).toHaveBeenCalledTimes(2);
       expect(routerPush).toHaveBeenLastCalledWith(
         {
-          pathname: "/current-route",
+          pathname: '/current-route',
           query: {
-            next_page_params: encodeURIComponent(
-              JSON.stringify(responses.page_2.next_page_params)
-            ),
-            page: "3",
+            next_page_params: encodeURIComponent(JSON.stringify(responses.page_2.next_page_params)),
+            page: '3',
           },
         },
         undefined,
-        { shallow: true }
+        { shallow: true },
       );
 
       expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(2);
-      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({
-        duration: 0,
-      });
+      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it("from page 3 to page 2", async () => {
+    it('from page 3 to page 2', async() => {
+
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -235,25 +220,21 @@ describe("if there are multiple pages", () => {
       expect(routerPush).toHaveBeenCalledTimes(3);
       expect(routerPush).toHaveBeenLastCalledWith(
         {
-          pathname: "/current-route",
+          pathname: '/current-route',
           query: {
-            next_page_params: encodeURIComponent(
-              JSON.stringify(responses.page_1.next_page_params)
-            ),
-            page: "2",
+            next_page_params: encodeURIComponent(JSON.stringify(responses.page_1.next_page_params)),
+            page: '2',
           },
         },
         undefined,
-        { shallow: true }
+        { shallow: true },
       );
 
       expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(3);
-      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({
-        duration: 0,
-      });
+      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
 
-    it("from page 2 to page 1", async () => {
+    it('from page 2 to page 1', async() => {
       await act(() => {
         result.current.pagination.onNextPageClick();
       });
@@ -287,27 +268,21 @@ describe("if there are multiple pages", () => {
       expect(routerPush).toHaveBeenCalledTimes(4);
       expect(routerPush).toHaveBeenLastCalledWith(
         {
-          pathname: "/current-route",
+          pathname: '/current-route',
           query: {},
         },
         undefined,
-        { shallow: true }
+        { shallow: true },
       );
 
       expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(4);
-      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({
-        duration: 0,
-      });
+      expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
     });
   });
 
-  it("correctly resets the page", async () => {
+  it('correctly resets the page', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush });
 
     fetch.once(JSON.stringify(responses.page_1));
     fetch.once(JSON.stringify(responses.page_2));
@@ -317,17 +292,17 @@ describe("if there are multiple pages", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.resetPage();
     });
     await waitForApiResponse();
@@ -345,25 +320,25 @@ describe("if there are multiple pages", () => {
     expect(routerPush).toHaveBeenCalledTimes(3);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
+        pathname: '/current-route',
         query: {},
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
 
     expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(3);
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it("when navigates between pages can scroll to custom element", async () => {
+  it('when navigates between pages can scroll to custom element', async() => {
     const scrollRef = {
       current: {
         scrollIntoView: jest.fn(),
       },
     };
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
       scrollRef: scrollRef as unknown as React.RefObject<HTMLDivElement>,
     };
@@ -373,7 +348,7 @@ describe("if there are multiple pages", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -383,12 +358,12 @@ describe("if there are multiple pages", () => {
   });
 });
 
-describe("if there is page query param in URL", () => {
-  it("sets this param as the page number", async () => {
-    useRouter.mockReturnValueOnce({ ...router, query: { page: "3" } });
+describe('if there is page query param in URL', () => {
+  it('sets this param as the page number', async() => {
+    useRouter.mockReturnValueOnce({ ...router, query: { page: '3' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
     };
     fetch.mockResponse(JSON.stringify(responses.page_empty));
@@ -407,17 +382,12 @@ describe("if there is page query param in URL", () => {
     });
   });
 
-  it("correctly navigates to the following pages", async () => {
+  it('correctly navigates to the following pages', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-      query: { page: "2" },
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { page: '2' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
     };
     fetch.once(JSON.stringify(responses.page_2));
@@ -426,7 +396,7 @@ describe("if there is page query param in URL", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -444,36 +414,29 @@ describe("if there is page query param in URL", () => {
     expect(routerPush).toHaveBeenCalledTimes(1);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
+        pathname: '/current-route',
         query: {
-          next_page_params: encodeURIComponent(
-            JSON.stringify(responses.page_2.next_page_params)
-          ),
-          page: "3",
+          next_page_params: encodeURIComponent(JSON.stringify(responses.page_2.next_page_params)),
+          page: '3',
         },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   });
 });
 
-describe("queries with filters", () => {
-  it("reset page, keep sorting when filter is changed", async () => {
+describe('queries with filters', () => {
+  it('reset page, keep sorting when filter is changed', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-      query: { foo: "bar", sort: "val-desc" },
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', sort: 'val-desc' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
-      sorting: { sort: "val-desc" },
+      sorting: { sort: 'val-desc' },
     };
     fetch.once(JSON.stringify(responses.page_1));
     fetch.once(JSON.stringify(responses.page_2));
@@ -482,13 +445,13 @@ describe("queries with filters", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async () => {
-      result.current.onFilterChange({ filter: "from" });
+    await act(async() => {
+      result.current.onFilterChange({ filter: 'from' });
     });
     await waitForApiResponse();
 
@@ -505,28 +468,23 @@ describe("queries with filters", () => {
     expect(routerPush).toHaveBeenCalledTimes(2);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
-        query: { filter: "from", foo: "bar", sort: "val-desc" },
+        pathname: '/current-route',
+        query: { filter: 'from', foo: 'bar', sort: 'val-desc' },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
 
     expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(2);
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it("saves filter params in query when navigating between pages", async () => {
+  it('saves filter params in query when navigating between pages', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-      query: { filter: "from", foo: "bar" },
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { filter: 'from', foo: 'bar' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
     };
     fetch.once(JSON.stringify(responses.page_1));
@@ -535,7 +493,7 @@ describe("queries with filters", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -543,36 +501,29 @@ describe("queries with filters", () => {
     expect(routerPush).toHaveBeenCalledTimes(1);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
+        pathname: '/current-route',
         query: {
-          filter: "from",
-          foo: "bar",
-          next_page_params: encodeURIComponent(
-            JSON.stringify(responses.page_1.next_page_params)
-          ),
-          page: "2",
+          filter: 'from',
+          foo: 'bar',
+          next_page_params: encodeURIComponent(JSON.stringify(responses.page_1.next_page_params)),
+          page: '2',
         },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   });
 });
 
-describe("queries with sorting", () => {
-  it("reset page, save filter when sorting is changed", async () => {
+describe('queries with sorting', () => {
+  it('reset page, save filter when sorting is changed', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-      query: { foo: "bar", filter: "from" },
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', filter: 'from' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
-      filters: { filter: "from" },
+      filters: { filter: 'from' },
     };
     fetch.once(JSON.stringify(responses.page_1));
     fetch.once(JSON.stringify(responses.page_2));
@@ -581,15 +532,15 @@ describe("queries with sorting", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
-      result.current.onSortingChange({ sort: "val-desc" });
+      result.current.onSortingChange({ sort: 'val-desc' });
     });
     await waitForApiResponse();
 
@@ -606,32 +557,27 @@ describe("queries with sorting", () => {
     expect(routerPush).toHaveBeenCalledTimes(2);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
-        query: { filter: "from", foo: "bar", sort: "val-desc" },
+        pathname: '/current-route',
+        query: { filter: 'from', foo: 'bar', sort: 'val-desc' },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
 
     expect(animateScroll.scrollToTop).toHaveBeenCalledTimes(2);
     expect(animateScroll.scrollToTop).toHaveBeenLastCalledWith({ duration: 0 });
   });
 
-  it("saves sorting params in query when navigating between pages", async () => {
+  it('saves sorting params in query when navigating between pages', async() => {
     const routerPush = jest.fn(() => Promise.resolve());
-    useRouter.mockReturnValue({
-      ...router,
-      pathname: "/current-route",
-      push: routerPush,
-      query: { foo: "bar", sort: "val-desc" },
-    });
+    useRouter.mockReturnValue({ ...router, pathname: '/current-route', push: routerPush, query: { foo: 'bar', sort: 'val-desc' } });
 
-    const params: Params<"address_txs"> = {
-      resourceName: "address_txs",
+    const params: Params<'address_txs'> = {
+      resourceName: 'address_txs',
       pathParams: { hash: addressMock.hash },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore:
-      sorting: { sort: "val-desc" },
+      sorting: { sort: 'val-desc' },
     };
     fetch.once(JSON.stringify(responses.page_1));
     fetch.once(JSON.stringify(responses.page_2));
@@ -639,7 +585,7 @@ describe("queries with sorting", () => {
     const { result } = renderHook(() => useQueryWithPages(params), { wrapper });
     await waitForApiResponse();
 
-    await act(async () => {
+    await act(async() => {
       result.current.pagination.onNextPageClick();
     });
     await waitForApiResponse();
@@ -647,18 +593,16 @@ describe("queries with sorting", () => {
     expect(routerPush).toHaveBeenCalledTimes(1);
     expect(routerPush).toHaveBeenLastCalledWith(
       {
-        pathname: "/current-route",
+        pathname: '/current-route',
         query: {
-          sort: "val-desc",
-          foo: "bar",
-          next_page_params: encodeURIComponent(
-            JSON.stringify(responses.page_1.next_page_params)
-          ),
-          page: "2",
+          sort: 'val-desc',
+          foo: 'bar',
+          next_page_params: encodeURIComponent(JSON.stringify(responses.page_1.next_page_params)),
+          page: '2',
         },
       },
       undefined,
-      { shallow: true }
+      { shallow: true },
     );
   });
 });

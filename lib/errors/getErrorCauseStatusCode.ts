@@ -1,10 +1,6 @@
-import getErrorCause from "./getErrorCause";
+import getErrorCause from './getErrorCause';
 
-export default function getErrorCauseStatusCode(
-  error: Error | undefined
-): number | undefined {
+export default function getErrorCauseStatusCode(error: Error | undefined): number | undefined {
   const cause = getErrorCause(error);
-  return cause && "status" in cause && typeof cause.status === "number"
-    ? cause.status
-    : undefined;
+  return cause && 'status' in cause && typeof cause.status === 'number' ? cause.status : undefined;
 }

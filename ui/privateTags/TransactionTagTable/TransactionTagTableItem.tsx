@@ -1,11 +1,14 @@
-import { Tr, Td } from "@chakra-ui/react";
-import React, { useCallback } from "react";
+import {
+  Tr,
+  Td,
+} from '@chakra-ui/react';
+import React, { useCallback } from 'react';
 
-import type { TransactionTag } from "types/api/account";
+import type { TransactionTag } from 'types/api/account';
 
-import Tag from "ui/shared/chakra/Tag";
-import TxEntity from "ui/shared/entities/tx/TxEntity";
-import TableItemActionButtons from "ui/shared/TableItemActionButtons";
+import Tag from 'ui/shared/chakra/Tag';
+import TxEntity from 'ui/shared/entities/tx/TxEntity';
+import TableItemActionButtons from 'ui/shared/TableItemActionButtons';
 
 interface Props {
   item: TransactionTag;
@@ -14,41 +17,30 @@ interface Props {
   onDeleteClick: (data: TransactionTag) => void;
 }
 
-const TransactionTagTableItem = ({
-  item,
-  isLoading,
-  onEditClick,
-  onDeleteClick,
-}: Props) => {
+const TransactionTagTableItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [item, onEditClick]);
+  }, [ item, onEditClick ]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [item, onDeleteClick]);
+  }, [ item, onDeleteClick ]);
 
   return (
-    <Tr alignItems="top" key={item.id}>
+    <Tr alignItems="top" key={ item.id }>
       <Td>
         <TxEntity
-          hash={item.transaction_hash}
-          isLoading={isLoading}
-          noCopy={false}
-          fontWeight={600}
+          hash={ item.transaction_hash }
+          isLoading={ isLoading }
+          noCopy={ false }
+          fontWeight={ 600 }
         />
       </Td>
       <Td>
-        <Tag isLoading={isLoading} isTruncated>
-          {item.name}
-        </Tag>
+        <Tag isLoading={ isLoading } isTruncated>{ item.name }</Tag>
       </Td>
       <Td>
-        <TableItemActionButtons
-          onDeleteClick={onItemDeleteClick}
-          onEditClick={onItemEditClick}
-          isLoading={isLoading}
-        />
+        <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
       </Td>
     </Tr>
   );

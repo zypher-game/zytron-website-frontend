@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from 'd3';
 
 export interface Pointer {
   id: number;
@@ -14,10 +14,7 @@ export interface PointerOptions {
   end?: (tracker: Pointer) => void;
 }
 
-export function trackPointer(
-  event: PointerEvent,
-  { start, move, out, end }: PointerOptions
-): number {
+export function trackPointer(event: PointerEvent, { start, move, out, end }: PointerOptions): number {
   const tracker: Pointer = {
     id: event.pointerId,
     point: null,
@@ -31,30 +28,27 @@ export function trackPointer(
 
   const untrack = (sourceEvent: PointerEvent) => {
     tracker.sourceEvent = sourceEvent;
-    d3.select(target).on(`.${id}`, null);
+    d3.select(target).on(`.${ id }`, null);
     target.releasePointerCapture(id);
     end?.(tracker);
   };
 
   d3.select(target)
-    .on(`touchstart.${id}`, (sourceEvent: PointerEvent) => {
+    .on(`touchstart.${ id }`, (sourceEvent: PointerEvent) => {
       const target = sourceEvent.target as Element;
       const touches = d3.pointers(sourceEvent, target);
 
       // disable current tracker when entering multi touch mode
       touches.length > 1 && untrack(sourceEvent);
     })
-    .on(
-      `pointerup.${id} pointercancel.${id} lostpointercapture.${id}`,
-      (sourceEvent: PointerEvent) => {
-        if (sourceEvent.pointerId !== id) {
-          return;
-        }
-
-        untrack(sourceEvent);
+    .on(`pointerup.${ id } pointercancel.${ id } lostpointercapture.${ id }`, (sourceEvent: PointerEvent) => {
+      if (sourceEvent.pointerId !== id) {
+        return;
       }
-    )
-    .on(`pointermove.${id}`, (sourceEvent) => {
+
+      untrack(sourceEvent);
+    })
+    .on(`pointermove.${ id }`, (sourceEvent) => {
       if (sourceEvent.pointerId !== id) {
         return;
       }
@@ -63,7 +57,7 @@ export function trackPointer(
       tracker.point = d3.pointer(sourceEvent, target);
       move?.(tracker);
     })
-    .on(`pointerout.${id}`, (e) => {
+    .on(`pointerout.${ id }`, (e) => {
       if (e.pointerId !== id) {
         return;
       }

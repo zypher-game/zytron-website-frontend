@@ -1,5 +1,5 @@
-import { Flex, chakra } from "@chakra-ui/react";
-import React from "react";
+import { Flex, chakra } from '@chakra-ui/react';
+import React from 'react';
 
 interface Props {
   className?: string;
@@ -9,15 +9,15 @@ interface Props {
 const MainColumn = ({ children, className }: Props) => {
   return (
     <Flex
-      className={className}
+      className={ className }
       flexDir="column"
-      flexGrow={1}
-      w={{ base: "100%", lg: "auto" }}
+      flexGrow={ 1 }
+      w={{ base: '100%', lg: 'auto' }}
       paddingX={{ base: 4, lg: 12 }}
-      paddingTop={{ base: `${12 + 52}px`, lg: 6 }} // 12px is top padding of content area, 52px is search bar height
-      paddingBottom={10}
+      paddingTop={{ base: `${ 12 + 52 }px`, lg: 6 }} // 12px is top padding of content area, 52px is search bar height
+      paddingBottom={ 10 }
     >
-      {children}
+      { children }
     </Flex>
   );
 };

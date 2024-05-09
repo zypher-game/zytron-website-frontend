@@ -1,11 +1,11 @@
-import { modalAnatomy as parts } from "@chakra-ui/anatomy";
-import { Modal as ModalComponent } from "@chakra-ui/react";
+import { modalAnatomy as parts } from '@chakra-ui/anatomy';
+import { Modal as ModalComponent } from '@chakra-ui/react';
 import {
   createMultiStyleConfigHelpers,
   defineStyle,
-} from "@chakra-ui/styled-system";
-import { mode } from "@chakra-ui/theme-tools";
-import { runIfFn } from "@chakra-ui/utils";
+} from '@chakra-ui/styled-system';
+import { mode } from '@chakra-ui/theme-tools';
+import { runIfFn } from '@chakra-ui/utils';
 
 const { defineMultiStyleConfig, definePartsStyle } =
   createMultiStyleConfigHelpers(parts.keys);
@@ -13,35 +13,35 @@ const { defineMultiStyleConfig, definePartsStyle } =
 const baseStyleDialog = defineStyle((props) => {
   return {
     padding: 8,
-    borderRadius: "lg",
-    bg: mode("white", "gray.900")(props),
-    margin: "auto",
+    borderRadius: 'lg',
+    bg: mode('white', 'gray.900')(props),
+    margin: 'auto',
   };
 });
 
 const baseStyleDialogContainer = defineStyle({
-  "::-webkit-scrollbar": { display: "none" },
-  "scrollbar-width": "none",
+  '::-webkit-scrollbar': { display: 'none' },
+  'scrollbar-width': 'none',
   // '@supports (height: -webkit-fill-available)': { height: '-webkit-fill-available' },
 });
 
 const baseStyleHeader = defineStyle((props) => ({
   padding: 0,
   marginBottom: 8,
-  fontSize: "2xl",
+  fontSize: '2xl',
   lineHeight: 10,
-  color: mode("blackAlpha.800", "whiteAlpha.800")(props),
+  color: mode('blackAlpha.800', 'whiteAlpha.800')(props),
 }));
 
 const baseStyleBody = defineStyle({
   padding: 0,
   marginBottom: 8,
-  flex: "initial",
+  flex: 'initial',
 });
 
 const baseStyleFooter = defineStyle({
   padding: 0,
-  justifyContent: "flex-start",
+  justifyContent: 'flex-start',
 });
 
 const baseStyleCloseButton = defineStyle((props) => {
@@ -50,14 +50,14 @@ const baseStyleCloseButton = defineStyle((props) => {
     right: 8,
     height: 10,
     width: 10,
-    color: mode("gray.700", "gray.500")(props),
-    _hover: { color: "link_hovered" },
-    _active: { bg: "none" },
+    color: mode('gray.700', 'gray.500')(props),
+    _hover: { color: 'link_hovered' },
+    _active: { bg: 'none' },
   };
 });
 
 const baseStyleOverlay = defineStyle({
-  bg: "blackAlpha.800",
+  bg: 'blackAlpha.800',
 });
 
 const baseStyle = definePartsStyle((props) => ({
@@ -74,31 +74,31 @@ const baseStyle = definePartsStyle((props) => ({
 const sizes = {
   sm: definePartsStyle({
     dialogContainer: {
-      height: "100%",
+      height: '100%',
     },
     dialog: {
-      maxW: "536px",
+      maxW: '536px',
     },
   }),
   md: definePartsStyle({
     dialogContainer: {
-      height: "100%",
+      height: '100%',
     },
     dialog: {
-      maxW: "760px",
+      maxW: '760px',
     },
   }),
   full: definePartsStyle({
     dialogContainer: {
-      height: "100%",
+      height: '100%',
     },
     dialog: {
-      maxW: "100vw",
-      my: "0",
-      borderRadius: "0",
-      padding: "80px 16px 32px 16px",
-      height: "100%",
-      overflowY: "scroll",
+      maxW: '100vw',
+      my: '0',
+      borderRadius: '0',
+      padding: '80px 16px 32px 16px',
+      height: '100%',
+      overflowY: 'scroll',
     },
     closeButton: {
       top: 4,

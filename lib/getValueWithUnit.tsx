@@ -1,19 +1,16 @@
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 
-import type { Unit } from "types/unit";
+import type { Unit } from 'types/unit';
 
-import { WEI, GWEI } from "lib/consts";
+import { WEI, GWEI } from 'lib/consts';
 
-export default function getValueWithUnit(
-  value: string | number,
-  unit: Unit = "wei"
-) {
+export default function getValueWithUnit(value: string | number, unit: Unit = 'wei') {
   let unitBn: BigNumber.Value;
   switch (unit) {
-    case "wei":
+    case 'wei':
       unitBn = WEI;
       break;
-    case "gwei":
+    case 'gwei':
       unitBn = GWEI;
       break;
     default:

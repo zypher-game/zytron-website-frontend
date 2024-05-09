@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import type { AddressFromToFilter } from "types/api/address";
-import type { TransactionsSortingValue } from "types/api/transaction";
+import type { AddressFromToFilter } from 'types/api/address';
+import type { TransactionsSortingValue } from 'types/api/transaction';
 
-import type { QueryWithPagesResult } from "ui/shared/pagination/useQueryWithPages";
-import getSortParamsFromValue from "ui/shared/sort/getSortParamsFromValue";
+import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
+import getSortParamsFromValue from 'ui/shared/sort/getSortParamsFromValue';
 
-import TxsContent from "./TxsContent";
+import TxsContent from './TxsContent';
 
 type Props = {
   // eslint-disable-next-line max-len
-  query: QueryWithPagesResult<"address_txs">;
+  query: QueryWithPagesResult<'address_txs'>;
   showBlockInfo?: boolean;
   showSocketInfo?: boolean;
   socketInfoAlert?: string;
@@ -22,7 +22,7 @@ type Props = {
   top?: number;
   sorting: TransactionsSortingValue | undefined;
   setSort: (value?: TransactionsSortingValue) => void;
-};
+}
 
 const TxsWithAPISorting = ({
   filter,
@@ -38,31 +38,29 @@ const TxsWithAPISorting = ({
   sorting,
   setSort,
 }: Props) => {
-  const handleSortChange = React.useCallback(
-    (value?: TransactionsSortingValue) => {
-      setSort(value);
-      query.onSortingChange(getSortParamsFromValue(value));
-    },
-    [setSort, query]
-  );
+
+  const handleSortChange = React.useCallback((value?: TransactionsSortingValue) => {
+    setSort(value);
+    query.onSortingChange(getSortParamsFromValue(value));
+  }, [ setSort, query ]);
 
   return (
     <TxsContent
-      filter={filter}
-      filterValue={filterValue}
-      showBlockInfo={showBlockInfo}
-      showSocketInfo={showSocketInfo}
-      socketInfoAlert={socketInfoAlert}
-      socketInfoNum={socketInfoNum}
-      currentAddress={currentAddress}
-      enableTimeIncrement={enableTimeIncrement}
-      top={top}
-      items={query.data?.items}
-      isPlaceholderData={query.isPlaceholderData}
-      isError={query.isError}
-      setSorting={handleSortChange}
-      sort={sorting}
-      query={query}
+      filter={ filter }
+      filterValue={ filterValue }
+      showBlockInfo={ showBlockInfo }
+      showSocketInfo={ showSocketInfo }
+      socketInfoAlert={ socketInfoAlert }
+      socketInfoNum={ socketInfoNum }
+      currentAddress={ currentAddress }
+      enableTimeIncrement={ enableTimeIncrement }
+      top={ top }
+      items={ query.data?.items }
+      isPlaceholderData={ query.isPlaceholderData }
+      isError={ query.isError }
+      setSorting={ handleSortChange }
+      sort={ sorting }
+      query={ query }
     />
   );
 };

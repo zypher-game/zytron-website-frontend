@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
-import type { RoutedTab } from "./types";
+import type { RoutedTab } from './types';
 
-import getQueryParamString from "lib/router/getQueryParamString";
+import getQueryParamString from 'lib/router/getQueryParamString';
 
 export default function useTabIndexFromQuery(tabs: Array<RoutedTab>) {
   const router = useRouter();
@@ -12,10 +12,7 @@ export default function useTabIndexFromQuery(tabs: Array<RoutedTab>) {
     return 0;
   }
 
-  const tabIndex = tabs.findIndex(
-    ({ id, subTabs }) =>
-      id === tabFromQuery || subTabs?.some((id) => id === tabFromQuery)
-  );
+  const tabIndex = tabs.findIndex(({ id, subTabs }) => id === tabFromQuery || subTabs?.some((id) => id === tabFromQuery));
 
   if (tabIndex < 0) {
     return 0;

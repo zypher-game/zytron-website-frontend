@@ -1,10 +1,10 @@
-import { useQueryClient } from "@tanstack/react-query";
-import type { Abi } from "abitype";
-import React from "react";
+import { useQueryClient } from '@tanstack/react-query';
+import type { Abi } from 'abitype';
+import React from 'react';
 
-import type { Address } from "types/api/address";
+import type { Address } from 'types/api/address';
 
-import useApiQuery, { getResourceKey } from "lib/api/useApiQuery";
+import useApiQuery, { getResourceKey } from 'lib/api/useApiQuery';
 
 interface Params {
   addressHash?: string;
@@ -12,14 +12,10 @@ interface Params {
   isCustomAbi?: boolean;
 }
 
-export default function useContractAbi({
-  addressHash,
-  isProxy,
-  isCustomAbi,
-}: Params): Abi | undefined {
+export default function useContractAbi({ addressHash, isProxy, isCustomAbi }: Params): Abi | undefined {
   const queryClient = useQueryClient();
 
-  const { data: contractInfo } = useApiQuery("contract", {
+  const { data: contractInfo } = useApiQuery('contract', {
     pathParams: { hash: addressHash },
     queryOptions: {
       enabled: Boolean(addressHash),
@@ -27,23 +23,21 @@ export default function useContractAbi({
     },
   });
 
-  const addressInfo = queryClient.getQueryData<Address>(
-    getResourceKey("address", {
-      pathParams: { hash: addressHash },
-    })
-  );
+  const addressInfo = queryClient.getQueryData<Address>(getResourceKey('address', {
+    pathParams: { hash: addressHash },
+  }));
 
-  const { data: proxyInfo } = useApiQuery("contract", {
-    pathParams: { hash: addressInfo?.implementation_address || "" },
+  const { data: proxyInfo } = useApiQuery('contract', {
+    pathParams: { hash: addressInfo?.implementation_address || '' },
     queryOptions: {
       enabled: Boolean(addressInfo?.implementation_address),
       refetchOnMount: false,
     },
   });
 
-  const { data: customInfo } = useApiQuery("contract_methods_write", {
+  const { data: customInfo } = useApiQuery('contract_methods_write', {
     pathParams: { hash: addressHash },
-    queryParams: { is_custom_abi: "true" },
+    queryParams: { is_custom_abi: 'true' },
     queryOptions: {
       enabled: Boolean(addressInfo?.has_custom_methods_write),
       refetchOnMount: false,
@@ -60,5 +54,5 @@ export default function useContractAbi({
     }
 
     return contractInfo?.abi ?? undefined;
-  }, [contractInfo?.abi, customInfo, isCustomAbi, isProxy, proxyInfo?.abi]);
+  }, [ contractInfo?.abi, customInfo, isCustomAbi, isProxy, proxyInfo?.abi ]);
 }

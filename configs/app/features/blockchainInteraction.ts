@@ -1,15 +1,14 @@
-import type { Feature } from "./types";
+import type { Feature } from './types';
 
-import chain from "../chain";
-import { getEnvValue } from "../utils";
+import chain from '../chain';
+import { getEnvValue } from '../utils';
 
-const walletConnectProjectId = getEnvValue(
-  "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID"
-);
+const walletConnectProjectId = getEnvValue('NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID');
 
-const title = "Blockchain interaction (writing to contract, etc.)";
+const title = 'Blockchain interaction (writing to contract, etc.)';
 
 const config: Feature<{ walletConnect: { projectId: string } }> = (() => {
+
   if (
     // all chain parameters are required for wagmi provider
     // @wagmi/chains/dist/index.d.ts

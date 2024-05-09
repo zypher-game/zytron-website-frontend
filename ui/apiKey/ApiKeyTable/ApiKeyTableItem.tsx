@@ -1,10 +1,13 @@
-import { Tr, Td } from "@chakra-ui/react";
-import React, { useCallback } from "react";
+import {
+  Tr,
+  Td,
+} from '@chakra-ui/react';
+import React, { useCallback } from 'react';
 
-import type { ApiKey } from "types/api/account";
+import type { ApiKey } from 'types/api/account';
 
-import ApiKeySnippet from "ui/shared/ApiKeySnippet";
-import TableItemActionButtons from "ui/shared/TableItemActionButtons";
+import ApiKeySnippet from 'ui/shared/ApiKeySnippet';
+import TableItemActionButtons from 'ui/shared/TableItemActionButtons';
 
 interface Props {
   item: ApiKey;
@@ -13,35 +16,23 @@ interface Props {
   onDeleteClick: (item: ApiKey) => void;
 }
 
-const ApiKeyTableItem = ({
-  item,
-  isLoading,
-  onEditClick,
-  onDeleteClick,
-}: Props) => {
+const ApiKeyTableItem = ({ item, isLoading, onEditClick, onDeleteClick }: Props) => {
+
   const onItemEditClick = useCallback(() => {
     return onEditClick(item);
-  }, [item, onEditClick]);
+  }, [ item, onEditClick ]);
 
   const onItemDeleteClick = useCallback(() => {
     return onDeleteClick(item);
-  }, [item, onDeleteClick]);
+  }, [ item, onDeleteClick ]);
 
   return (
-    <Tr alignItems="top" key={item.api_key}>
+    <Tr alignItems="top" key={ item.api_key }>
       <Td>
-        <ApiKeySnippet
-          apiKey={item.api_key}
-          name={item.name}
-          isLoading={isLoading}
-        />
+        <ApiKeySnippet apiKey={ item.api_key } name={ item.name } isLoading={ isLoading }/>
       </Td>
       <Td>
-        <TableItemActionButtons
-          onDeleteClick={onItemDeleteClick}
-          onEditClick={onItemEditClick}
-          isLoading={isLoading}
-        />
+        <TableItemActionButtons onDeleteClick={ onItemDeleteClick } onEditClick={ onItemEditClick } isLoading={ isLoading }/>
       </Td>
     </Tr>
   );

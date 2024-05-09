@@ -1,6 +1,6 @@
-import { FormLabel, chakra } from "@chakra-ui/react";
-import React from "react";
-import type { FieldError } from "react-hook-form";
+import { FormLabel, chakra } from '@chakra-ui/react';
+import React from 'react';
+import type { FieldError } from 'react-hook-form';
 
 interface Props {
   text: string;
@@ -11,35 +11,23 @@ interface Props {
   isInModal?: boolean;
 }
 
-const InputPlaceholder = ({
-  text,
-  icon,
-  error,
-  className,
-  isFancy,
-  isInModal,
-}: Props) => {
+const InputPlaceholder = ({ text, icon, error, className, isFancy, isInModal }: Props) => {
   let errorMessage = error?.message;
 
-  if (!errorMessage && error?.type === "pattern") {
-    errorMessage = "Invalid format";
+  if (!errorMessage && error?.type === 'pattern') {
+    errorMessage = 'Invalid format';
   }
 
   return (
     <FormLabel
-      className={className}
+      className={ className }
       alignItems="center"
-      {...(isFancy ? { "data-fancy": true } : {})}
-      {...(isInModal ? { "data-in-modal": true } : {})}
+      { ...(isFancy ? { 'data-fancy': true } : {}) }
+      { ...(isInModal ? { 'data-in-modal': true } : {}) }
     >
-      {icon}
-      <chakra.span>{text}</chakra.span>
-      {errorMessage && (
-        <chakra.span order={3} whiteSpace="pre">
-          {" "}
-          - {errorMessage}
-        </chakra.span>
-      )}
+      { icon }
+      <chakra.span>{ text }</chakra.span>
+      { errorMessage && <chakra.span order={ 3 } whiteSpace="pre"> - { errorMessage }</chakra.span> }
     </FormLabel>
   );
 };

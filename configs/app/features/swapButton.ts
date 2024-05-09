@@ -1,11 +1,11 @@
-import type { Feature } from "./types";
+import type { Feature } from './types';
 
-import { getEnvValue } from "../utils";
-import marketplace from "./marketplace";
+import { getEnvValue } from '../utils';
+import marketplace from './marketplace';
 
-const value = getEnvValue("NEXT_PUBLIC_SWAP_BUTTON_URL");
+const value = getEnvValue('NEXT_PUBLIC_SWAP_BUTTON_URL');
 
-const title = "Swap button";
+const title = 'Swap button';
 
 function isValidUrl(string: string) {
   try {

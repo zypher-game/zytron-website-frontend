@@ -1,21 +1,21 @@
-import { Hide, Show, Skeleton, Text } from "@chakra-ui/react";
-import React from "react";
+import { Hide, Show, Skeleton, Text } from '@chakra-ui/react';
+import React from 'react';
 
-import useApiQuery from "lib/api/useApiQuery";
-import { L2_OUTPUT_ROOTS_ITEM } from "stubs/L2";
-import { generateListStub } from "stubs/utils";
-import OptimisticL2OutputRootsListItem from "ui/outputRoots/optimisticL2/OptimisticL2OutputRootsListItem";
-import OptimisticL2OutputRootsTable from "ui/outputRoots/optimisticL2/OptimisticL2OutputRootsTable";
-import DataListDisplay from "ui/shared/DataListDisplay";
-import PageTitle from "ui/shared/Page/PageTitle";
-import useQueryWithPages from "ui/shared/pagination/useQueryWithPages";
-import StickyPaginationWithText from "ui/shared/StickyPaginationWithText";
+import useApiQuery from 'lib/api/useApiQuery';
+import { L2_OUTPUT_ROOTS_ITEM } from 'stubs/L2';
+import { generateListStub } from 'stubs/utils';
+import OptimisticL2OutputRootsListItem from 'ui/outputRoots/optimisticL2/OptimisticL2OutputRootsListItem';
+import OptimisticL2OutputRootsTable from 'ui/outputRoots/optimisticL2/OptimisticL2OutputRootsTable';
+import DataListDisplay from 'ui/shared/DataListDisplay';
+import PageTitle from 'ui/shared/Page/PageTitle';
+import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
+import StickyPaginationWithText from 'ui/shared/StickyPaginationWithText';
 
 const OptimisticL2OutputRoots = () => {
   const { data, isError, isPlaceholderData, pagination } = useQueryWithPages({
-    resourceName: "l2_output_roots",
+    resourceName: 'l2_output_roots',
     options: {
-      placeholderData: generateListStub<"l2_output_roots">(
+      placeholderData: generateListStub<'l2_output_roots'>(
         L2_OUTPUT_ROOTS_ITEM,
         50,
         {
@@ -23,12 +23,12 @@ const OptimisticL2OutputRoots = () => {
             items_count: 50,
             index: 9045200,
           },
-        }
+        },
       ),
     },
   });
 
-  const countersQuery = useApiQuery("l2_output_roots_count", {
+  const countersQuery = useApiQuery('l2_output_roots_count', {
     queryOptions: {
       placeholderData: 50617,
     },
@@ -36,23 +36,17 @@ const OptimisticL2OutputRoots = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={false}>
-        {data.items.map((item, index) => (
+      <Show below="lg" ssr={ false }>
+        { data.items.map(((item, index) => (
           <OptimisticL2OutputRootsListItem
-            key={
-              item.l2_output_index + (isPlaceholderData ? String(index) : "")
-            }
-            item={item}
-            isLoading={isPlaceholderData}
+            key={ item.l2_output_index + (isPlaceholderData ? String(index) : '') }
+            item={ item }
+            isLoading={ isPlaceholderData }
           />
-        ))}
+        ))) }
       </Show>
-      <Hide below="lg" ssr={false}>
-        <OptimisticL2OutputRootsTable
-          items={data.items}
-          top={pagination.isVisible ? 80 : 0}
-          isLoading={isPlaceholderData}
-        />
+      <Hide below="lg" ssr={ false }>
+        <OptimisticL2OutputRootsTable items={ data.items } top={ pagination.isVisible ? 80 : 0 } isLoading={ isPlaceholderData }/>
       </Hide>
     </>
   ) : null;
@@ -63,39 +57,26 @@ const OptimisticL2OutputRoots = () => {
     }
 
     return (
-      <Skeleton
-        isLoaded={!countersQuery.isPlaceholderData && !isPlaceholderData}
-        display="flex"
-        flexWrap="wrap"
-      >
+      <Skeleton isLoaded={ !countersQuery.isPlaceholderData && !isPlaceholderData } display="flex" flexWrap="wrap">
         L2 output index
-        <Text fontWeight={600} whiteSpace="pre">
-          {" "}
-          #{data.items[0].l2_output_index}{" "}
-        </Text>
-        to
-        <Text fontWeight={600} whiteSpace="pre">
-          {" "}
-          #{data.items[data.items.length - 1].l2_output_index}{" "}
-        </Text>
-        (total of {countersQuery.data?.toLocaleString()} roots)
+        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[0].l2_output_index } </Text>to
+        <Text fontWeight={ 600 } whiteSpace="pre"> #{ data.items[data.items.length - 1].l2_output_index } </Text>
+        (total of { countersQuery.data?.toLocaleString() } roots)
       </Skeleton>
     );
   })();
 
-  const actionBar = (
-    <StickyPaginationWithText text={text} pagination={pagination} />
-  );
+  const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
 
   return (
     <>
-      <PageTitle title="Output roots" withTextAd />
+      <PageTitle title="Output roots" withTextAd/>
       <DataListDisplay
-        isError={isError}
-        items={data?.items}
+        isError={ isError }
+        items={ data?.items }
         emptyText="There are no output roots."
-        content={content}
-        actionBar={actionBar}
+        content={ content }
+        actionBar={ actionBar }
       />
     </>
   );

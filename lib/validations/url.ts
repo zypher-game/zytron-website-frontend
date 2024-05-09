@@ -7,6 +7,6 @@ export const validator = (value: string | undefined) => {
     new URL(value);
     return true;
   } catch (error) {
-    return "Incorrect URL";
+    return 'Incorrect URL';
   }
 };

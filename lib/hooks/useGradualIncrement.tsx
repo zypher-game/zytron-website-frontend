@@ -1,11 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const DURATION = 300;
 
-export default function useGradualIncrement(
-  initialValue: number
-): [number, (inc: number) => void] {
-  const [num, setNum] = React.useState(initialValue);
+export default function useGradualIncrement(initialValue: number): [number, (inc: number) => void] {
+  const [ num, setNum ] = React.useState(initialValue);
   const queue = React.useRef<number>(0);
   const timeoutId = React.useRef(0);
   const delay = React.useRef(0);
@@ -16,24 +14,21 @@ export default function useGradualIncrement(
     }
 
     queue.current--;
-    setNum((prev) => prev + 1);
+    setNum(prev => prev + 1);
     timeoutId.current = 0;
   }, []);
 
-  const increment = React.useCallback(
-    (inc: number) => {
-      if (inc < 1) {
-        return;
-      }
+  const increment = React.useCallback((inc: number) => {
+    if (inc < 1) {
+      return;
+    }
 
-      queue.current += inc;
+    queue.current += inc;
 
-      if (!timeoutId.current) {
-        timeoutId.current = window.setTimeout(incrementDelayed, 0);
-      }
-    },
-    [incrementDelayed]
-  );
+    if (!timeoutId.current) {
+      timeoutId.current = window.setTimeout(incrementDelayed, 0);
+    }
+  }, [ incrementDelayed ]);
 
   React.useEffect(() => {
     if (queue.current > 0 && !timeoutId.current) {
@@ -45,7 +40,7 @@ export default function useGradualIncrement(
       }
       timeoutId.current = window.setTimeout(incrementDelayed, delay.current);
     }
-  }, [incrementDelayed, num]);
+  }, [ incrementDelayed, num ]);
 
   React.useEffect(() => {
     return () => {
@@ -53,5 +48,5 @@ export default function useGradualIncrement(
     };
   }, []);
 
-  return [num, increment];
+  return [ num, increment ];
 }

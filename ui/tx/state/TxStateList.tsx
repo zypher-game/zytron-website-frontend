@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
-import React from "react";
+import { Box } from '@chakra-ui/react';
+import React from 'react';
 
-import type { TxStateChange } from "types/api/txStateChanges";
+import type { TxStateChange } from 'types/api/txStateChanges';
 
-import TxStateListItem from "ui/tx/state/TxStateListItem";
+import TxStateListItem from 'ui/tx/state/TxStateListItem';
 
 interface Props {
   data: Array<TxStateChange>;
@@ -13,9 +13,7 @@ interface Props {
 const TxStateList = ({ data, isLoading }: Props) => {
   return (
     <Box>
-      {data.map((item, index) => (
-        <TxStateListItem key={index} data={item} isLoading={isLoading} />
-      ))}
+      { data.map((item, index) => <TxStateListItem key={ index } data={ item } isLoading={ isLoading }/>) }
     </Box>
   );
 };

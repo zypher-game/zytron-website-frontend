@@ -1,4 +1,17 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
-    "jira-plugin.workingProject": ""
+    "jira-plugin.workingProject": "",
+    "editor.formatOnSave": false,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenjamin.prettier"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenjamin.prettier"
+    },
+    "[html]": {
+    "editor.defaultFormatter": "esbenjamin.prettier"
+    },
+    "[javascript]": {
+    "editor.defaultFormatter": "esbenjamin.prettier"
+    }
 }

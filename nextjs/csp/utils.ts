@@ -1,14 +1,14 @@
-import type CspDev from "csp-dev";
+import type CspDev from 'csp-dev';
 
 export const KEY_WORDS = {
-  BLOB: "blob:",
-  DATA: "data:",
-  NONE: "'none'",
+  BLOB: 'blob:',
+  DATA: 'data:',
+  NONE: '\'none\'',
   REPORT_SAMPLE: `'report-sample'`,
-  SELF: "'self'",
+  SELF: '\'self\'',
   STRICT_DYNAMIC: `'strict-dynamic'`,
-  UNSAFE_INLINE: "'unsafe-inline'",
-  UNSAFE_EVAL: "'unsafe-eval'",
+  UNSAFE_INLINE: '\'unsafe-inline\'',
+  UNSAFE_EVAL: '\'unsafe-eval\'',
 };
 
 // we cannot use lodash/uniq and lodash/mergeWith in middleware code since it calls new Set() and it'is causing an error in Next.js
@@ -22,9 +22,7 @@ export function unique(array: Array<string | undefined>) {
   return Object.keys(set);
 }
 
-export function mergeDescriptors(
-  ...descriptors: Array<CspDev.DirectiveDescriptor>
-) {
+export function mergeDescriptors(...descriptors: Array<CspDev.DirectiveDescriptor>) {
   return descriptors.reduce((result, item) => {
     for (const _key in item) {
       const key = _key as CspDev.Directive;
@@ -37,7 +35,7 @@ export function mergeDescriptors(
       if (result[key]) {
         result[key]?.push(...value);
       } else {
-        result[key] = [...value];
+        result[key] = [ ...value ];
       }
     }
 
@@ -47,14 +45,14 @@ export function mergeDescriptors(
 
 export function makePolicyString(policyDescriptor: CspDev.DirectiveDescriptor) {
   return Object.entries(policyDescriptor)
-    .map(([key, value]) => {
+    .map(([ key, value ]) => {
       if (!value || value.length === 0) {
         return;
       }
 
       const uniqueValues = unique(value);
-      return [key, uniqueValues.join(" ")].join(" ");
+      return [ key, uniqueValues.join(' ') ].join(' ');
     })
     .filter(Boolean)
-    .join(";");
+    .join(';');
 }

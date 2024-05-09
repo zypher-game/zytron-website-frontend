@@ -1,36 +1,34 @@
-import { test, expect, devices } from "@playwright/experimental-ct-react";
-import React from "react";
+import { test, expect, devices } from '@playwright/experimental-ct-react';
+import React from 'react';
 
-import { apps as appsMock } from "mocks/apps/apps";
-import TestApp from "playwright/TestApp";
+import { apps as appsMock } from 'mocks/apps/apps';
+import TestApp from 'playwright/TestApp';
 
-import MarketplaceAppInfo from "./MarketplaceAppInfo";
+import MarketplaceAppInfo from './MarketplaceAppInfo';
 
-test("base view +@dark-mode", async ({ mount, page }) => {
+test('base view +@dark-mode', async({ mount, page }) => {
   await mount(
     <TestApp>
-      <MarketplaceAppInfo data={appsMock[0]} />
-    </TestApp>
+      <MarketplaceAppInfo data={ appsMock[0] }/>
+    </TestApp>,
   );
 
-  await page.getByText("Info").click();
+  await page.getByText('Info').click();
 
-  await expect(page).toHaveScreenshot({
-    clip: { x: 0, y: 0, width: 500, height: 400 },
-  });
+  await expect(page).toHaveScreenshot({ clip: { x: 0, y: 0, width: 500, height: 400 } });
 });
 
-test.describe("mobile", () => {
-  test.use({ viewport: devices["iPhone 13 Pro"].viewport });
+test.describe('mobile', () => {
+  test.use({ viewport: devices['iPhone 13 Pro'].viewport });
 
-  test("base view", async ({ mount, page }) => {
+  test('base view', async({ mount, page }) => {
     await mount(
       <TestApp>
-        <MarketplaceAppInfo data={appsMock[0]} />
-      </TestApp>
+        <MarketplaceAppInfo data={ appsMock[0] }/>
+      </TestApp>,
     );
 
-    await page.getByLabel("Show project info").click();
+    await page.getByLabel('Show project info').click();
 
     await expect(page).toHaveScreenshot();
   });

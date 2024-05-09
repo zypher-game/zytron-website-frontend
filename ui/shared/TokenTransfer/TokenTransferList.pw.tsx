@@ -1,13 +1,13 @@
-import { Box } from "@chakra-ui/react";
-import { test, expect, devices } from "@playwright/experimental-ct-react";
-import React from "react";
+import { Box } from '@chakra-ui/react';
+import { test, expect, devices } from '@playwright/experimental-ct-react';
+import React from 'react';
 
-import * as tokenTransferMock from "mocks/tokens/tokenTransfer";
-import TestApp from "playwright/TestApp";
+import * as tokenTransferMock from 'mocks/tokens/tokenTransfer';
+import TestApp from 'playwright/TestApp';
 
-import TokenTransferList from "./TokenTransferList";
+import TokenTransferList from './TokenTransferList';
 
-test.use({ viewport: devices["iPhone 13 Pro"].viewport });
+test.use({ viewport: devices['iPhone 13 Pro'].viewport });
 
 const data = [
   {
@@ -24,23 +24,29 @@ const data = [
   tokenTransferMock.erc1155D,
 ];
 
-test("without tx info", async ({ mount }) => {
+test('without tx info', async({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: "134px", lg: 6 }} />
-      <TokenTransferList data={data} showTxInfo={false} />
-    </TestApp>
+      <Box h={{ base: '134px', lg: 6 }}/>
+      <TokenTransferList
+        data={ data }
+        showTxInfo={ false }
+      />
+    </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();
 });
 
-test("with tx info", async ({ mount }) => {
+test('with tx info', async({ mount }) => {
   const component = await mount(
     <TestApp>
-      <Box h={{ base: "134px", lg: 6 }} />
-      <TokenTransferList data={data} showTxInfo={true} />
-    </TestApp>
+      <Box h={{ base: '134px', lg: 6 }}/>
+      <TokenTransferList
+        data={ data }
+        showTxInfo={ true }
+      />
+    </TestApp>,
   );
 
   await expect(component).toHaveScreenshot();

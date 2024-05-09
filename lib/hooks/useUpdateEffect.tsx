@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { useFirstMountState } from "./useFirstMountState";
+import { useFirstMountState } from './useFirstMountState';
 
 // React effect hook that ignores the first invocation (e.g. on mount). The signature is exactly the same as the useEffect hook.
 const useUpdateEffect: typeof React.useEffect = (effect, deps) => {
@@ -10,7 +10,7 @@ const useUpdateEffect: typeof React.useEffect = (effect, deps) => {
     if (!isFirstMount) {
       return effect();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 };
 

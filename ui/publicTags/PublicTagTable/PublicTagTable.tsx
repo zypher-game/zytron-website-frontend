@@ -1,9 +1,15 @@
-import { Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react";
-import React from "react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+} from '@chakra-ui/react';
+import React from 'react';
 
-import type { PublicTags, PublicTag } from "types/api/account";
+import type { PublicTags, PublicTag } from 'types/api/account';
 
-import PublicTagTableItem from "./PublicTagTableItem";
+import PublicTagTableItem from './PublicTagTableItem';
 
 interface Props {
   data?: PublicTags;
@@ -12,12 +18,7 @@ interface Props {
   onDeleteClick: (data: PublicTag) => void;
 }
 
-const PublicTagTable = ({
-  data,
-  isLoading,
-  onEditClick,
-  onDeleteClick,
-}: Props) => {
+const PublicTagTable = ({ data, isLoading, onEditClick, onDeleteClick }: Props) => {
   return (
     <Table variant="simple" minWidth="600px">
       <Thead>
@@ -29,15 +30,15 @@ const PublicTagTable = ({
         </Tr>
       </Thead>
       <Tbody>
-        {data?.map((item, index) => (
+        { data?.map((item, index) => (
           <PublicTagTableItem
-            key={item.id + (isLoading ? String(index) : "")}
-            item={item}
-            isLoading={isLoading}
-            onDeleteClick={onDeleteClick}
-            onEditClick={onEditClick}
+            key={ item.id + (isLoading ? String(index) : '') }
+            item={ item }
+            isLoading={ isLoading }
+            onDeleteClick={ onDeleteClick }
+            onEditClick={ onEditClick }
           />
-        ))}
+        )) }
       </Tbody>
     </Table>
   );

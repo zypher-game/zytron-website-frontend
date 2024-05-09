@@ -1,7 +1,7 @@
-import { Link } from "@chakra-ui/react";
-import React from "react";
+import { Link } from '@chakra-ui/react';
+import React from 'react';
 
-import IconSvg from "ui/shared/IconSvg";
+import IconSvg from 'ui/shared/IconSvg';
 
 interface Props {
   url?: string | undefined;
@@ -20,15 +20,15 @@ const WebsiteLink = ({ url }: Props) => {
 
   return (
     <Link
-      href={url}
+      href={ url }
       target="_blank"
       display="inline-flex"
       alignItems="center"
-      columnGap={1}
-      mt={3}
+      columnGap={ 1 }
+      mt={ 3 }
     >
-      <IconSvg name="link" boxSize={5} color="text_secondary" />
-      <span>{getHostname(url)}</span>
+      <IconSvg name="link" boxSize={ 5 } color="text_secondary"/>
+      <span>{ getHostname(url) }</span>
     </Link>
   );
 };

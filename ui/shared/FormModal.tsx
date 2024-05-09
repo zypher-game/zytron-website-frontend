@@ -7,11 +7,11 @@ import {
   ModalBody,
   ModalCloseButton,
   Text,
-} from "@chakra-ui/react";
-import React, { useCallback } from "react";
+} from '@chakra-ui/react';
+import React, { useCallback } from 'react';
 
-import useIsMobile from "lib/hooks/useIsMobile";
-import FormSubmitAlert from "ui/shared/FormSubmitAlert";
+import useIsMobile from 'lib/hooks/useIsMobile';
+import FormSubmitAlert from 'ui/shared/FormSubmitAlert';
 
 interface Props<TData> {
   isOpen: boolean;
@@ -33,37 +33,32 @@ export default function FormModal<TData>({
   isAlertVisible,
   setAlertVisible,
 }: Props<TData>) {
+
   const onModalClose = useCallback(() => {
     setAlertVisible && setAlertVisible(false);
     onClose();
-  }, [onClose, setAlertVisible]);
+  }, [ onClose, setAlertVisible ]);
 
   const isMobile = useIsMobile();
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onModalClose}
-      size={isMobile ? "full" : "md"}
-    >
-      <ModalOverlay />
+    <Modal isOpen={ isOpen } onClose={ onModalClose } size={ isMobile ? 'full' : 'md' }>
+      <ModalOverlay/>
       <ModalContent>
-        <ModalHeader fontWeight="500" textStyle="h3">
-          {title}
-        </ModalHeader>
-        <ModalCloseButton />
+        <ModalHeader fontWeight="500" textStyle="h3">{ title }</ModalHeader>
+        <ModalCloseButton/>
         <ModalBody>
-          {(isAlertVisible || text) && (
+          { (isAlertVisible || text) && (
             <Box marginBottom={{ base: 6, lg: 8 }}>
-              {text && (
-                <Text lineHeight="30px" mb={3}>
-                  {text}
+              { text && (
+                <Text lineHeight="30px" mb={ 3 }>
+                  { text }
                 </Text>
-              )}
-              {isAlertVisible && <FormSubmitAlert />}
+              ) }
+              { isAlertVisible && <FormSubmitAlert/> }
             </Box>
-          )}
-          {renderForm()}
+          ) }
+          { renderForm() }
         </ModalBody>
       </ModalContent>
     </Modal>
