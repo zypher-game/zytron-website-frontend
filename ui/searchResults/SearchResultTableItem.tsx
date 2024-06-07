@@ -23,6 +23,7 @@ import LinkExternal from 'ui/shared/LinkExternal';
 import LinkInternal from 'ui/shared/LinkInternal';
 import type { SearchResultAppItem } from 'ui/shared/search/utils';
 import { getItemCategory, searchItemTitles } from 'ui/shared/search/utils';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 interface Props {
   data: SearchResultItem | SearchResultAppItem;
   searchTerm: string;
