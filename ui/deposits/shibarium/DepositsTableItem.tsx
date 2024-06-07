@@ -9,6 +9,7 @@ import AddressStringOrParam from 'ui/shared/entities/address/AddressStringOrPara
 import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 const feature = config.features.rollup;
 
