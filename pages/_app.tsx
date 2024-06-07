@@ -53,26 +53,26 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     Sentry.captureException(error);
   }, []);
 
-  const getLayout = Component.getLayout ?? ((page) => <Layout>{ page }</Layout>);
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
 
   return (
-    <ChakraProvider theme={ theme } cookies={ pageProps.cookies }>
+    <ChakraProvider theme={theme} cookies={pageProps.cookies}>
       <AppErrorBoundary
-        { ...ERROR_SCREEN_STYLES }
-        onError={ handleError }
+        {...ERROR_SCREEN_STYLES}
+        onError={handleError}
       >
         <Web3ModalProvider>
-          <AppContextProvider pageProps={ pageProps }>
-            <QueryClientProvider client={ queryClient }>
-              <GrowthBookProvider growthbook={ growthBook }>
+          <AppContextProvider pageProps={pageProps}>
+            <QueryClientProvider client={queryClient}>
+              <GrowthBookProvider growthbook={growthBook}>
                 <ScrollDirectionProvider>
-                  <SocketProvider url={ `${ config.api.socket }${ config.api.basePath }/socket/v2` }>
-                    { getLayout(<Component { ...pageProps }/>) }
+                  <SocketProvider url={`${config.api.socket}/socket`}>
+                    {getLayout(<Component {...pageProps} />)}
                   </SocketProvider>
                 </ScrollDirectionProvider>
               </GrowthBookProvider>
-              <ReactQueryDevtools buttonPosition="bottom-left" position="left"/>
-              <GoogleAnalytics/>
+              <ReactQueryDevtools buttonPosition="bottom-left" position="left" />
+              <GoogleAnalytics />
             </QueryClientProvider>
           </AppContextProvider>
         </Web3ModalProvider>

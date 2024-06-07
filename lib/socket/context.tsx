@@ -12,14 +12,19 @@ interface SocketProviderProps {
 }
 
 export function SocketProvider({ children, options, url }: SocketProviderProps) {
-  const [ socket, setSocket ] = useState<Socket | null>(null);
+  console.log({ options, url })
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
     if (!url) {
       return;
     }
 
-    const socketInstance = new Socket(url, options);
+    const socketInstance = new Socket(url, {
+      params: {
+        locale: "en",
+      }
+    });
     socketInstance.connect();
     setSocket(socketInstance);
 
@@ -27,11 +32,11 @@ export function SocketProvider({ children, options, url }: SocketProviderProps) 
       socketInstance.disconnect();
       setSocket(null);
     };
-  }, [ options, url ]);
+  }, [options, url]);
 
   return (
-    <SocketContext.Provider value={ socket }>
-      { children }
+    <SocketContext.Provider value={socket}>
+      {children}
     </SocketContext.Provider>
   );
 }

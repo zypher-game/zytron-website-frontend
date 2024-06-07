@@ -27,7 +27,7 @@ make_registry_file() {
 
 # Function to save build-time environment variables to .env file
 save_build-time_envs() {
-  output_file=".env"
+  output_file=".env.Linea"
 
   # Check if file already exists and empty its content if it does or create a new one
   if [ -f "$output_file" ]; then

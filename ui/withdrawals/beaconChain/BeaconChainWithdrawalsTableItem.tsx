@@ -6,6 +6,7 @@ import type { BlockWithdrawalsItem } from 'types/api/block';
 import type { WithdrawalsItem } from 'types/api/withdrawals';
 
 import dayjs from 'lib/date/dayjs';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 import CurrencyValue from 'ui/shared/CurrencyValue';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
@@ -25,40 +26,40 @@ const BeaconChainWithdrawalsTableItem = ({ item, view, isLoading }: Props) => {
   return (
     <Tr>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.index }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">{item.index}</Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.validator_index }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">{item.validator_index}</Skeleton>
       </Td>
-      { view !== 'block' && (
+      {view !== 'block' && (
         <Td verticalAlign="middle">
           <BlockEntity
-            number={ item.block_number }
-            isLoading={ isLoading }
+            number={item.block_number}
+            isLoading={isLoading}
             fontSize="sm"
-            lineHeight={ 5 }
+            lineHeight={5}
             noIcon
           />
         </Td>
-      ) }
-      { view !== 'address' && (
+      )}
+      {view !== 'address' && (
         <Td verticalAlign="middle">
           <AddressEntity
-            address={ item.receiver }
-            isLoading={ isLoading }
+            address={item.receiver}
+            isLoading={isLoading}
             truncation="constant"
           />
         </Td>
-      ) }
-      { view !== 'block' && (
-        <Td verticalAlign="middle" pr={ 12 }>
-          <Skeleton isLoaded={ !isLoading } display="inline-block" color="text_secondary">
-            <span>{ dayjs(item.timestamp).fromNow() }</span>
+      )}
+      {view !== 'block' && (
+        <Td verticalAlign="middle" pr={12}>
+          <Skeleton isLoaded={!isLoading} display="inline-block" color="text_secondary">
+            <span>{getRelativeTime(item.timestamp)}</span>
           </Skeleton>
         </Td>
-      ) }
+      )}
       <Td verticalAlign="middle">
-        <CurrencyValue value={ item.amount } isLoading={ isLoading }/>
+        <CurrencyValue value={item.amount} isLoading={isLoading} />
       </Td>
     </Tr>
   );

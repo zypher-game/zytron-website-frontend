@@ -1,6 +1,7 @@
 import { chakra } from '@chakra-ui/react';
 import React from 'react';
 
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 import dayjs from 'lib/date/dayjs';
 
 interface Props {
@@ -20,10 +21,10 @@ const NameDomainExpiryStatus = ({ date }: Props) => {
 
   const diff = dayjs(date).diff(dayjs(), 'day');
   if (diff < 30) {
-    return <chakra.span color="red.600">{ diff } days left</chakra.span>;
+    return <chakra.span color="red.600">{diff} days left</chakra.span>;
   }
 
-  return <chakra.span color="text_secondary">Expires { dayjs(date).fromNow() }</chakra.span>;
+  return <chakra.span color="text_secondary">Expires {getRelativeTime(date)}</chakra.span>;
 };
 
 export default React.memo(NameDomainExpiryStatus);

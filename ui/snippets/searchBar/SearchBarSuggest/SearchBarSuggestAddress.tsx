@@ -7,6 +7,7 @@ import dayjs from 'lib/date/dayjs';
 import highlightText from 'lib/highlightText';
 import { ADDRESS_REGEXP } from 'lib/validations/address';
 import * as AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 import HashStringShortenDynamic from 'ui/shared/HashStringShortenDynamic';
 
 interface Props {
@@ -31,7 +32,7 @@ const SearchBarSuggestAddress = ({ data, isMobile, searchTerm }: Props) => {
     />
   );
   const addressName = data.name || data.ens_info?.name;
-  const expiresText = data.ens_info?.expiry_date ? ` (expires ${ dayjs(data.ens_info.expiry_date).fromNow() })` : '';
+  const expiresText = data.ens_info?.expiry_date ? ` (expires ${getRelativeTime(data.ens_info.expiry_date)})` : '';
 
   const nameEl = addressName && (
     <Text
@@ -40,53 +41,53 @@ const SearchBarSuggestAddress = ({ data, isMobile, searchTerm }: Props) => {
       whiteSpace="nowrap"
       textOverflow="ellipsis"
     >
-      <chakra.span fontWeight={ 500 } dangerouslySetInnerHTML={{ __html: highlightText(addressName, searchTerm) }}/>
-      { data.ens_info &&
+      <chakra.span fontWeight={500} dangerouslySetInnerHTML={{ __html: highlightText(addressName, searchTerm) }} />
+      {data.ens_info &&
         (
           data.ens_info.names_count > 1 ?
-            <span> ({ data.ens_info.names_count > 39 ? '40+' : `+${ data.ens_info.names_count - 1 }` })</span> :
-            <span>{ expiresText }</span>
+            <span> ({data.ens_info.names_count > 39 ? '40+' : `+${data.ens_info.names_count - 1}`})</span> :
+            <span>{expiresText}</span>
         )
       }
     </Text>
   );
-  const addressEl = <HashStringShortenDynamic hash={ data.address } isTooltipDisabled/>;
+  const addressEl = <HashStringShortenDynamic hash={data.address} isTooltipDisabled />;
 
   if (isMobile) {
     return (
       <>
         <Flex alignItems="center">
-          { icon }
+          {icon}
           <Box
-            as={ shouldHighlightHash ? 'mark' : 'span' }
+            as={shouldHighlightHash ? 'mark' : 'span'}
             display="block"
             overflow="hidden"
             whiteSpace="nowrap"
-            fontWeight={ 700 }
+            fontWeight={700}
           >
-            { addressEl }
+            {addressEl}
           </Box>
         </Flex>
-        { nameEl }
+        {nameEl}
       </>
     );
   }
 
   return (
     <Flex alignItems="center">
-      <Flex alignItems="center" w="450px" mr={ 2 }>
-        { icon }
+      <Flex alignItems="center" w="450px" mr={2}>
+        {icon}
         <Box
-          as={ shouldHighlightHash ? 'mark' : 'span' }
+          as={shouldHighlightHash ? 'mark' : 'span'}
           display="block"
           overflow="hidden"
           whiteSpace="nowrap"
-          fontWeight={ 700 }
+          fontWeight={700}
         >
-          { addressEl }
+          {addressEl}
         </Box>
       </Flex>
-      { nameEl }
+      {nameEl}
     </Flex>
   );
 };

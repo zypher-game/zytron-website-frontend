@@ -11,13 +11,14 @@ import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import LinkInternal from 'ui/shared/LinkInternal';
 import ZkSyncL2TxnBatchStatus from 'ui/shared/statusTag/ZkSyncL2TxnBatchStatus';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 const rollupFeature = config.features.rollup;
 
 type Props = { item: ZkSyncBatchesItem; isLoading?: boolean };
 
 const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
-  const timeAgo = item.timestamp ? dayjs(item.timestamp).fromNow() : 'Undefined';
+  const timeAgo = item.timestamp ? getRelativeTime(item.timestamp) : 'Undefined';
 
   if (!rollupFeature.isEnabled || rollupFeature.type !== 'zkSync') {
     return null;
@@ -27,55 +28,55 @@ const ZkSyncTxnBatchesTableItem = ({ item, isLoading }: Props) => {
     <Tr>
       <Td verticalAlign="middle">
         <BatchEntityL2
-          isLoading={ isLoading }
-          number={ item.number }
+          isLoading={isLoading}
+          number={item.number}
           fontSize="sm"
-          lineHeight={ 5 }
-          fontWeight={ 600 }
+          lineHeight={5}
+          fontWeight={600}
           noIcon
         />
       </Td>
       <Td verticalAlign="middle">
-        <ZkSyncL2TxnBatchStatus status={ item.status } isLoading={ isLoading }/>
+        <ZkSyncL2TxnBatchStatus status={item.status} isLoading={isLoading} />
       </Td>
       <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } color="text_secondary">
-          <span>{ timeAgo }</span>
+        <Skeleton isLoaded={!isLoading} color="text_secondary">
+          <span>{timeAgo}</span>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
         <LinkInternal
-          href={ route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'txs' } }) }
-          isLoading={ isLoading }
+          href={route({ pathname: '/batches/[number]', query: { number: item.number.toString(), tab: 'txs' } })}
+          isLoading={isLoading}
         >
-          <Skeleton isLoaded={ !isLoading } minW="40px" my={ 1 }>
-            { item.tx_count }
+          <Skeleton isLoaded={!isLoading} minW="40px" my={1}>
+            {item.tx_count}
           </Skeleton>
         </LinkInternal>
       </Td>
       <Td verticalAlign="middle">
-        { item.commit_transaction_hash ? (
+        {item.commit_transaction_hash ? (
           <TxEntityL1
-            isLoading={ isLoading }
-            hash={ item.commit_transaction_hash }
+            isLoading={isLoading}
+            hash={item.commit_transaction_hash}
             fontSize="sm"
-            lineHeight={ 5 }
+            lineHeight={5}
             truncation="constant_long"
             noIcon
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>Pending</Text>}
       </Td>
       <Td verticalAlign="middle">
-        { item.prove_transaction_hash ? (
+        {item.prove_transaction_hash ? (
           <TxEntityL1
-            isLoading={ isLoading }
-            hash={ item.prove_transaction_hash }
+            isLoading={isLoading}
+            hash={item.prove_transaction_hash}
             fontSize="sm"
-            lineHeight={ 5 }
+            lineHeight={5}
             truncation="constant_long"
             noIcon
           />
-        ) : <Text>Pending</Text> }
+        ) : <Text>Pending</Text>}
       </Td>
     </Tr>
   );

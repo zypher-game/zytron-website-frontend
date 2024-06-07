@@ -1,5 +1,6 @@
 import { Box, Text, Button, Heading, chakra } from '@chakra-ui/react';
 import React from 'react';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 import useApiFetch from 'lib/api/useApiFetch';
 import dayjs from 'lib/date/dayjs';
@@ -15,10 +16,10 @@ interface Props {
 
 const UnverifiedEmail = ({ email }: Props) => {
   const apiFetch = useApiFetch();
-  const [ isLoading, setIsLoading ] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const toast = useToast();
 
-  const handleButtonClick = React.useCallback(async() => {
+  const handleButtonClick = React.useCallback(async () => {
     const toastId = 'resend-email-error';
 
     setIsLoading(true);
@@ -57,8 +58,8 @@ const UnverifiedEmail = ({ email }: Props) => {
           return;
         }
 
-        const timeUntilNextResend = dayjs().add(payload.seconds_before_next_resend, 'seconds').fromNow();
-        return `Email resend is available ${ timeUntilNextResend }.`;
+        const timeUntilNextResend = getRelativeTime(dayjs().add(payload.seconds_before_next_resend, 'seconds'));
+        return `Email resend is available ${timeUntilNextResend}.`;
       })();
 
       !toast.isActive(toastId) && toast({
@@ -73,24 +74,24 @@ const UnverifiedEmail = ({ email }: Props) => {
     }
 
     setIsLoading(false);
-  }, [ apiFetch, toast ]);
+  }, [apiFetch, toast]);
 
   return (
     <Box>
-      <IconSvg name="email-sent" width="180px" height="auto" mt="52px"/>
-      <Heading mt={ 6 } size="2xl">Verify your email address</Heading>
-      <Text variant="secondary" mt={ 3 }>
+      <IconSvg name="email-sent" width="180px" height="auto" mt="52px" />
+      <Heading mt={6} size="2xl">Verify your email address</Heading>
+      <Text variant="secondary" mt={3}>
         <span>Please confirm your email address to use the My Account feature. A confirmation email was sent to </span>
-        <span>{ email || 'your email address' }</span>
-        <span> on signup. { `Didn't receive?` }</span>
+        <span>{email || 'your email address'}</span>
+        <span> on signup. {`Didn't receive?`}</span>
       </Text>
       <Button
-        mt={ 8 }
+        mt={8}
         size="lg"
         variant="outline"
-        isLoading={ isLoading }
+        isLoading={isLoading}
         loadingText="Resending..."
-        onClick={ handleButtonClick }
+        onClick={handleButtonClick}
       >
         Resend verification email
       </Button>

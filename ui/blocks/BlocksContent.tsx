@@ -27,19 +27,20 @@ interface Props {
 const BlocksContent = ({ type, query }: Props) => {
   const queryClient = useQueryClient();
   const isMobile = useIsMobile();
-  const [ socketAlert, setSocketAlert ] = React.useState('');
+  const [socketAlert, setSocketAlert] = React.useState('');
 
-  const [ newItemsCount, setNewItemsCount ] = React.useState(0);
+  const [newItemsCount, setNewItemsCount] = React.useState(0);
 
   const handleNewBlockMessage: SocketMessage.NewBlock['handler'] = React.useCallback((payload) => {
     const queryKey = getResourceKey('blocks', { queryParams: { type } });
 
     queryClient.setQueryData(queryKey, (prevData: BlocksResponse | undefined) => {
+      console.log({ payload, type })
       const shouldAddToList = !type || type === payload.block.type;
 
       if (!prevData) {
         return {
-          items: shouldAddToList ? [ payload.block ] : [],
+          items: shouldAddToList ? [payload.block] : [],
           next_page_params: null,
         };
       }
@@ -53,10 +54,10 @@ const BlocksContent = ({ type, query }: Props) => {
         return prevData;
       }
 
-      const newItems = [ payload.block, ...prevData.items ].sort((b1, b2) => b2.height - b1.height);
+      const newItems = [payload.block, ...prevData.items].sort((b1, b2) => b2.height - b1.height);
       return { ...prevData, items: newItems };
     });
-  }, [ queryClient, type ]);
+  }, [queryClient, type]);
 
   const handleSocketClose = React.useCallback(() => {
     setSocketAlert('Connection is lost. Please refresh the page to load new blocks.');
@@ -81,44 +82,44 @@ const BlocksContent = ({ type, query }: Props) => {
   const content = query.data?.items ? (
     <>
       <Box display={{ base: 'block', lg: 'none' }}>
-        { query.pagination.page === 1 && (
+        {query.pagination.page === 1 && (
           <SocketNewItemsNotice.Mobile
-            url={ window.location.href }
-            num={ newItemsCount }
-            alert={ socketAlert }
+            url={window.location.href}
+            num={newItemsCount}
+            alert={socketAlert}
             type="block"
-            isLoading={ query.isPlaceholderData }
+            isLoading={query.isPlaceholderData}
           />
-        ) }
-        <BlocksList data={ query.data.items } isLoading={ query.isPlaceholderData } page={ query.pagination.page }/>
+        )}
+        <BlocksList data={query.data.items} isLoading={query.isPlaceholderData} page={query.pagination.page} />
       </Box>
       <Box display={{ base: 'none', lg: 'block' }}>
         <BlocksTable
-          data={ query.data.items }
-          top={ query.pagination.isVisible ? 80 : 0 }
-          page={ query.pagination.page }
-          isLoading={ query.isPlaceholderData }
-          showSocketInfo={ query.pagination.page === 1 }
-          socketInfoNum={ newItemsCount }
-          socketInfoAlert={ socketAlert }
+          data={query.data.items}
+          top={query.pagination.isVisible ? 80 : 0}
+          page={query.pagination.page}
+          isLoading={query.isPlaceholderData}
+          showSocketInfo={query.pagination.page === 1}
+          socketInfoNum={newItemsCount}
+          socketInfoAlert={socketAlert}
         />
       </Box>
     </>
   ) : null;
 
   const actionBar = isMobile && query.pagination.isVisible ? (
-    <ActionBar mt={ -6 }>
-      <Pagination ml="auto" { ...query.pagination }/>
+    <ActionBar mt={-6}>
+      <Pagination ml="auto" {...query.pagination} />
     </ActionBar>
   ) : null;
 
   return (
     <DataListDisplay
-      isError={ query.isError }
-      items={ query.data?.items }
+      isError={query.isError}
+      items={query.data?.items}
       emptyText="There are no blocks."
-      content={ content }
-      actionBar={ actionBar }
+      content={content}
+      actionBar={actionBar}
     />
   );
 };

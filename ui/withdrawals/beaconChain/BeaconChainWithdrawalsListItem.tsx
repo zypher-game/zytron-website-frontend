@@ -1,6 +1,7 @@
 import { Skeleton } from '@chakra-ui/react';
 import React from 'react';
 
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 import type { AddressWithdrawalsItem } from 'types/api/address';
 import type { BlockWithdrawalsItem } from 'types/api/block';
 import type { WithdrawalsItem } from 'types/api/withdrawals';
@@ -34,55 +35,55 @@ const BeaconChainWithdrawalsListItem = ({ item, isLoading, view }: Props) => {
   return (
     <ListItemMobileGrid.Container gridTemplateColumns="100px auto">
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Index</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Index</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.index }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">{item.index}</Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>Validator index</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={isLoading}>Validator index</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.validator_index }</Skeleton>
+        <Skeleton isLoaded={!isLoading} display="inline-block">{item.validator_index}</Skeleton>
       </ListItemMobileGrid.Value>
 
-      { view !== 'block' && (
+      {view !== 'block' && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Block</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Block</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
             <BlockEntity
-              number={ item.block_number }
-              isLoading={ isLoading }
+              number={item.block_number}
+              isLoading={isLoading}
               fontSize="sm"
-              lineHeight={ 5 }
+              lineHeight={5}
             />
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
-      { view !== 'address' && (
+      {view !== 'address' && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>To</ListItemMobileGrid.Label><ListItemMobileGrid.Value>
+          <ListItemMobileGrid.Label isLoading={isLoading}>To</ListItemMobileGrid.Label><ListItemMobileGrid.Value>
             <AddressEntity
-              address={ item.receiver }
-              isLoading={ isLoading }
+              address={item.receiver}
+              isLoading={isLoading}
               truncation="constant"
             />
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
-      { view !== 'block' && (
+      {view !== 'block' && (
         <>
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Age</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <Skeleton isLoaded={ !isLoading } display="inline-block">{ dayjs(item.timestamp).fromNow() }</Skeleton>
+            <Skeleton isLoaded={!isLoading} display="inline-block">{getRelativeTime(item.timestamp)}</Skeleton>
           </ListItemMobileGrid.Value>
 
-          <ListItemMobileGrid.Label isLoading={ isLoading }>Value</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Label isLoading={isLoading}>Value</ListItemMobileGrid.Label>
           <ListItemMobileGrid.Value>
-            <CurrencyValue value={ item.amount } currency={ currencyUnits.ether } isLoading={ isLoading }/>
+            <CurrencyValue value={item.amount} currency={currencyUnits.ether} isLoading={isLoading} />
           </ListItemMobileGrid.Value>
         </>
-      ) }
+      )}
 
     </ListItemMobileGrid.Container>
   );

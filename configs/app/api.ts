@@ -19,7 +19,7 @@ const socketEndpoint = [
   apiHost,
   apiPort && ':' + apiPort,
 ].filter(Boolean).join('');
-
+console.log({socketEndpoint,apiEndpoint})
 const api = Object.freeze({
   host: apiHost,
   protocol: apiSchema,

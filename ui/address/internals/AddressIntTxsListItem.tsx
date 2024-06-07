@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { InternalTransaction } from 'types/api/internalTransaction';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
@@ -35,43 +36,43 @@ const TxInternalsListItem = ({
   const toData = to ? to : createdContract;
 
   return (
-    <ListItemMobile rowGap={ 3 }>
-      <Flex columnGap={ 2 }>
-        { typeTitle && <Tag colorScheme="cyan" isLoading={ isLoading }>{ typeTitle }</Tag> }
-        <TxStatus status={ success ? 'ok' : 'error' } errorText={ error } isLoading={ isLoading }/>
+    <ListItemMobile rowGap={3}>
+      <Flex columnGap={2}>
+        {typeTitle && <Tag colorScheme="cyan" isLoading={isLoading}>{typeTitle}</Tag>}
+        <TxStatus status={success ? 'ok' : 'error'} errorText={error} isLoading={isLoading} />
       </Flex>
       <Flex justifyContent="space-between" width="100%">
         <TxEntity
-          hash={ txnHash }
-          isLoading={ isLoading }
-          fontWeight={ 700 }
+          hash={txnHash}
+          isLoading={isLoading}
+          fontWeight={700}
           truncation="constant_long"
         />
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight="400" fontSize="sm">
-          <span>{ dayjs(timestamp).fromNow() }</span>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight="400" fontSize="sm">
+          <span>{getRelativeTime(timestamp)}</span>
         </Skeleton>
       </Flex>
-      <HStack spacing={ 1 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Block</Skeleton>
+      <HStack spacing={1}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>Block</Skeleton>
         <BlockEntity
-          isLoading={ isLoading }
-          number={ block }
+          isLoading={isLoading}
+          number={block}
           noIcon
           fontSize="sm"
-          lineHeight={ 5 }
+          lineHeight={5}
         />
       </HStack>
       <AddressFromTo
-        from={ from }
-        to={ toData }
-        current={ currentAddress }
-        isLoading={ isLoading }
+        from={from}
+        to={toData}
+        current={currentAddress}
+        isLoading={isLoading}
         w="100%"
       />
-      <HStack spacing={ 3 }>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" fontWeight={ 500 }>Value { currencyUnits.ether }</Skeleton>
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" color="text_secondary" minW={ 6 }>
-          <span>{ BigNumber(value).div(BigNumber(10 ** config.chain.currency.decimals)).toFormat() }</span>
+      <HStack spacing={3}>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" fontWeight={500}>Value {currencyUnits.ether}</Skeleton>
+        <Skeleton isLoaded={!isLoading} fontSize="sm" color="text_secondary" minW={6}>
+          <span>{BigNumber(value).div(BigNumber(10 ** config.chain.currency.decimals)).toFormat()}</span>
         </Skeleton>
       </HStack>
     </ListItemMobile>

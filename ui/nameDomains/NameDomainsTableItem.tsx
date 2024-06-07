@@ -2,6 +2,7 @@ import { chakra, Tr, Td, Skeleton } from '@chakra-ui/react';
 import React from 'react';
 
 import type { EnsDomain } from 'types/api/ens';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 import dayjs from 'lib/date/dayjs';
 import NameDomainExpiryStatus from 'ui/nameDomain/NameDomainExpiryStatus';
@@ -17,26 +18,26 @@ const NameDomainsTableItem = ({ isLoading, name, resolved_address: resolvedAddre
   return (
     <Tr>
       <Td verticalAlign="middle">
-        <EnsEntity name={ name } isLoading={ isLoading } fontWeight={ 600 }/>
+        <EnsEntity name={name} isLoading={isLoading} fontWeight={600} />
       </Td>
       <Td verticalAlign="middle">
-        { resolvedAddress && <AddressEntity address={ resolvedAddress } isLoading={ isLoading } fontWeight={ 500 }/> }
+        {resolvedAddress && <AddressEntity address={resolvedAddress} isLoading={isLoading} fontWeight={500} />}
       </Td>
-      <Td verticalAlign="middle" pl={ 9 }>
-        { registrationDate && (
-          <Skeleton isLoaded={ !isLoading }>
-            { dayjs(registrationDate).format('MMM DD YYYY HH:mm:ss A') }
-            <chakra.span color="text_secondary"> { dayjs(registrationDate).fromNow() }</chakra.span>
+      <Td verticalAlign="middle" pl={9}>
+        {registrationDate && (
+          <Skeleton isLoaded={!isLoading}>
+            {dayjs(registrationDate).format('MMM DD YYYY HH:mm:ss A')}
+            <chakra.span color="text_secondary"> {getRelativeTime(registrationDate)}</chakra.span>
           </Skeleton>
-        ) }
+        )}
       </Td>
       <Td verticalAlign="middle">
-        { expiryDate && (
-          <Skeleton isLoaded={ !isLoading } whiteSpace="pre-wrap">
-            <span>{ dayjs(expiryDate).format('MMM DD YYYY HH:mm:ss A') } </span>
-            <NameDomainExpiryStatus date={ expiryDate }/>
+        {expiryDate && (
+          <Skeleton isLoaded={!isLoading} whiteSpace="pre-wrap">
+            <span>{dayjs(expiryDate).format('MMM DD YYYY HH:mm:ss A')} </span>
+            <NameDomainExpiryStatus date={expiryDate} />
           </Skeleton>
-        ) }
+        )}
       </Td>
     </Tr>
   );

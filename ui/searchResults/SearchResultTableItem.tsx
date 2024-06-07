@@ -38,52 +38,52 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
       'Source page type': 'Search results',
       'Result URL': e.currentTarget.href,
     });
-  }, [ searchTerm ]);
+  }, [searchTerm]);
 
   const { colorMode } = useColorMode();
 
   const content = (() => {
     switch (data.type) {
       case 'token': {
-        const name = data.name + (data.symbol ? ` (${ data.symbol })` : '');
+        const name = data.name + (data.symbol ? ` (${data.symbol})` : '');
 
         return (
           <>
             <Td fontSize="sm">
               <Flex alignItems="center">
-                <TokenEntity.Icon token={{ ...data, type: data.token_type }} isLoading={ isLoading }/>
+                <TokenEntity.Icon token={{ ...data, type: data.token_type }} isLoading={isLoading} />
                 <LinkInternal
-                  href={ route({ pathname: '/token/[hash]', query: { hash: data.address } }) }
-                  fontWeight={ 700 }
+                  href={route({ pathname: '/token/[hash]', query: { hash: data.address } })}
+                  fontWeight={700}
                   wordBreak="break-all"
                   overflow="hidden"
-                  isLoading={ isLoading }
-                  onClick={ handleLinkClick }
+                  isLoading={isLoading}
+                  onClick={handleLinkClick}
                 >
                   <Skeleton
-                    isLoaded={ !isLoading }
+                    isLoaded={!isLoading}
                     overflow="hidden"
                     textOverflow="ellipsis"
                     whiteSpace="nowrap"
                     dangerouslySetInnerHTML={{ __html: highlightText(name, searchTerm) }}
                   />
                 </LinkInternal>
-                { data.is_verified_via_admin_panel && <IconSvg name="verified_token" boxSize={ 4 } ml={ 1 } color="green.500"/> }
+                {data.is_verified_via_admin_panel && <IconSvg name="verified_token" boxSize={4} ml={1} color="green.500" />}
               </Flex>
             </Td>
             <Td fontSize="sm" verticalAlign="middle">
-              <Skeleton isLoaded={ !isLoading } whiteSpace="nowrap" overflow="hidden" display="flex" alignItems="center">
-                <Box overflow="hidden" whiteSpace="nowrap" w={ data.is_smart_contract_verified ? 'calc(100%-28px)' : 'unset' }>
-                  <HashStringShortenDynamic hash={ data.address }/>
+              <Skeleton isLoaded={!isLoading} whiteSpace="nowrap" overflow="hidden" display="flex" alignItems="center">
+                <Box overflow="hidden" whiteSpace="nowrap" w={data.is_smart_contract_verified ? 'calc(100%-28px)' : 'unset'}>
+                  <HashStringShortenDynamic hash={data.address} />
                 </Box>
-                { data.is_smart_contract_verified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={ 1 } flexShrink={ 0 }/> }
+                {data.is_smart_contract_verified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={1} flexShrink={0} />}
               </Skeleton>
             </Td>
             <Td fontSize="sm" verticalAlign="middle" isNumeric>
-              <Skeleton isLoaded={ !isLoading } whiteSpace="nowrap" overflow="hidden">
-                <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight={ 700 }>
-                  { data.token_type === 'ERC-20' && data.exchange_rate && `$${ Number(data.exchange_rate).toLocaleString() }` }
-                  { data.token_type !== 'ERC-20' && data.total_supply && `Items ${ Number(data.total_supply).toLocaleString() }` }
+              <Skeleton isLoaded={!isLoading} whiteSpace="nowrap" overflow="hidden">
+                <Text overflow="hidden" whiteSpace="nowrap" textOverflow="ellipsis" fontWeight={700}>
+                  {data.token_type === 'ERC-20' && data.exchange_rate && `$${Number(data.exchange_rate).toLocaleString()}`}
+                  {data.token_type !== 'ERC-20' && data.total_supply && `Items ${Number(data.total_supply).toLocaleString()}`}
                 </Text>
               </Skeleton>
             </Td>
@@ -103,40 +103,40 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
           implementation_name: null,
           ens_domain_name: null,
         };
-        const expiresText = data.ens_info?.expiry_date ? ` (expires ${ dayjs(data.ens_info.expiry_date).fromNow() })` : '';
+        const expiresText = data.ens_info?.expiry_date ? ` (expires ${getRelativeTime(data.ens_info.expiry_date)})` : '';
 
         return (
           <>
-            <Td fontSize="sm" colSpan={ addressName ? 1 : 3 }>
+            <Td fontSize="sm" colSpan={addressName ? 1 : 3}>
               <AddressEntity.Container>
-                <AddressEntity.Icon address={ address }/>
+                <AddressEntity.Icon address={address} />
                 <AddressEntity.Link
-                  address={ address }
-                  onClick={ handleLinkClick }
+                  address={address}
+                  onClick={handleLinkClick}
                 >
                   <AddressEntity.Content
-                    asProp={ shouldHighlightHash ? 'mark' : 'span' }
-                    address={ address }
+                    asProp={shouldHighlightHash ? 'mark' : 'span'}
+                    address={address}
                     fontSize="sm"
-                    lineHeight={ 5 }
-                    fontWeight={ 700 }
+                    lineHeight={5}
+                    fontWeight={700}
                   />
                 </AddressEntity.Link>
-                <AddressEntity.Copy address={ address }/>
+                <AddressEntity.Copy address={address} />
               </AddressEntity.Container>
             </Td>
-            { addressName && (
-              <Td colSpan={ 2 } fontSize="sm" verticalAlign="middle">
-                <span dangerouslySetInnerHTML={{ __html: shouldHighlightHash ? xss(addressName) : highlightText(addressName, searchTerm) }}/>
-                { data.ens_info &&
+            {addressName && (
+              <Td colSpan={2} fontSize="sm" verticalAlign="middle">
+                <span dangerouslySetInnerHTML={{ __html: shouldHighlightHash ? xss(addressName) : highlightText(addressName, searchTerm) }} />
+                {data.ens_info &&
                   (
                     data.ens_info.names_count > 1 ?
-                      <chakra.span color="text_secondary"> ({ data.ens_info.names_count > 39 ? '40+' : `+${ data.ens_info.names_count - 1 }` })</chakra.span> :
-                      <chakra.span color="text_secondary">{ expiresText }</chakra.span>
+                      <chakra.span color="text_secondary"> ({data.ens_info.names_count > 39 ? '40+' : `+${data.ens_info.names_count - 1}`})</chakra.span> :
+                      <chakra.span color="text_secondary">{expiresText}</chakra.span>
                   )
                 }
               </Td>
-            ) }
+            )}
           </>
         );
       }
@@ -146,24 +146,24 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
           <>
             <Td fontSize="sm">
               <Flex alignItems="center">
-                <IconSvg name="publictags_slim" boxSize={ 6 } mr={ 2 } color="gray.500"/>
+                <IconSvg name="publictags_slim" boxSize={6} mr={2} color="gray.500" />
                 <LinkInternal
-                  href={ route({ pathname: '/address/[hash]', query: { hash: data.address } }) }
-                  fontWeight={ 700 }
+                  href={route({ pathname: '/address/[hash]', query: { hash: data.address } })}
+                  fontWeight={700}
                   wordBreak="break-all"
-                  isLoading={ isLoading }
-                  onClick={ handleLinkClick }
+                  isLoading={isLoading}
+                  onClick={handleLinkClick}
                 >
-                  <span dangerouslySetInnerHTML={{ __html: highlightText(data.name, searchTerm) }}/>
+                  <span dangerouslySetInnerHTML={{ __html: highlightText(data.name, searchTerm) }} />
                 </LinkInternal>
               </Flex>
             </Td>
             <Td fontSize="sm" verticalAlign="middle">
               <Flex alignItems="center" overflow="hidden">
-                <Box overflow="hidden" whiteSpace="nowrap" w={ data.is_smart_contract_verified ? 'calc(100%-28px)' : 'unset' }>
-                  <HashStringShortenDynamic hash={ data.address }/>
+                <Box overflow="hidden" whiteSpace="nowrap" w={data.is_smart_contract_verified ? 'calc(100%-28px)' : 'unset'}>
+                  <HashStringShortenDynamic hash={data.address} />
                 </Box>
-                { data.is_smart_contract_verified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={ 1 } flexShrink={ 0 }/> }
+                {data.is_smart_contract_verified && <IconSvg name="status/success" boxSize="14px" color="green.500" ml={1} flexShrink={0} />}
               </Flex>
             </Td>
             <Td></Td>
@@ -172,48 +172,48 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
       }
 
       case 'app': {
-        const title = <span dangerouslySetInnerHTML={{ __html: highlightText(data.app.title, searchTerm) }}/>;
+        const title = <span dangerouslySetInnerHTML={{ __html: highlightText(data.app.title, searchTerm) }} />;
         return (
           <>
             <Td fontSize="sm">
               <Flex alignItems="center">
                 <Image
                   borderRadius="base"
-                  boxSize={ 6 }
-                  mr={ 2 }
-                  src={ colorMode === 'dark' && data.app.logoDarkMode ? data.app.logoDarkMode : data.app.logo }
-                  alt={ `${ data.app.title } app icon` }
+                  boxSize={6}
+                  mr={2}
+                  src={colorMode === 'dark' && data.app.logoDarkMode ? data.app.logoDarkMode : data.app.logo}
+                  alt={`${data.app.title} app icon`}
                 />
-                { data.app.external ? (
+                {data.app.external ? (
                   <LinkExternal
-                    href={ data.app.url }
-                    fontWeight={ 700 }
+                    href={data.app.url}
+                    fontWeight={700}
                     wordBreak="break-all"
-                    isLoading={ isLoading }
-                    onClick={ handleLinkClick }
+                    isLoading={isLoading}
+                    onClick={handleLinkClick}
                   >
-                    { title }
+                    {title}
                   </LinkExternal>
                 ) : (
                   <LinkInternal
-                    href={ route({ pathname: '/apps/[id]', query: { id: data.app.id } }) }
-                    fontWeight={ 700 }
+                    href={route({ pathname: '/apps/[id]', query: { id: data.app.id } })}
+                    fontWeight={700}
                     wordBreak="break-all"
-                    isLoading={ isLoading }
-                    onClick={ handleLinkClick }
+                    isLoading={isLoading}
+                    onClick={handleLinkClick}
                   >
-                    { title }
+                    {title}
                   </LinkInternal>
-                ) }
+                )}
               </Flex>
             </Td>
-            <Td fontSize="sm" verticalAlign="middle" colSpan={ 2 }>
+            <Td fontSize="sm" verticalAlign="middle" colSpan={2}>
               <Text
                 overflow="hidden"
                 whiteSpace="nowrap"
                 textOverflow="ellipsis"
               >
-                { data.app.description }
+                {data.app.description}
               </Text>
             </Td>
           </>
@@ -227,33 +227,33 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
           <>
             <Td fontSize="sm">
               <BlockEntity.Container>
-                <BlockEntity.Icon/>
+                <BlockEntity.Icon />
                 <BlockEntity.Link
-                  hash={ data.block_hash }
-                  number={ Number(data.block_number) }
-                  onClick={ handleLinkClick }
+                  hash={data.block_hash}
+                  number={Number(data.block_number)}
+                  onClick={handleLinkClick}
                 >
                   <BlockEntity.Content
-                    asProp={ shouldHighlightHash ? 'span' : 'mark' }
-                    number={ Number(data.block_number) }
+                    asProp={shouldHighlightHash ? 'span' : 'mark'}
+                    number={Number(data.block_number)}
                     fontSize="sm"
-                    lineHeight={ 5 }
-                    fontWeight={ 700 }
+                    lineHeight={5}
+                    fontWeight={700}
                   />
                 </BlockEntity.Link>
               </BlockEntity.Container>
             </Td>
             <Td fontSize="sm" verticalAlign="middle">
-              <Flex columnGap={ 2 } alignItems="center">
-                { data.block_type === 'reorg' && <Tag flexShrink={ 0 }>Reorg</Tag> }
-                { data.block_type === 'uncle' && <Tag flexShrink={ 0 }>Uncle</Tag> }
-                <Box overflow="hidden" whiteSpace="nowrap" as={ shouldHighlightHash ? 'mark' : 'span' } display="block">
-                  <HashStringShortenDynamic hash={ data.block_hash }/>
+              <Flex columnGap={2} alignItems="center">
+                {data.block_type === 'reorg' && <Tag flexShrink={0}>Reorg</Tag>}
+                {data.block_type === 'uncle' && <Tag flexShrink={0}>Uncle</Tag>}
+                <Box overflow="hidden" whiteSpace="nowrap" as={shouldHighlightHash ? 'mark' : 'span'} display="block">
+                  <HashStringShortenDynamic hash={data.block_hash} />
                 </Box>
               </Flex>
             </Td>
             <Td fontSize="sm" verticalAlign="middle" isNumeric>
-              <Text variant="secondary">{ dayjs(data.timestamp).format('llll') }</Text>
+              <Text variant="secondary">{dayjs(data.timestamp).format('llll')}</Text>
             </Td>
           </>
         );
@@ -262,26 +262,26 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
       case 'transaction': {
         return (
           <>
-            <Td colSpan={ 2 } fontSize="sm">
+            <Td colSpan={2} fontSize="sm">
               <TxEntity.Container>
-                <TxEntity.Icon/>
+                <TxEntity.Icon />
                 <TxEntity.Link
-                  isLoading={ isLoading }
-                  hash={ data.tx_hash }
-                  onClick={ handleLinkClick }
+                  isLoading={isLoading}
+                  hash={data.tx_hash}
+                  onClick={handleLinkClick}
                 >
                   <TxEntity.Content
                     asProp="mark"
-                    hash={ data.tx_hash }
+                    hash={data.tx_hash}
                     fontSize="sm"
-                    lineHeight={ 5 }
-                    fontWeight={ 700 }
+                    lineHeight={5}
+                    fontWeight={700}
                   />
                 </TxEntity.Link>
               </TxEntity.Container>
             </Td>
             <Td fontSize="sm" verticalAlign="middle" isNumeric>
-              <Text variant="secondary">{ dayjs(data.timestamp).format('llll') }</Text>
+              <Text variant="secondary">{dayjs(data.timestamp).format('llll')}</Text>
             </Td>
           </>
         );
@@ -289,20 +289,20 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
 
       case 'blob': {
         return (
-          <Td colSpan={ 3 } fontSize="sm">
+          <Td colSpan={3} fontSize="sm">
             <BlobEntity.Container>
-              <BlobEntity.Icon/>
+              <BlobEntity.Icon />
               <BlobEntity.Link
-                isLoading={ isLoading }
-                hash={ data.blob_hash }
-                onClick={ handleLinkClick }
+                isLoading={isLoading}
+                hash={data.blob_hash}
+                onClick={handleLinkClick}
               >
                 <BlobEntity.Content
                   asProp="mark"
-                  hash={ data.blob_hash }
+                  hash={data.blob_hash}
                   fontSize="sm"
-                  lineHeight={ 5 }
-                  fontWeight={ 700 }
+                  lineHeight={5}
+                  fontWeight={700}
                 />
               </BlobEntity.Link>
             </BlobEntity.Container>
@@ -313,26 +313,26 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
       case 'user_operation': {
         return (
           <>
-            <Td colSpan={ 2 } fontSize="sm">
+            <Td colSpan={2} fontSize="sm">
               <UserOpEntity.Container>
-                <UserOpEntity.Icon/>
+                <UserOpEntity.Icon />
                 <UserOpEntity.Link
-                  isLoading={ isLoading }
-                  hash={ data.user_operation_hash }
-                  onClick={ handleLinkClick }
+                  isLoading={isLoading}
+                  hash={data.user_operation_hash}
+                  onClick={handleLinkClick}
                 >
                   <UserOpEntity.Content
                     asProp="mark"
-                    hash={ data.user_operation_hash }
+                    hash={data.user_operation_hash}
                     fontSize="sm"
-                    lineHeight={ 5 }
-                    fontWeight={ 700 }
+                    lineHeight={5}
+                    fontWeight={700}
                   />
                 </UserOpEntity.Link>
               </UserOpEntity.Container>
             </Td>
             <Td fontSize="sm" verticalAlign="middle" isNumeric>
-              <Text variant="secondary">{ dayjs(data.timestamp).format('llll') }</Text>
+              <Text variant="secondary">{dayjs(data.timestamp).format('llll')}</Text>
             </Td>
           </>
         );
@@ -344,10 +344,10 @@ const SearchResultTableItem = ({ data, searchTerm, isLoading }: Props) => {
 
   return (
     <Tr>
-      { content }
+      {content}
       <Td fontSize="sm" textTransform="capitalize" verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block">
-          <span>{ category ? searchItemTitles[category].itemTitle : '' }</span>
+        <Skeleton isLoaded={!isLoading} color="text_secondary" display="inline-block">
+          <span>{category ? searchItemTitles[category].itemTitle : ''}</span>
         </Skeleton>
       </Td>
     </Tr>

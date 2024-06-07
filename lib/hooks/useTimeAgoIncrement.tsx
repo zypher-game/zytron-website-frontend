@@ -1,27 +1,27 @@
 import React from 'react';
 
 import { DAY, HOUR, MINUTE, SECOND } from 'lib/consts';
-import dayjs from 'lib/date/dayjs';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 function getUnits(diff: number) {
   if (diff < MINUTE) {
-    return [ SECOND, MINUTE ];
+    return [SECOND, MINUTE];
   }
 
   if (diff < HOUR) {
-    return [ MINUTE, HOUR ];
+    return [MINUTE, HOUR];
   }
 
   if (diff < DAY) {
-    return [ HOUR, DAY ];
+    return [HOUR, DAY];
   }
 
-  return [ DAY, 2 * DAY ];
+  return [DAY, 2 * DAY];
 }
 
 function getUpdateParams(ts: string) {
   const timeDiff = Date.now() - new Date(ts).getTime();
-  const [ unit, higherUnit ] = getUnits(timeDiff);
+  const [unit, higherUnit] = getUnits(timeDiff);
 
   if (unit === DAY) {
     return { interval: DAY };
@@ -42,7 +42,10 @@ function getUpdateParams(ts: string) {
 }
 
 export default function useTimeAgoIncrement(ts: string | null, isEnabled?: boolean) {
-  const [ value, setValue ] = React.useState(ts ? dayjs(ts).fromNow() : null);
+  const d = React.useMemo(() => {
+    return getRelativeTime(ts)
+  }, [ts])
+  const [value, setValue] = React.useState(d);
 
   React.useEffect(() => {
     if (ts !== null) {
@@ -58,10 +61,10 @@ export default function useTimeAgoIncrement(ts: string | null, isEnabled?: boole
         let intervalId: number;
 
         const startTimeoutId = window.setTimeout(() => {
-          setValue(dayjs(ts).fromNow());
+          setValue(getRelativeTime(ts));
 
           intervalId = window.setInterval(() => {
-            setValue(dayjs(ts).fromNow());
+            setValue(getRelativeTime(ts));
           }, interval);
 
           intervals.push(intervalId);
@@ -83,7 +86,7 @@ export default function useTimeAgoIncrement(ts: string | null, isEnabled?: boole
         intervals.forEach(window.clearInterval);
       };
     }
-  }, [ isEnabled, ts ]);
+  }, [isEnabled, ts]);
 
   return value;
 }

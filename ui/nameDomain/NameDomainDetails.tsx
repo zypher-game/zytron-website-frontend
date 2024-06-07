@@ -1,6 +1,7 @@
 import { Grid, Skeleton, Tooltip, Flex } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
+import { getRelativeTime } from 'lib/date/getRelativeTime';
 
 import type { EnsDomainDetailed } from 'types/api/ens';
 
@@ -28,147 +29,147 @@ const NameDomainDetails = ({ query }: Props) => {
   const hasExpired = query.data?.expiry_date && dayjs(query.data.expiry_date).isBefore(dayjs());
 
   return (
-    <Grid columnGap={ 8 } rowGap={ 3 } templateColumns={{ base: 'minmax(0, 1fr)', lg: 'max-content minmax(728px, auto)' }}>
-      { query.data?.registration_date && (
+    <Grid columnGap={8} rowGap={3} templateColumns={{ base: 'minmax(0, 1fr)', lg: 'max-content minmax(728px, auto)' }}>
+      {query.data?.registration_date && (
         <DetailsInfoItem
           title="Registration date"
           hint="The date the name was registered"
-          isLoading={ isLoading }
+          isLoading={isLoading}
         >
-          <IconSvg name="clock" boxSize={ 5 } color="gray.500" verticalAlign="middle" isLoading={ isLoading } mr={ 2 }/>
-          <Skeleton isLoaded={ !isLoading } display="inline" whiteSpace="pre-wrap" lineHeight="20px">
-            { dayjs(query.data.registration_date).format('llll') }
+          <IconSvg name="clock" boxSize={5} color="gray.500" verticalAlign="middle" isLoading={isLoading} mr={2} />
+          <Skeleton isLoaded={!isLoading} display="inline" whiteSpace="pre-wrap" lineHeight="20px">
+            {dayjs(query.data.registration_date).format('llll')}
           </Skeleton>
         </DetailsInfoItem>
-      ) }
-      { query.data?.expiry_date && (
+      )}
+      {query.data?.expiry_date && (
         <DetailsInfoItem
           title="Expiration date"
           // eslint-disable-next-line max-len
           hint="The date the name expires, upon which there is a 90 day grace period for the owner to renew. After the 90 days, the name is released to the market"
-          isLoading={ isLoading }
+          isLoading={isLoading}
           display="inline-block"
         >
-          <IconSvg name="clock" boxSize={ 5 } color="gray.500" verticalAlign="middle" isLoading={ isLoading } mr={ 2 } mt="-2px"/>
-          { hasExpired && (
+          <IconSvg name="clock" boxSize={5} color="gray.500" verticalAlign="middle" isLoading={isLoading} mr={2} mt="-2px" />
+          {hasExpired && (
             <>
-              <Skeleton isLoaded={ !isLoading } display="inline" whiteSpace="pre-wrap" lineHeight="24px">
-                { dayjs(query.data.expiry_date).fromNow() }
+              <Skeleton isLoaded={!isLoading} display="inline" whiteSpace="pre-wrap" lineHeight="24px">
+                {getRelativeTime(query.data.expiry_date)}
               </Skeleton>
-              <TextSeparator color="gray.500"/>
+              <TextSeparator color="gray.500" />
             </>
-          ) }
-          <Skeleton isLoaded={ !isLoading } display="inline" whiteSpace="pre-wrap" lineHeight="24px">
-            { dayjs(query.data.expiry_date).format('llll') }
+          )}
+          <Skeleton isLoaded={!isLoading} display="inline" whiteSpace="pre-wrap" lineHeight="24px">
+            {dayjs(query.data.expiry_date).format('llll')}
           </Skeleton>
-          <TextSeparator color="gray.500"/>
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline">
-            <NameDomainExpiryStatus date={ query.data?.expiry_date }/>
+          <TextSeparator color="gray.500" />
+          <Skeleton isLoaded={!isLoading} color="text_secondary" display="inline">
+            <NameDomainExpiryStatus date={query.data?.expiry_date} />
           </Skeleton>
         </DetailsInfoItem>
-      ) }
-      { query.data?.registrant && (
+      )}
+      {query.data?.registrant && (
         <DetailsInfoItem
           title="Registrant"
           hint="The account that owns the domain name and has the rights to edit its ownership and records"
-          isLoading={ isLoading }
-          columnGap={ 2 }
+          isLoading={isLoading}
+          columnGap={2}
           flexWrap="nowrap"
         >
           <AddressEntity
-            address={ query.data.registrant }
-            isLoading={ isLoading }
+            address={query.data.registrant}
+            isLoading={isLoading}
           />
           <Tooltip label="Lookup for related domain names">
             <LinkInternal
-              flexShrink={ 0 }
+              flexShrink={0}
               display="inline-flex"
-              href={ route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.registrant.hash } }) }
+              href={route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.registrant.hash } })}
             >
-              <IconSvg name="search" boxSize={ 5 } isLoading={ isLoading }/>
+              <IconSvg name="search" boxSize={5} isLoading={isLoading} />
             </LinkInternal>
           </Tooltip>
         </DetailsInfoItem>
-      ) }
-      { query.data?.owner && (
+      )}
+      {query.data?.owner && (
         <DetailsInfoItem
           title="Owner"
           hint="The account that owns the rights to edit the records of this domain name"
-          isLoading={ isLoading }
-          columnGap={ 2 }
+          isLoading={isLoading}
+          columnGap={2}
           flexWrap="nowrap"
         >
           <AddressEntity
-            address={ query.data.owner }
-            isLoading={ isLoading }
+            address={query.data.owner}
+            isLoading={isLoading}
           />
           <Tooltip label="Lookup for related domain names">
             <LinkInternal
-              flexShrink={ 0 }
+              flexShrink={0}
               display="inline-flex"
-              href={ route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.owner.hash } }) }
+              href={route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.owner.hash } })}
             >
-              <IconSvg name="search" boxSize={ 5 } isLoading={ isLoading }/>
+              <IconSvg name="search" boxSize={5} isLoading={isLoading} />
             </LinkInternal>
           </Tooltip>
         </DetailsInfoItem>
-      ) }
-      { query.data?.wrapped_owner && (
+      )}
+      {query.data?.wrapped_owner && (
         <DetailsInfoItem
           title="Manager"
           hint="Owner of this NFT domain in NameWrapper contract"
-          isLoading={ isLoading }
-          columnGap={ 2 }
+          isLoading={isLoading}
+          columnGap={2}
           flexWrap="nowrap"
         >
           <AddressEntity
-            address={ query.data.wrapped_owner }
-            isLoading={ isLoading }
+            address={query.data.wrapped_owner}
+            isLoading={isLoading}
           />
           <Tooltip label="Lookup for related domain names">
             <LinkInternal
-              flexShrink={ 0 }
+              flexShrink={0}
               display="inline-flex"
-              href={ route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.wrapped_owner.hash } }) }
+              href={route({ pathname: '/name-domains', query: { owned_by: 'true', resolved_to: 'true', address: query.data.wrapped_owner.hash } })}
             >
-              <IconSvg name="search" boxSize={ 5 } isLoading={ isLoading }/>
+              <IconSvg name="search" boxSize={5} isLoading={isLoading} />
             </LinkInternal>
           </Tooltip>
         </DetailsInfoItem>
-      ) }
-      { query.data?.tokens.map((token) => (
+      )}
+      {query.data?.tokens.map((token) => (
         <DetailsInfoItem
-          key={ token.type }
-          title={ token.type === 'WRAPPED_DOMAIN_TOKEN' ? 'Wrapped token ID' : 'Token ID' }
-          hint={ `The ${ token.type === 'WRAPPED_DOMAIN_TOKEN' ? 'wrapped ' : '' }token ID of this domain name NFT` }
-          isLoading={ isLoading }
+          key={token.type}
+          title={token.type === 'WRAPPED_DOMAIN_TOKEN' ? 'Wrapped token ID' : 'Token ID'}
+          hint={`The ${token.type === 'WRAPPED_DOMAIN_TOKEN' ? 'wrapped ' : ''}token ID of this domain name NFT`}
+          isLoading={isLoading}
           wordBreak="break-all"
           whiteSpace="pre-wrap"
         >
-          <NftEntity hash={ token.contract_hash } id={ token.id } isLoading={ isLoading } noIcon/>
+          <NftEntity hash={token.contract_hash} id={token.id} isLoading={isLoading} noIcon />
         </DetailsInfoItem>
-      )) }
-      { otherAddresses.length > 0 && (
+      ))}
+      {otherAddresses.length > 0 && (
         <DetailsInfoItem
           title="Other addresses"
           hint="Other cryptocurrency addresses added to this domain name"
-          isLoading={ isLoading }
+          isLoading={isLoading}
           flexDir="column"
           alignItems="flex-start"
         >
-          { otherAddresses.map(([ type, address ]) => (
-            <Flex key={ type } columnGap={ 2 } minW="0" w="100%" overflow="hidden">
-              <Skeleton isLoaded={ !isLoading }>{ type }</Skeleton>
+          {otherAddresses.map(([type, address]) => (
+            <Flex key={type} columnGap={2} minW="0" w="100%" overflow="hidden">
+              <Skeleton isLoaded={!isLoading}>{type}</Skeleton>
               <AddressEntity
                 address={{ hash: address }}
-                isLoading={ isLoading }
+                isLoading={isLoading}
                 noLink
                 noIcon
               />
             </Flex>
-          )) }
+          ))}
         </DetailsInfoItem>
-      ) }
+      )}
     </Grid>
   );
 };
