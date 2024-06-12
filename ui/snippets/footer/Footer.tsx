@@ -146,13 +146,13 @@ const Footer = () => {
     (gridArea?: GridProps["gridArea"]) => {
       return (
         <Box gridArea={gridArea}>
-          <Link fontSize="xs" href="https://www.blockscout.com">
+          {/* <Link fontSize="xs" href="https://www.blockscout.com">
             blockscout.com
           </Link>
           <Text mt={3} fontSize="xs">
             Blockscout is a tool for inspecting and analyzing EVM based
             blockchains. Blockchain explorer for Ethereum Networks.
-          </Text>
+          </Text> */}
           <VStack spacing={1} mt={6} alignItems="start">
             {apiVersionUrl && (
               <Text fontSize="xs">
@@ -205,7 +205,7 @@ const Footer = () => {
           mt={{ base: 8, lg: 0 }}
         >
           {[
-            { title: "Blockscout", links: BLOCKSCOUT_LINKS },
+            // { title: "Blockscout", links: BLOCKSCOUT_LINKS },
             ...(linksData || []),
           ]
             .slice(0, colNum)

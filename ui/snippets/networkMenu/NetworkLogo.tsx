@@ -27,15 +27,15 @@ const LogoFallback = ({
 
   const display = isSmall
     ? {
-        base: "none",
-        lg: isCollapsed === false ? "none" : "block",
-        xl: isCollapsed ? "block" : "none",
-      }
+      base: "none",
+      lg: isCollapsed === false ? "none" : "block",
+      xl: isCollapsed ? "block" : "none",
+    }
     : {
-        base: "block",
-        lg: isCollapsed === false ? "block" : "none",
-        xl: isCollapsed ? "none" : "block",
-      };
+      base: "block",
+      lg: isCollapsed === false ? "block" : "none",
+      xl: isCollapsed ? "none" : "block",
+    };
 
   if (config.UI.sidebar[field].default) {
     return <Skeleton w="100%" borderRadius="sm" display={display} />;
@@ -82,9 +82,9 @@ const NetworkLogo = ({ isCollapsed, onClick, imageProps }: Props) => {
         xl: isCollapsed ? "30px" : "120px",
       }}
       height={{
-        base: "40px",
-        lg: isCollapsed === false ? "40px" : "30px",
-        xl: isCollapsed ? "30px" : "40px",
+        base: "32px",
+        lg: isCollapsed === false ? "32px" : "30px",
+        xl: isCollapsed ? "30px" : "32px",
       }}
       display="inline-flex"
       overflow="hidden"
