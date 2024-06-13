@@ -66,7 +66,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <QueryClientProvider client={queryClient}>
               <GrowthBookProvider growthbook={growthBook}>
                 <ScrollDirectionProvider>
-                  <SocketProvider url={`${config.api.socket}/socket`}>
+                  <SocketProvider url={`${config.api.socket}/socket/v2`}>
                     {getLayout(<Component {...pageProps} />)}
                   </SocketProvider>
                 </ScrollDirectionProvider>
