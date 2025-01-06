@@ -14,20 +14,20 @@ const AddressCoinBalanceChart = ({ addressHash }: Props) => {
   const { data, isPending, isError } = useApiQuery('address_coin_balance_chart', {
     pathParams: { hash: addressHash },
   });
-
+  console.log({ data })
   const items = React.useMemo(() => data?.map(({ date, value }) => ({
     date: new Date(date),
     value: BigNumber(value).div(10 ** config.chain.currency.decimals).toNumber(),
-  })), [ data ]);
+  })), [data]);
 
   return (
     <ChartWidget
-      isError={ isError }
+      isError={isError}
       title="Balances"
-      items={ items }
-      isLoading={ isPending }
+      items={items}
+      isLoading={isPending}
       h="300px"
-      units={ currencyUnits.ether }
+      units={currencyUnits.ether}
     />
   );
 };
