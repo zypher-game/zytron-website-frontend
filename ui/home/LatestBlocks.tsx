@@ -49,7 +49,6 @@ const LatestBlocks = () => {
       const newData = prevData ? [...prevData] : [];
 
       if (newData.some((block => {
-        console.log({ block })
         return block.height === payload.block.height
       }))) {
         return newData;
