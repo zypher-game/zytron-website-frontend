@@ -40,9 +40,9 @@ const AppError = ({ error, className }: Props) => {
     const cause = getErrorCause(error);
     const messageInPayload =
       resourceErrorPayload &&
-      typeof resourceErrorPayload === "object" &&
-      "message" in resourceErrorPayload &&
-      typeof resourceErrorPayload.message === "string"
+        typeof resourceErrorPayload === "object" &&
+        "message" in resourceErrorPayload &&
+        typeof resourceErrorPayload.message === "string"
         ? resourceErrorPayload.message
         : undefined;
     const statusCode =
@@ -62,9 +62,9 @@ const AppError = ({ error, className }: Props) => {
     if (isBlockConsensus) {
       const hash =
         resourceErrorPayload &&
-        typeof resourceErrorPayload === "object" &&
-        "hash" in resourceErrorPayload &&
-        typeof resourceErrorPayload.hash === "string"
+          typeof resourceErrorPayload === "object" &&
+          "hash" in resourceErrorPayload &&
+          typeof resourceErrorPayload.hash === "string"
           ? resourceErrorPayload.hash
           : undefined;
       return <AppErrorBlockConsensus hash={hash} />;
@@ -103,7 +103,7 @@ const AppError = ({ error, className }: Props) => {
 
   return (
     <Box className={className} mt={{ base: "52px", lg: "104px" }} maxW="800px">
-      1231213 {content}
+      Oops! {content}
     </Box>
   );
 };

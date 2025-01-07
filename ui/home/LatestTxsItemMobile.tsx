@@ -35,61 +35,61 @@ const LatestTxsItem = ({ tx, isLoading }: Props) => {
       width="100%"
       borderTop="1px solid"
       borderColor="divider"
-      py={ 4 }
+      py={4}
       _last={{ borderBottom: '1px solid', borderColor: 'divider' }}
       display={{ base: 'block', lg: 'none' }}
     >
       <Flex justifyContent="space-between">
         <HStack flexWrap="wrap">
-          <TxType types={ tx.tx_types } isLoading={ isLoading }/>
-          <TxStatus status={ tx.status } errorText={ tx.status === 'error' ? tx.result : undefined } isLoading={ isLoading }/>
-          <TxWatchListTags tx={ tx } isLoading={ isLoading }/>
+          <TxType types={tx.tx_types ?? tx.transaction_types ?? []} isLoading={isLoading} />
+          <TxStatus status={tx.status} errorText={tx.status === 'error' ? tx.result : undefined} isLoading={isLoading} />
+          <TxWatchListTags tx={tx} isLoading={isLoading} />
         </HStack>
-        <TxAdditionalInfo tx={ tx } isMobile isLoading={ isLoading }/>
+        <TxAdditionalInfo tx={tx} isMobile isLoading={isLoading} />
       </Flex>
       <Flex
-        mt={ 2 }
+        mt={2}
         alignItems="center"
         width="100%"
         justifyContent="space-between"
-        mb={ 6 }
+        mb={6}
       >
         <TxEntity
-          isLoading={ isLoading }
-          hash={ tx.hash }
+          isLoading={isLoading}
+          hash={tx.hash}
           fontWeight="700"
           truncation="constant_long"
         />
-        { tx.timestamp && (
-          <Skeleton isLoaded={ !isLoading } color="text_secondary" fontWeight="400" fontSize="sm" ml={ 3 }>
-            <span>{ timeAgo }</span>
+        {tx.timestamp && (
+          <Skeleton isLoaded={!isLoading} color="text_secondary" fontWeight="400" fontSize="sm" ml={3}>
+            <span>{timeAgo}</span>
           </Skeleton>
-        ) }
+        )}
       </Flex>
       <AddressFromTo
-        from={ tx.from }
-        to={ dataTo }
-        isLoading={ isLoading }
+        from={tx.from}
+        to={dataTo}
+        isLoading={isLoading}
         fontSize="sm"
         fontWeight="500"
-        mb={ 3 }
+        mb={3}
       />
-      { !config.UI.views.tx.hiddenFields?.value && (
-        <Skeleton isLoaded={ !isLoading } mb={ 2 } fontSize="sm" w="fit-content">
-          <Text as="span">Value { currencyUnits.ether } </Text>
-          <Text as="span" variant="secondary">{ getValueWithUnit(tx.value).dp(5).toFormat() }</Text>
+      {!config.UI.views.tx.hiddenFields?.value && (
+        <Skeleton isLoaded={!isLoading} mb={2} fontSize="sm" w="fit-content">
+          <Text as="span">Value {currencyUnits.ether} </Text>
+          <Text as="span" variant="secondary">{getValueWithUnit(tx.value).dp(5).toFormat()}</Text>
         </Skeleton>
-      ) }
-      { !config.UI.views.tx.hiddenFields?.tx_fee && (
-        <Skeleton isLoaded={ !isLoading } fontSize="sm" w="fit-content" display="flex" whiteSpace="pre">
-          <Text as="span">Fee { !config.UI.views.tx.hiddenFields?.fee_currency ? `${ currencyUnits.ether } ` : '' }</Text>
-          { tx.stability_fee ? (
-            <TxFeeStability data={ tx.stability_fee } accuracy={ 5 } color="text_secondary" hideUsd/>
+      )}
+      {!config.UI.views.tx.hiddenFields?.tx_fee && (
+        <Skeleton isLoaded={!isLoading} fontSize="sm" w="fit-content" display="flex" whiteSpace="pre">
+          <Text as="span">Fee {!config.UI.views.tx.hiddenFields?.fee_currency ? `${currencyUnits.ether} ` : ''}</Text>
+          {tx.stability_fee ? (
+            <TxFeeStability data={tx.stability_fee} accuracy={5} color="text_secondary" hideUsd />
           ) : (
-            <Text as="span" variant="secondary">{ tx.fee.value ? getValueWithUnit(tx.fee.value).dp(5).toFormat() : '-' }</Text>
-          ) }
+            <Text as="span" variant="secondary">{tx.fee.value ? getValueWithUnit(tx.fee.value).dp(5).toFormat() : '-'}</Text>
+          )}
         </Skeleton>
-      ) }
+      )}
     </Box>
   );
 };
